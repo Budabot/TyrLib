@@ -34,4 +34,13 @@ public class PrivateGroupInviteRequestPacket extends BaseClientPacket {
 	public int getPacketType() {
 		return PrivateGroupInviteRequestPacket.TYPE;
 	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.toString();
+	
+		return output;
+	}
 }

@@ -47,20 +47,17 @@ public class BuddyAddedPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, online, status);
 	}
 	
 	public String toString() {
-		
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tUserId: ").append(userId.getLongData())
-			.append("\n\tOnline: ").append(online.getIntData())
-			.append("\n\tStatus: ").append(status.getStringData())
-		.toString();
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tOnline: ").append(online)
+			.append("\n\tStatus: ").append(status)
+			.toString();
 	
 		return output;
-	
 	}
 }

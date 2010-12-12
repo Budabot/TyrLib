@@ -74,7 +74,19 @@ public class ChatMessagePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(clientId, windowId, messageId, messageArgs);
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tClientId: ").append(clientId)
+			.append("\n\tWindowId: ").append(windowId)
+			.append("\n\tMessageId: ").append(messageId)
+			.append("\n\tMessageArgs: ").append(messageArgs)
+			.append("\n\tExtendedMessage: ").append(extendedMessage)
+			.toString();
+
+		return output;
 	}
 }

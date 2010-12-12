@@ -27,11 +27,20 @@ public class BuddyAddPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, status);
 	}
 	
 	public int getPacketType() {
 		return BuddyAddPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tStatus: ").append(status)
+			.toString();
+	
+		return output;
 	}
 }

@@ -23,11 +23,19 @@ public class ClientLookupPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(name);
 	}
 	
 	public int getPacketType() {
 		return ClientLookupPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tName: ").append(name)
+			.toString();
+	
+		return output;
 	}
 }

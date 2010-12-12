@@ -47,20 +47,17 @@ public class PrivateMessagePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, message, raw);
 	}
 	
 	public String toString() {
-		
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tUserId: ").append(this.userId.getLongData())
-			.append("\n\tMessage: ").append(this.message.getStringData())
-			.append("\n\tRaw: ").append(this.raw.getStringData())
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tMessage: ").append(message)
+			.append("\n\tRaw: ").append(raw)
 			.toString();
 	
 		return output;
-
 	}
 }

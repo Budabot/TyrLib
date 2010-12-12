@@ -63,8 +63,8 @@ public class Int extends AbstractType {
 		return 4;
 	}
 
-        @Override
+    @Override
 	public String toString() {
-		return super.toString() + "( " + mydata + " )";
+		return String.valueOf(mydata);
 	}
 }

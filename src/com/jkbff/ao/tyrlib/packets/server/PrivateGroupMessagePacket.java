@@ -54,7 +54,18 @@ public class PrivateGroupMessagePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId1, userId2, message, raw);
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId1: ").append(userId1)
+			.append("\n\tUserId2: ").append(userId2)
+			.append("\n\tMessage: ").append(message)
+			.append("\n\tRaw: ").append(raw)
+			.toString();
+	
+		return output;
 	}
 }

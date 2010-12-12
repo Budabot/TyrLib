@@ -36,11 +36,21 @@ public class OutgoingPrivateMessagePacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, text, raw);
 	}
 	
 	public int getPacketType() {
 		return OutgoingPrivateMessagePacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tText: ").append(text)
+			.append("\n\tRaw: ").append(raw)
+			.toString();
+	
+		return output;
 	}
 }

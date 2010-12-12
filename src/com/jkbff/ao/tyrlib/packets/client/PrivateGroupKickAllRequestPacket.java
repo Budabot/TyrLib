@@ -30,4 +30,12 @@ public class PrivateGroupKickAllRequestPacket extends BaseClientPacket {
 	public int getPacketType() {
 		return PrivateGroupKickAllRequestPacket.TYPE;
 	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.toString();
+	
+		return output;
+	}
 }

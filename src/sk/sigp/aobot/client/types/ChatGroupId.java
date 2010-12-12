@@ -66,8 +66,9 @@ public class ChatGroupId extends AbstractType {
 		return 5;
 	}
 
+	@Override
 	public String toString() {
-		return super.toString() + "( " + mydata + " )";
+		return String.valueOf(mydata);
 	}
 	
 	public boolean equals(Object obj) {

@@ -46,20 +46,17 @@ public class AnonymousVicinityMessagePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(text, message, raw);
 	}
 	
 	public String toString() {
-		
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tText: '").append(this.text.getStringData()).append("'")
-			.append("\n\tMessage: '").append(this.message.getStringData()).append("'")
-			.append("\n\tRaw: ").append(this.raw.getStringData())
+			.append("\n\tText: '").append(text).append("'")
+			.append("\n\tMessage: '").append(message).append("'")
+			.append("\n\tRaw: ").append(raw)
 			.toString();
 	
 		return output;
-
 	}
 }

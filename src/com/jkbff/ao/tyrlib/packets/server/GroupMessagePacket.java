@@ -71,18 +71,16 @@ public class GroupMessagePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(chatGroupId, userId, message, raw);
 	}
 	
 	public String toString() {
-		
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tChatGroupId: ").append(chatGroupId.getLongData())
-			.append("\n\tUserId: ").append(userId.getLongData())
-			.append("\n\tMessage: ").append(message.getStringData())
-			.append("\n\tRaw: ").append(raw.getStringData())
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tMessage: ").append(message)
+			.append("\n\tRaw: ").append(raw)
 			.toString();
 		
 		return output;

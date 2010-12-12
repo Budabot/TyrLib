@@ -34,7 +34,7 @@ public class PingResponsePacket extends BaseServerPacket {
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tRaw: ").append(this.raw.getStringData())
+			.append("\n\tRaw: ").append(raw)
 			.toString();
 	
 		return output;

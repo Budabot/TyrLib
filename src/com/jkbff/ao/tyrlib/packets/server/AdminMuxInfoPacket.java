@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.Int;
 
+import com.jkbff.ao.tyrlib.chat.Helper;
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
 public class AdminMuxInfoPacket extends BaseServerPacket {
@@ -58,7 +59,6 @@ public class AdminMuxInfoPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(byteStream);
 		
@@ -91,5 +91,16 @@ public class AdminMuxInfoPacket extends BaseServerPacket {
 		}
 		
 		return byteStream.toByteArray();
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUnknownIntArray1: ").append(Helper.printArray(unknownInt1))
+			.append("\n\tUnknownIntArray2: ").append(Helper.printArray(unknownInt2))
+			.append("\n\tUnknownIntArray3: ").append(Helper.printArray(unknownInt3))
+			.toString();
+	
+		return output;
 	}
 }

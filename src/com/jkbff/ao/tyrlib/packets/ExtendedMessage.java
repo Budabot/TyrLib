@@ -47,7 +47,7 @@ public class ExtendedMessage {
 		List<Object> params = new ArrayList<Object>();
 
 		while (dataInputStream.available() > 0) {
-			int paramType = dataInputStream.read();
+			char paramType = (char)dataInputStream.read();
 			switch (paramType) {
 				case 'R':
 					// reference
@@ -60,10 +60,10 @@ public class ExtendedMessage {
 					params.add(b85g(dataInputStream));
 					break;
 
-				case 's':	
+				case 'S':	
 					// string
-					int stringLength = dataInputStream.read();
-					byte[] bytes = new byte[stringLength - 1]; // why -1? I dunno, the string length seems to be one too many tho
+					int stringLength = dataInputStream.readShort();
+					byte[] bytes = new byte[stringLength];
 					dataInputStream.readFully(bytes);
 					
 					params.add(new String(bytes, ENCODING));
@@ -90,7 +90,7 @@ public class ExtendedMessage {
     }
 
 	public String getFormattedMessage() {
-		return String.format(message, params);
+		return String.format(message, params.toArray());
 	}
 	
 	public String toString() {

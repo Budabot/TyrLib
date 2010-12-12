@@ -31,7 +31,15 @@ public class GroupPartPacket extends BaseServerPacket {
 	}
 
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(chatGroupId);
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.toString();
+	
+		return output;
 	}
 }

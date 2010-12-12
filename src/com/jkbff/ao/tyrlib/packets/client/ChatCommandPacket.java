@@ -27,7 +27,6 @@ public class ChatCommandPacket extends BaseClientPacket {
 	}
 	
 	public ChatCommandPacket(String[] command) {
-		
 		this.command = new Text[command.length];
 		
 		for (int i = 0; i < command.length; i++) {
@@ -36,7 +35,6 @@ public class ChatCommandPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(byteStream);
 		
@@ -61,5 +59,17 @@ public class ChatCommandPacket extends BaseClientPacket {
 	
 	public int getPacketType() {
 		return ChatCommandPacket.TYPE;
+	}
+	
+	public String toString() {
+		StringBuffer output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")");
+		
+		int i = 0;
+		for (Text text: command) {
+			output.append("\n\tCommand #").append(i++).append(": ").append(text);
+		}
+		
+		return output.toString();
 	}
 }

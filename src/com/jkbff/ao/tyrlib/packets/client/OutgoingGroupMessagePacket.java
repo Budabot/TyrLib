@@ -42,4 +42,15 @@ public class OutgoingGroupMessagePacket extends BaseClientPacket {
 	public int getPacketType() {
 		return OutgoingGroupMessagePacket.TYPE;
 	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tText: ").append(text)
+			.append("\n\tRaw: ").append(raw)
+			.toString();
+	
+		return output;
+	}
 }

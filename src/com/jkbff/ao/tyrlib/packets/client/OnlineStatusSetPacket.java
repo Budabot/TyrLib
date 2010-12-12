@@ -28,11 +28,19 @@ public class OnlineStatusSetPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(status);
 	}
 	
 	public int getPacketType() {
 		return OnlineStatusSetPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tStatus: ").append(status)
+			.toString();
+	
+		return output;
 	}
 }

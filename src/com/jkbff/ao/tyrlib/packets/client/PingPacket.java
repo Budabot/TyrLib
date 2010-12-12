@@ -29,7 +29,6 @@ public class PingPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(raw);
 	}
 	
@@ -40,7 +39,7 @@ public class PingPacket extends BaseClientPacket {
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tRaw: ").append(this.raw.getStringData())
+			.append("\n\tRaw: ").append(raw)
 			.toString();
 	
 		return output;

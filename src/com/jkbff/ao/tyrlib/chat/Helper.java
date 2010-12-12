@@ -1,9 +1,7 @@
 package com.jkbff.ao.tyrlib.chat;
 
-import java.io.DataInputStream;
-import java.io.IOException;
 
-public class Globals {
+public class Helper {
 	
 	public static final int CHATGROUPIDSIZE = 5;
 	
@@ -15,6 +13,14 @@ public class Globals {
 		}
 		
 		return returnValue.toString();
+	}
+	
+	public static <T> String printArray(T[] array) {
+		StringBuilder str = new StringBuilder();
+		for (T obj : array) {
+			str.append(obj.toString() + " ");
+		}
+		return str.toString();
 	}
 	
 	protected static void longToBytes(long from, byte[] to, int off) {
@@ -144,9 +150,5 @@ public class Globals {
 		} else {
 			return false;
 		}
-	}
-	
-	public static int getInt(DataInputStream input) throws IOException {
-		return input.readInt();
 	}
 }

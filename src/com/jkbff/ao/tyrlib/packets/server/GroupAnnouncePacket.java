@@ -23,20 +23,20 @@ public class GroupAnnouncePacket extends BaseServerPacket {
 	private ChatGroupId chatGroupId;
 	private Text groupName;
 	private Int unknownInt;
-	private Raw mute;
+	private Raw flags;
 
 	public GroupAnnouncePacket(DataInputStream input) throws IOException {
 		this.chatGroupId = new ChatGroupId(input);
 		this.groupName = new Text(input);
 		this.unknownInt = new Int(input);
-		this.mute = new Raw(input);
+		this.flags = new Raw(input);
 	}
 	
-	public GroupAnnouncePacket(int channelType, int channelId, String groupName, int unknownInt, String mute) {
+	public GroupAnnouncePacket(int channelType, int channelId, String groupName, int unknownInt, String flags) {
 		this.chatGroupId = new ChatGroupId(channelId);
 		this.groupName = new Text(groupName);
 		this.unknownInt = new Int(unknownInt);
-		this.mute = new Raw(mute);
+		this.flags = new Raw(flags);
 	}
 	
 	public long getChatGroupId() {
@@ -47,8 +47,8 @@ public class GroupAnnouncePacket extends BaseServerPacket {
 		return groupName.getStringData();
 	}
 
-	public String getMute() {
-		return mute.getStringData();
+	public String getFlags() {
+		return flags.getStringData();
 	}
 
 	public int getUnknownInt() {
@@ -60,18 +60,16 @@ public class GroupAnnouncePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
-		return getBytes(chatGroupId, groupName, unknownInt, mute);
+		return getBytes(chatGroupId, groupName, unknownInt, flags);
 	}
 	
 	public String toString() {
-		
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tChatGroupId: ").append(this.chatGroupId.getLongData())
-			.append("\n\tGroupName: ").append(this.groupName.getStringData())
-			.append("\n\tUnknownInt: ").append(this.unknownInt.getIntData())
-			.append("\n\tMute: ").append(this.mute.getStringData())
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tGroupName: ").append(groupName)
+			.append("\n\tUnknownInt: ").append(unknownInt)
+			.append("\n\tMute: ").append(flags)
 			.toString();
 		
 		return output;

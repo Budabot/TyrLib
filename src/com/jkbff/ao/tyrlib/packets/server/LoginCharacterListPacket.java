@@ -23,7 +23,6 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	private Int[] online;
 
 	public LoginCharacterListPacket(DataInputStream input) throws IOException {
-		
 		int userIdSize = input.readUnsignedShort();
 		this.userId = new UserId[userIdSize];
 		for(int i = 0; i < userIdSize; i++) {
@@ -50,7 +49,6 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	}
 	
 	public LoginCharacterListPacket(long[] userId, String[] name, int[] level, int[] online) {
-		
 		this.userId = new UserId[userId.length];
 		for(int i = 0; i < userId.length; i++) {
 			this.userId[i] = new UserId(userId[i]);
@@ -77,7 +75,6 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(byteStream);
 		
@@ -124,7 +121,6 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	}
 	
 	private int getAbstractArraySize(AbstractType[] abstractTypes) {
-
 		int size = 0;
 		for (AbstractType abstractType: abstractTypes) {
 			
@@ -151,7 +147,6 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	}
 	
 	public LoginUser[] getLoginUsers() {
-		
 		LoginUser[] loginUsers = new LoginUser[userId.length];
 		for (int i = 0; i < userId.length; i++) {
 			
@@ -162,14 +157,12 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	}
 	
 	public class LoginUser {
-		
 		private long userId;
 		private String name;
 		private int level;
 		private int online;
 		
 		public LoginUser(UserId userId, Text name, Int level, Int online) {
-			
 			this.userId = userId.getLongData();
 			this.name = name.getStringData();
 			this.level = level.getIntData();
@@ -191,7 +184,6 @@ public class LoginCharacterListPacket extends BaseServerPacket {
 	}
 	
 	public String toString() {
-		
 		LoginUser[] loginUsers = getLoginUsers();
 		
 		StringBuffer output = new StringBuffer()

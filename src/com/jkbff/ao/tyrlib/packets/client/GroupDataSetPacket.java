@@ -31,18 +31,27 @@ public class GroupDataSetPacket extends BaseClientPacket {
 	}
 	
 	public GroupDataSetPacket(int chatGroupId, int flags, String mute) {
-		
 		this.chatGroupId = new ChatGroupId(chatGroupId);
 		this.flags = new Int(flags);
 		this.mute = new Raw(mute);
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(chatGroupId, flags, mute);
 	}
 	
 	public int getPacketType() {
 		return GroupDataSetPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tFlags: ").append(flags)
+			.append("\n\tMute: ").append(mute)
+			.toString();
+	
+		return output;
 	}
 }

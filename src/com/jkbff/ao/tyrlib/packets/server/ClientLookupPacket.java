@@ -39,7 +39,16 @@ public class ClientLookupPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, characterName);
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tCharacterName: ").append(characterName)
+			.toString();
+	
+		return output;
 	}
 }

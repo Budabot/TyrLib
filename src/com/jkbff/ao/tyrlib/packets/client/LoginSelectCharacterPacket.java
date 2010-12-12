@@ -29,11 +29,19 @@ public class LoginSelectCharacterPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId);
 	}
 	
 	public int getPacketType() {
 		return LoginSelectCharacterPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.toString();
+	
+		return output;
 	}
 }

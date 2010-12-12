@@ -79,9 +79,8 @@ public class Text extends AbstractType {
 		return getRaw().length;
 	}
 
-        @Override
+	@Override
 	public String toString() {
-		char c = 34;
-		return super.toString() + "( " + c + mydata + c + " )";
+		return mydata;
 	}
 }

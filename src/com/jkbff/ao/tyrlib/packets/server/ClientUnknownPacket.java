@@ -31,7 +31,15 @@ public class ClientUnknownPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(unknownInt);
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUnknownInt: ").append(unknownInt)
+			.toString();
+	
+		return output;
 	}
 }

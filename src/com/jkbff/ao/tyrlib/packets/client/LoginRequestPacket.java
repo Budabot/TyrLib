@@ -36,11 +36,21 @@ public class LoginRequestPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(unknownInt, username, key);
 	}
 
 	public int getPacketType() {
 		return LoginRequestPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUnknownInt: ").append(unknownInt)
+			.append("\n\tUsername: ").append(username)
+			.append("\n\tKey: ").append(key)
+			.toString();
+	
+		return output;
 	}
 }

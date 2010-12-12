@@ -90,11 +90,9 @@ public class Raw extends AbstractType {
 		return mydata.length + 2;
 	}
 
-        @Override
+	@Override
 	public String toString() {
-
-		String str = super.toString() + "(" + getStringData() + " )";
-		return str;
+		return getStringData();
 	}
 	
 	public String getStringData() {

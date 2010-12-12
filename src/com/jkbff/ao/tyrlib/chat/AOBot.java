@@ -82,6 +82,13 @@ public class AOBot {
     		notify();
     	}
     	
+    	// threads have two seconds to cleanup before the socket closes
+    	try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e1) {
+
+		}
+    	
     	try {
     		if (socket != null) {
     			socket.close();
@@ -146,11 +153,12 @@ public class AOBot {
     	try {
     		chatPacketHandler.processPacket(packet, this);
     	} catch (Exception e) {
-    		
+    		e.printStackTrace();
     	}
     }
 
     public void sendPacket(BaseClientPacket packet) {
+    	System.out.println("OUT " + packet);
         chatPacketSender.sendPacket(packet);
     }
 

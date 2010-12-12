@@ -36,8 +36,16 @@ public class ForwardPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, map);
 	}
-
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tMap: ").append(map)
+			.toString();
+	
+		return output;
+	}
 }

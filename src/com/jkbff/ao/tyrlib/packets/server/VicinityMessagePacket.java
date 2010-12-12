@@ -47,7 +47,18 @@ public class VicinityMessagePacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(userId, message, blob);
+	}
+	
+	@Override
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId: ").append(userId)
+			.append("\n\tMessage: ").append(message)
+			.append("\n\tBlob: ").append(blob)
+			.toString();
+	
+		return output;
 	}
 }

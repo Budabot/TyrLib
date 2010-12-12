@@ -40,4 +40,14 @@ public class PrivateGroupClientJoinedPacket extends BaseServerPacket {
 	public byte[] getBytes() throws IOException {
 		return getBytes(userId1, userId2);
 	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUserId1: ").append(userId1)
+			.append("\n\tUserId2: ").append(userId2)
+			.toString();
+	
+		return output;
+	}
 }

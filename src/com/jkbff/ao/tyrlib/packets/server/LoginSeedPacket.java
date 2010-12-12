@@ -31,15 +31,13 @@ public class LoginSeedPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(seed);
 	}
 	
 	public String toString() {
-		
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
-			.append("\n\tSeed: ").append(this.seed.getStringData())
+			.append("\n\tSeed: ").append(seed)
 			.toString();
 		
 		return output;

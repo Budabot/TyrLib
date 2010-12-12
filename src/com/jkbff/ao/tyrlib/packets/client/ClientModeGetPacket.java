@@ -27,11 +27,20 @@ public class ClientModeGetPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(unknownInt, chatGroupId);
 	}
 	
 	public int getPacketType() {
 		return ClientModeGetPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tUnknownInt: ").append(unknownInt)
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.toString();
+	
+		return output;
 	}
 }

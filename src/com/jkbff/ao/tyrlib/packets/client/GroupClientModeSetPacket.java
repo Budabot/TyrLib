@@ -28,7 +28,6 @@ public class GroupClientModeSetPacket extends BaseClientPacket {
 	}
 	
 	public GroupClientModeSetPacket(int chatGroupId, int unknownInt1, int unknownInt2, int unknownInt3, int unknownInt4) {
-		
 		this.chatGroupId = new ChatGroupId(chatGroupId);
 		this.unknownInt1 = new Int(unknownInt1);
 		this.unknownInt2 = new Int(unknownInt2);
@@ -37,11 +36,23 @@ public class GroupClientModeSetPacket extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		
 		return getBytes(chatGroupId, unknownInt1, unknownInt2, unknownInt3, unknownInt4);
 	}
 	
 	public int getPacketType() {
 		return GroupClientModeSetPacket.TYPE;
+	}
+	
+	public String toString() {
+		String output = new StringBuffer()
+			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tUnknownInt1: ").append(unknownInt1)
+			.append("\n\tUnknownInt2: ").append(unknownInt2)
+			.append("\n\tUnknownInt3: ").append(unknownInt3)
+			.append("\n\tUnknownInt4: ").append(unknownInt4)
+			.toString();
+	
+		return output;
 	}
 }
