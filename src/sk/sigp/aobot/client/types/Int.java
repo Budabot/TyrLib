@@ -25,6 +25,8 @@ package sk.sigp.aobot.client.types;
 
 import java.io.*;
 
+import com.jkbff.ao.tyrlib.chat.Helper;
+
 
 public class Int extends AbstractType {
 	protected int mydata;
@@ -55,7 +57,7 @@ public class Int extends AbstractType {
 
 	public byte[] getRaw() {
 		byte[] ret = new byte[4];
-		integerToBytes(mydata, ret, size(), 0);
+		Helper.integerToBytes(mydata, ret, size(), 0);
 		return ret;
 	}
 

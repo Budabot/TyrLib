@@ -26,6 +26,8 @@ package sk.sigp.aobot.client.types;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import com.jkbff.ao.tyrlib.chat.Helper;
+
 
 public class Raw extends AbstractType {
 	public byte[] mydata;
@@ -46,14 +48,6 @@ public class Raw extends AbstractType {
 		input.readFully(mydata);
 	}
 
-	public Raw(Item item) {
-		mydata = new byte[16];
-		integerToBytes(item.lowID, mydata, 4, 0);
-		integerToBytes(item.highID, mydata, 4, 4);
-		integerToBytes(item.quality, mydata, 4, 8);
-		integerToBytes(item.dummy, mydata, 4, 12);
-	}
-
 	public Raw(String textblob) {
 		byte[] str = new byte[0];
 		try {
@@ -62,12 +56,12 @@ public class Raw extends AbstractType {
 		}
 		mydata = new byte[str.length + 16];
 
-		integerToBytes(0x0000C350, mydata, 4, 0);
-		integerToBytes(str.hashCode() & 0xFFFF, mydata, 4, 4);
-		integerToBytes(0, mydata, 4, 8);
-		integerToBytes(0, mydata, 2, 12);
-		integerToBytes(str.length, mydata, 2, 14);
-		copy(str, mydata, 16);
+		Helper.integerToBytes(0x0000C350, mydata, 4, 0);
+		Helper.integerToBytes(str.hashCode() & 0xFFFF, mydata, 4, 4);
+		Helper.integerToBytes(0, mydata, 4, 8);
+		Helper.integerToBytes(0, mydata, 2, 12);
+		Helper.integerToBytes(str.length, mydata, 2, 14);
+		Helper.copy(str, mydata, 16);
 	}
 
 	public void append(Raw raw) {
@@ -81,8 +75,8 @@ public class Raw extends AbstractType {
 
 	public byte[] getRaw() {
 		byte ret[] = new byte[mydata.length + 2];
-		integerToBytes(mydata.length, ret, 2, 0);
-		copy(mydata, ret, 2);
+		Helper.integerToBytes(mydata.length, ret, 2, 0);
+		Helper.copy(mydata, ret, 2);
 		return ret;
 	}
 
