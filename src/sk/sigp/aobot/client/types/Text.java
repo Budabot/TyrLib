@@ -26,6 +26,8 @@ package sk.sigp.aobot.client.types;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import com.jkbff.ao.tyrlib.chat.Helper;
+
 
 public class Text extends AbstractType {
 	protected String mydata;
@@ -65,12 +67,12 @@ public class Text extends AbstractType {
 		try {
 			byte[] str = mydata.getBytes(ENCODING);
 			byte[] ret = new byte[str.length + 2];
-			integerToBytes(str.length, ret, 2, 0);
-			copy(str, ret, 2);
+			Helper.integerToBytes(str.length, ret, 2, 0);
+			Helper.copy(str, ret, 2);
 			return ret;
 		} catch (Exception e) {
 			byte[] ret = new byte[2];
-			integerToBytes(0, ret, 2, 0);
+			Helper.integerToBytes(0, ret, 2, 0);
 			return ret;
 		}
 	}

@@ -33,7 +33,7 @@ public abstract class AbstractType {
 
 	public abstract int size();
 
-        @Override
+	@Override
 	public String toString() {
 		String s = this.getClass().getName();
 		int i = s.indexOf(".");
@@ -44,38 +44,5 @@ public abstract class AbstractType {
 
 	public void write(DataOutputStream output) throws IOException {
 		output.write(getRaw());
-	}
-
-	protected static void copy(byte[] from, byte[] to, int toff) {
-		// stupid routine. make sure to.length >= from.length+toff
-		for (int i = from.length - 1; i >= 0; i--)
-			to[toff + i] = from[i];
-	}
-
-	protected static void integerToBytes(long from, byte[] to, int length, int off) {
-
-                for (int i = 0; i < length; i++) {
-
-			int byteArraySizeInBits = length * Byte.SIZE;
-			int bitShiftSize = byteArraySizeInBits - (8 * (i + 1));
-			
-			to[off + i] = (byte) ((from >> bitShiftSize) & 0xFF);
-		}
-	}
-	
-	protected static long bytesTolong (byte[] bytes) {
-		
-		long newLong = 0;
-		for (int i = 0; i < bytes.length; i++) {
-			
-			long tempLong = bytes[i];
-			if (tempLong < 0) {
-				tempLong += 256;
-			}
-
-			newLong += (tempLong << ((bytes.length - i - 1) * 8));
-		}
-
-		return newLong;
 	}
 }

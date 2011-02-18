@@ -82,7 +82,7 @@ public class AOBot {
     		notify();
     	}
     	
-    	// threads have two seconds to cleanup before the socket closes
+    	// threads have five seconds to cleanup before the socket closes
     	try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e1) {

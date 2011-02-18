@@ -26,6 +26,8 @@ package sk.sigp.aobot.client.types;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import com.jkbff.ao.tyrlib.chat.Helper;
+
 public class ChatGroupId extends AbstractType {
 	
 	protected long mydata;
@@ -41,7 +43,7 @@ public class ChatGroupId extends AbstractType {
 	public ChatGroupId(DataInputStream input) throws IOException {
 		byte[] data = new byte[size()];
 		input.readFully(data, 0, size());
-		mydata = bytesTolong(data);
+		mydata = Helper.bytesTolong(data);
 	}
 	
 	public boolean equals(long i) {
@@ -58,7 +60,7 @@ public class ChatGroupId extends AbstractType {
 
 	public byte[] getRaw() {
 		byte[] ret = new byte[5];
-		integerToBytes(mydata, ret, 5, 0);
+		Helper.integerToBytes(mydata, ret, 5, 0);
 		return ret;
 	}
 

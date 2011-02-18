@@ -24,7 +24,7 @@ public class ChatPacketSender extends Thread {
                 	outputStream.write(bytes);
                 }
             } catch (InterruptedException e) {
-            	System.err.println("int!!");
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
