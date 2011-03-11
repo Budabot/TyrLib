@@ -3,7 +3,6 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.Raw;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.UserId;
 
@@ -21,22 +20,22 @@ public class OutgoingPrivateMessagePacket extends BaseClientPacket {
 	
 	private UserId userId;
 	private Text text;
-	private Raw raw;
+	private Text voice;
 	
 	public OutgoingPrivateMessagePacket(DataInputStream input) throws IOException {
 		userId = new UserId(input);
 		text = new Text(input);
-		raw = new Raw(input);
+		voice = new Text(input);
 	}
 	
-	public OutgoingPrivateMessagePacket(long userId, String text, String raw) {
+	public OutgoingPrivateMessagePacket(long userId, String text, String voice) {
 		this.userId = new UserId(userId);
 		this.text = new Text(text);
-		this.raw = new Raw(raw);
+		this.voice = new Text(voice);
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(userId, text, raw);
+		return getBytes(userId, text, voice);
 	}
 	
 	public int getPacketType() {
@@ -48,7 +47,7 @@ public class OutgoingPrivateMessagePacket extends BaseClientPacket {
 			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
 			.append("\n\tUserId: ").append(userId)
 			.append("\n\tText: ").append(text)
-			.append("\n\tRaw: ").append(raw)
+			.append("\n\tVoice: ").append(voice)
 			.toString();
 	
 		return output;
