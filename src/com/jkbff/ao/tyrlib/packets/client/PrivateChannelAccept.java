@@ -19,7 +19,7 @@ public class PrivateChannelAccept extends BaseClientPacket {
 	
 	private UserId userId;
 	
-	public PrivateChannelAccept(DataInputStream input) throws IOException {
+	public PrivateChannelAccept(DataInputStream input) {
 		userId = new UserId(input);
 	}
 	

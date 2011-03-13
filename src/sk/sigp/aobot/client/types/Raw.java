@@ -25,6 +25,9 @@ package sk.sigp.aobot.client.types;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import com.jkbff.ao.tyrlib.chat.Helper;
 
 
 public class Raw extends AbstractType {
@@ -41,17 +44,22 @@ public class Raw extends AbstractType {
 		}
 	}
 
-	public Raw(DataInputStream input) throws IOException {
-		int size = input.readUnsignedShort();
-		mydata = new byte[size];
-		input.readFully(mydata);
+	public Raw(DataInputStream input) {
+		try {
+			int size = input.readUnsignedShort();
+			mydata = new byte[size];
+			input.readFully(mydata);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public Raw(String textblob) {
 		byte[] str = new byte[0];
 		try {
 			str = textblob.getBytes(ENCODING);
-		} catch (Exception e) {
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
 		}
 		mydata = new byte[str.length + 16];
 

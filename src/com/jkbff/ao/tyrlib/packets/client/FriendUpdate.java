@@ -3,7 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.Raw;
+import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.UserId;
 
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
@@ -13,16 +13,24 @@ public class FriendUpdate extends BaseClientPacket {
 	public static final int TYPE = 40;
 	
 	private UserId userId;
-	private Raw status;
+	private Text status;
 	
-	public FriendUpdate(DataInputStream input) throws IOException {
+	public FriendUpdate(DataInputStream input) {
 		this.userId = new UserId(input);
-		this.status = new Raw(input);
+		this.status = new Text(input);
 	}
 	
 	public FriendUpdate(long userId, String status) {
 		this.userId = new UserId(userId);
-		this.status = new Raw(status);
+		this.status = new Text(status);
+	}
+	
+	public long getUserId() {
+		return userId.getLongData();
+	}
+
+	public String getStatus() {
+		return status.getStringData();
 	}
 	
 	public byte[] getBytes() throws IOException {

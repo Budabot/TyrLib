@@ -21,7 +21,7 @@ public class SystemMessage extends BaseServerPacket {
 	
 	private static final int CATEGORY_ID = 20000;
 
-	public SystemMessage(DataInputStream input) throws IOException {
+	public SystemMessage(DataInputStream input) {
 		this.clientId = new Int(input);
 		this.windowId = new Int(input);
 		this.messageId = new Int(input);

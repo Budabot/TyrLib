@@ -3,7 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.Raw;
+import sk.sigp.aobot.client.types.Text;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
@@ -11,14 +11,14 @@ public class Ping extends BaseServerPacket {
 
 	public static final int TYPE = 100;
 	
-	private Raw raw;
+	private Text raw;
 	
-	public Ping(DataInputStream input) throws IOException {
-		raw = new Raw(input);
+	public Ping(DataInputStream input) {
+		raw = new Text(input);
 	}
 	
 	public Ping(String raw) {
-		this.raw = new Raw(raw);
+		this.raw = new Text(raw);
 	}
 	
 	public byte[] getBytes() throws IOException {

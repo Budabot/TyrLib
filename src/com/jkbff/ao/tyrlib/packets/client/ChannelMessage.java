@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import sk.sigp.aobot.client.types.ChatGroupId;
-import sk.sigp.aobot.client.types.Raw;
 import sk.sigp.aobot.client.types.Text;
 
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
@@ -20,18 +19,18 @@ public class ChannelMessage extends BaseClientPacket {
 	
 	private ChatGroupId chatGroupId;
 	private Text text;
-	private Raw raw;
+	private Text raw;
 	
-	public ChannelMessage(DataInputStream input) throws IOException {
+	public ChannelMessage(DataInputStream input) {
 		chatGroupId = new ChatGroupId(input);
 		text = new Text(input);
-		raw = new Raw(input);
+		raw = new Text(input);
 	}
 	
 	public ChannelMessage(long chatGroupId, String text, String raw) {
 		this.chatGroupId = new ChatGroupId(chatGroupId);
 		this.text = new Text(text);
-		this.raw = new Raw(raw);
+		this.raw = new Text(raw);
 	}
 	
 	public byte[] getBytes() throws IOException {

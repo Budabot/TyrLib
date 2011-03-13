@@ -23,7 +23,8 @@
 
 package sk.sigp.aobot.client.types;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.IOException;
 
 
 /**
@@ -35,13 +36,17 @@ public class Map extends AbstractType {
 	public Map() {
 	}
 
-	public Map(DataInputStream input) throws IOException {
-		int size = input.readUnsignedByte();
-		for (int i = 0; i < size; i++) {
-			int s = input.readUnsignedByte();
-			int i5 = (s & 0xf000) >>> 12;
-			int j5 = s & 0xfff;
-			input.skipBytes(i5 + j5);
+	public Map(DataInputStream input) {
+		try {
+			int size = input.readUnsignedByte();
+			for (int i = 0; i < size; i++) {
+				int s = input.readUnsignedByte();
+				int i5 = (s & 0xf000) >>> 12;
+				int j5 = s & 0xfff;
+				input.skipBytes(i5 + j5);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

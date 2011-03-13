@@ -21,29 +21,33 @@ public class CharacterList extends BaseServerPacket {
 	private Int[] level;
 	private Int[] online;
 
-	public CharacterList(DataInputStream input) throws IOException {
-		int userIdSize = input.readUnsignedShort();
-		this.userId = new UserId[userIdSize];
-		for(int i = 0; i < userIdSize; i++) {
-			this.userId[i] = new UserId(input);
-		}
-		
-		int nameSize = input.readUnsignedShort();
-		this.name = new Text[nameSize];
-		for(int i = 0; i < nameSize; i++) {
-			this.name[i] = new Text(input);
-		}
-		
-		int levelSize = input.readUnsignedShort();
-		this.level = new Int[levelSize];
-		for(int i = 0; i < levelSize; i++) {
-			this.level[i] = new Int(input);
-		}
-		
-		int onlineSize = input.readUnsignedShort();
-		this.online = new Int[onlineSize];
-		for(int i = 0; i < onlineSize; i++) {
-			this.online[i] = new Int(input);
+	public CharacterList(DataInputStream input) {
+		try {
+			int userIdSize = input.readUnsignedShort();
+			this.userId = new UserId[userIdSize];
+			for(int i = 0; i < userIdSize; i++) {
+				this.userId[i] = new UserId(input);
+			}
+			
+			int nameSize = input.readUnsignedShort();
+			this.name = new Text[nameSize];
+			for(int i = 0; i < nameSize; i++) {
+				this.name[i] = new Text(input);
+			}
+			
+			int levelSize = input.readUnsignedShort();
+			this.level = new Int[levelSize];
+			for(int i = 0; i < levelSize; i++) {
+				this.level[i] = new Int(input);
+			}
+			
+			int onlineSize = input.readUnsignedShort();
+			this.online = new Int[onlineSize];
+			for(int i = 0; i < onlineSize; i++) {
+				this.online[i] = new Int(input);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 	

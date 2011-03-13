@@ -23,7 +23,8 @@
 
 package sk.sigp.aobot.client.types;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.IOException;
 
 import com.jkbff.ao.tyrlib.chat.Helper;
 
@@ -39,10 +40,14 @@ public class UserId extends AbstractType {
 		mydata = i;
 	}
 
-	public UserId(DataInputStream input) throws IOException {
-		byte[] data = new byte[size()];
-		input.readFully(data, 0, size());
-		mydata = Helper.bytesToLong(data);
+	public UserId(DataInputStream input) {
+		try {
+			byte[] data = new byte[size()];
+			input.readFully(data, 0, size());
+			mydata = Helper.bytesToLong(data);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public boolean equals(long i) {

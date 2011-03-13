@@ -2,7 +2,6 @@ package com.jkbff.ao.tyrlib.packets;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 
 import com.jkbff.ao.tyrlib.packets.server.BroadcastMessage;
 import com.jkbff.ao.tyrlib.packets.server.ChannelLeave;
@@ -31,7 +30,7 @@ import com.jkbff.ao.tyrlib.packets.server.SystemMessage;
 import com.jkbff.ao.tyrlib.packets.server.VicinityMessage;
 
 public abstract class BaseServerPacket extends BasePacket {
-	public static BaseServerPacket createInstance(int packetId, byte[] payload) throws IOException {
+	public static BaseServerPacket createInstance(int packetId, byte[] payload) {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(payload);
 		DataInputStream dataStream = new DataInputStream(byteStream);
 

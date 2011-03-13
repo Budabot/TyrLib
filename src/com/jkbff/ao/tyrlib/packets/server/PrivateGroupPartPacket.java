@@ -13,7 +13,7 @@ public class PrivateGroupPartPacket extends BaseServerPacket {
 	
 	private UserId userId;
 
-	public PrivateGroupPartPacket(DataInputStream input) throws IOException {
+	public PrivateGroupPartPacket(DataInputStream input) {
 		this.userId = new UserId(input);
 	}
 	

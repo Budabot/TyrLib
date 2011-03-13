@@ -17,7 +17,7 @@ public class VicinityMessage extends BaseServerPacket {
 	private Text message;
 	private TextBlob blob;
 
-	public VicinityMessage(DataInputStream input) throws IOException {
+	public VicinityMessage(DataInputStream input) {
 		this.userId = new UserId(input);
 		this.message = new Text(input);
 		this.blob = new TextBlob(input);

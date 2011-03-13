@@ -13,7 +13,7 @@ public class LoginSeed extends BaseServerPacket {
 	
 	private Text seed = null;
 
-	public LoginSeed(DataInputStream input) throws IOException {
+	public LoginSeed(DataInputStream input) {
 		this.seed = new Text(input);
 	}
 	

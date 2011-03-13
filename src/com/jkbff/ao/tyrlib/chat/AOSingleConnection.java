@@ -12,11 +12,11 @@ import aoChatLib.Crypto;
 
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-import com.jkbff.ao.tyrlib.packets.server.FriendUpdate;
 import com.jkbff.ao.tyrlib.packets.client.LoginRequest;
 import com.jkbff.ao.tyrlib.packets.client.LoginSelect;
 import com.jkbff.ao.tyrlib.packets.client.Ping;
 import com.jkbff.ao.tyrlib.packets.server.CharacterList;
+import com.jkbff.ao.tyrlib.packets.server.FriendUpdate;
 import com.jkbff.ao.tyrlib.packets.server.LoginError;
 import com.jkbff.ao.tyrlib.packets.server.LoginOk;
 import com.jkbff.ao.tyrlib.packets.server.LoginSeed;
@@ -118,7 +118,7 @@ public class AOSingleConnection extends Thread implements AOConnection {
     	}
     }
 
-    void processIncomingPacket(BaseServerPacket packet) throws Exception {
+    void processIncomingPacket(BaseServerPacket packet) {
     	log.debug("SERVER " + packet);
     	
         // If logged on, dispatch packet to handlers, otherwise, complete login sequence

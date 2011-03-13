@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Int;
-import sk.sigp.aobot.client.types.Raw;
 import sk.sigp.aobot.client.types.Text;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
@@ -22,20 +21,20 @@ public class ChannelUpdate extends BaseServerPacket {
 	private ChatGroupId chatGroupId;
 	private Text groupName;
 	private Int unknownInt;
-	private Raw flags;
+	private Text flags;
 
-	public ChannelUpdate(DataInputStream input) throws IOException {
+	public ChannelUpdate(DataInputStream input) {
 		this.chatGroupId = new ChatGroupId(input);
 		this.groupName = new Text(input);
 		this.unknownInt = new Int(input);
-		this.flags = new Raw(input);
+		this.flags = new Text(input);
 	}
 	
 	public ChannelUpdate(int channelType, int channelId, String groupName, int unknownInt, String flags) {
 		this.chatGroupId = new ChatGroupId(channelId);
 		this.groupName = new Text(groupName);
 		this.unknownInt = new Int(unknownInt);
-		this.flags = new Raw(flags);
+		this.flags = new Text(flags);
 	}
 	
 	public long getChatGroupId() {

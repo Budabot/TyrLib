@@ -13,7 +13,7 @@ public class LoginError extends BaseServerPacket {
 	
 	private Text message = null;
 
-	public LoginError(DataInputStream input) throws IOException {
+	public LoginError(DataInputStream input) {
 		this.message = new Text(input);
 	}
 	

@@ -17,7 +17,7 @@ public class FriendUpdate extends BaseServerPacket {
 	private Int online;
 	private Text status;
 	
-	public FriendUpdate(DataInputStream input) throws IOException {
+	public FriendUpdate(DataInputStream input) {
 		this.userId = new UserId(input);
 		this.online = new Int(input);
 		this.status = new Text(input);

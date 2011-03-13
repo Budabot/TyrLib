@@ -13,7 +13,7 @@ public class SimpleSystemMessage extends BaseServerPacket {
 	
 	private Text message;
 
-	public SimpleSystemMessage(DataInputStream input) throws IOException {
+	public SimpleSystemMessage(DataInputStream input) {
 		this.message = new Text(input);
 	}
 	

@@ -40,13 +40,13 @@ public class Text extends AbstractType {
 		mydata = str;
 	}
 
-	public Text(DataInputStream input) throws IOException {
-		int size = input.readUnsignedShort();
-		byte[] bytes = new byte[size];
-		input.readFully(bytes);
+	public Text(DataInputStream input) {
 		try {
+			int size = input.readUnsignedShort();
+			byte[] bytes = new byte[size];
+			input.readFully(bytes);
 			mydata = new String(bytes, ENCODING);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}

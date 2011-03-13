@@ -14,7 +14,7 @@ public class PrivateChannelCharacterJoin extends BaseServerPacket {
 	private UserId userId1;
 	private UserId userId2;
 
-	public PrivateChannelCharacterJoin(DataInputStream input) throws IOException {
+	public PrivateChannelCharacterJoin(DataInputStream input) {
 		this.userId1 = new UserId(input);
 		this.userId2 = new UserId(input);
 	}

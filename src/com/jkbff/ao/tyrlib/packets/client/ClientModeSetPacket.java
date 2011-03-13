@@ -16,7 +16,7 @@ public class ClientModeSetPacket extends BaseClientPacket {
 	private Int unknownInt3;
 	private Int unknownInt4;
 	
-	public ClientModeSetPacket(DataInputStream input) throws IOException {
+	public ClientModeSetPacket(DataInputStream input) {
 		unknownInt1 = new Int(input);
 		unknownInt2 = new Int(input);
 		unknownInt3 = new Int(input);

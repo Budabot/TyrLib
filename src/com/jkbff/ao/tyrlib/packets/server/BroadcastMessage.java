@@ -15,7 +15,7 @@ public class BroadcastMessage extends BaseServerPacket {
 	private Text message;
 	private Text raw;
 
-	public BroadcastMessage(DataInputStream input) throws IOException {
+	public BroadcastMessage(DataInputStream input) {
 		this.text = new Text(input);
 		this.message = new Text(input);
 		this.raw = new Text(input);

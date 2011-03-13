@@ -15,7 +15,7 @@ public class CharacterReply extends BaseServerPacket {
 	private UserId userId;
 	private Text characterName;
 
-	public CharacterReply(DataInputStream input) throws IOException {
+	public CharacterReply(DataInputStream input) {
 		this.userId = new UserId(input);
 		this.characterName = new Text(input);
 	}

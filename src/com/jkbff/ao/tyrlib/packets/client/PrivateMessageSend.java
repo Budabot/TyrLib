@@ -3,7 +3,6 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.Raw;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.UserId;
 
@@ -20,18 +19,18 @@ public class PrivateMessageSend extends BaseClientPacket {
 	
 	private UserId userId;
 	private Text text;
-	private Raw raw;
+	private Text raw;
 	
-	public PrivateMessageSend(DataInputStream input) throws IOException {
+	public PrivateMessageSend(DataInputStream input) {
 		userId = new UserId(input);
 		text = new Text(input);
-		raw = new Raw(input);
+		raw = new Text(input);
 	}
 	
 	public PrivateMessageSend(long userId, String text, String raw) {
 		this.userId = new UserId(userId);
 		this.text = new Text(text);
-		this.raw = new Raw(raw);
+		this.raw = new Text(raw);
 	}
 	
 	public byte[] getBytes() throws IOException {

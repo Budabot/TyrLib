@@ -11,7 +11,7 @@ public class LoginOk extends BaseServerPacket {
 
 	public static final int TYPE = 5;
 	
-	public LoginOk(DataInputStream input) throws IOException {
+	public LoginOk(DataInputStream input) {
 		
 	}
 	

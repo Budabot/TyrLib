@@ -14,7 +14,7 @@ public class PrivateChannelKickAll extends BaseClientPacket {
 
 	public static final int TYPE = 54;
 	
-	public PrivateChannelKickAll(DataInputStream input) throws IOException {
+	public PrivateChannelKickAll(DataInputStream input) {
 		
 	}
 	

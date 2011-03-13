@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Int;
-import sk.sigp.aobot.client.types.Raw;
+import sk.sigp.aobot.client.types.Text;
 
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 
@@ -21,18 +21,18 @@ public class GroupDataSetPacket extends BaseClientPacket {
 	
 	private ChatGroupId chatGroupId;
 	private Int flags;
-	private Raw mute;
+	private Text mute;
 	
-	public GroupDataSetPacket(DataInputStream input) throws IOException {
+	public GroupDataSetPacket(DataInputStream input) {
 		chatGroupId = new ChatGroupId(input);
 		flags = new Int(input);
-		mute = new Raw(input);
+		mute = new Text(input);
 	}
 	
 	public GroupDataSetPacket(int chatGroupId, int flags, String mute) {
 		this.chatGroupId = new ChatGroupId(chatGroupId);
 		this.flags = new Int(flags);
-		this.mute = new Raw(mute);
+		this.mute = new Text(mute);
 	}
 	
 	public byte[] getBytes() throws IOException {

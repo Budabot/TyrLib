@@ -19,7 +19,7 @@ public class LoginSelect extends BaseClientPacket {
 	
 	private UserId userId;
 	
-	public LoginSelect(DataInputStream input) throws IOException {
+	public LoginSelect(DataInputStream input) {
 		userId = new UserId(input);
 	}
 	

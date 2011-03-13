@@ -22,7 +22,7 @@ public class LoginRequest extends BaseClientPacket {
 	private Text username;
 	private Text key;
 	
-	public LoginRequest(DataInputStream input) throws IOException {
+	public LoginRequest(DataInputStream input) {
 		unknownInt = new Int(input);
 		username = new Text(input);
 		key = new Text(input);

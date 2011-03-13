@@ -18,7 +18,7 @@ public class PrivateChannelKick extends BaseClientPacket {
 	
 	private UserId userId;
 	
-	public PrivateChannelKick(DataInputStream input) throws IOException {
+	public PrivateChannelKick(DataInputStream input) {
 		userId = new UserId(input);
 	}
 	

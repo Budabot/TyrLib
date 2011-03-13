@@ -17,27 +17,30 @@ public class ChatPacketListener extends Thread {
     @Override
     public void run() {
         while (!aoBot.shouldStop) {
-
             int packetId = -1;
             int packetLength = -1;
             byte[] payload = null;
+
+            // read the packet bytes from the stream
             try {
                 packetId = dataInputStream.readUnsignedShort();
                 packetLength = dataInputStream.readUnsignedShort();
                 payload = new byte[packetLength];
                 dataInputStream.readFully(payload);
-
-                BaseServerPacket packet = BaseServerPacket.createInstance(packetId, payload);
-                if (packet == null) {
-                	log.error("Unknown packet!! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
-                } else {
-                	aoBot.processIncomingPacket(packet);
-                }
             } catch (IOException e) {
             	if (!aoBot.shouldStop) {
             		log.error("Bot Character: '" + aoBot.getCharacter() + "'", e);
             	}
-            	aoBot.shutdown();
+            }
+            
+            // create a packet from the bytes read in and send to the bot to process
+            try {
+	            BaseServerPacket packet = BaseServerPacket.createInstance(packetId, payload);
+	            if (packet == null) {
+	            	log.error("Unknown packet!! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
+	            } else {
+	            	aoBot.processIncomingPacket(packet);
+	            }
             } catch (Exception e) {
                 log.error("Bot Character: '" + aoBot.getCharacter() + "' packet id: '" + packetId + "'", e);
             }

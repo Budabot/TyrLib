@@ -18,7 +18,7 @@ public class OnlineStatusSetPacket extends BaseClientPacket {
 	
 	private Int status;
 	
-	public OnlineStatusSetPacket(DataInputStream input) throws IOException {
+	public OnlineStatusSetPacket(DataInputStream input) {
 		status = new Int(input);
 	}
 	

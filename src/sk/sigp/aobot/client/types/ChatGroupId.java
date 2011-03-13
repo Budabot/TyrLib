@@ -40,10 +40,14 @@ public class ChatGroupId extends AbstractType {
 		mydata = i;
 	}
 
-	public ChatGroupId(DataInputStream input) throws IOException {
-		byte[] data = new byte[size()];
-		input.readFully(data, 0, size());
-		mydata = Helper.bytesToLong(data);
+	public ChatGroupId(DataInputStream input) {
+		try {
+			byte[] data = new byte[size()];
+			input.readFully(data, 0, size());
+			mydata = Helper.bytesToLong(data);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public boolean equals(long i) {

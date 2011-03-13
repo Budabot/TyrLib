@@ -13,7 +13,7 @@ public class FriendRemove extends BaseServerPacket {
 	
 	private UserId userId;
 
-	public FriendRemove(DataInputStream input) throws IOException {
+	public FriendRemove(DataInputStream input) {
 		this.userId = new UserId(input);
 	}
 	

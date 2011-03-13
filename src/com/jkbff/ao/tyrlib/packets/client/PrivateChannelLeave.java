@@ -18,7 +18,7 @@ public class PrivateChannelLeave extends BaseClientPacket {
 	
 	private UserId userId;
 	
-	public PrivateChannelLeave(DataInputStream input) throws IOException {
+	public PrivateChannelLeave(DataInputStream input) {
 		userId = new UserId(input);
 	}
 	

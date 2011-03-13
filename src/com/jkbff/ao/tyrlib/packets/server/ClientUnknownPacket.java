@@ -13,7 +13,7 @@ public class ClientUnknownPacket extends BaseServerPacket {
 	
 	private Int unknownInt;
 
-	public ClientUnknownPacket(DataInputStream input) throws IOException {
+	public ClientUnknownPacket(DataInputStream input) {
 		this.unknownInt = new Int(input);
 	}
 	

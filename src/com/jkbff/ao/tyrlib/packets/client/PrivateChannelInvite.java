@@ -18,7 +18,7 @@ public class PrivateChannelInvite extends BaseClientPacket {
 	
 	private UserId userId;
 	
-	public PrivateChannelInvite(DataInputStream input) throws IOException {
+	public PrivateChannelInvite(DataInputStream input) {
 		userId = new UserId(input);
 	}
 	

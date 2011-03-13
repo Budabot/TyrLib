@@ -13,7 +13,7 @@ public class PrivateChannelInvite extends BaseServerPacket {
 	
 	private UserId userId;
 
-	public PrivateChannelInvite(DataInputStream input) throws IOException {
+	public PrivateChannelInvite(DataInputStream input) {
 		this.userId = new UserId(input);
 	}
 	

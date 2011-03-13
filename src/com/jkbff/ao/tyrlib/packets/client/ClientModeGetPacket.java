@@ -15,7 +15,7 @@ public class ClientModeGetPacket extends BaseClientPacket {
 	private Int unknownInt;
 	private ChatGroupId chatGroupId;
 	
-	public ClientModeGetPacket(DataInputStream input) throws IOException {
+	public ClientModeGetPacket(DataInputStream input) {
 		unknownInt = new Int(input);
 		chatGroupId = new ChatGroupId(input);
 	}

@@ -18,7 +18,7 @@ public class GroupClientModeSetPacket extends BaseClientPacket {
 	private Int unknownInt3;
 	private Int unknownInt4;
 	
-	public GroupClientModeSetPacket(DataInputStream input) throws IOException {
+	public GroupClientModeSetPacket(DataInputStream input) {
 		chatGroupId = new ChatGroupId(input);
 		unknownInt1 = new Int(input);
 		unknownInt2 = new Int(input);

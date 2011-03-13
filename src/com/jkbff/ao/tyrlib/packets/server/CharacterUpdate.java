@@ -15,7 +15,7 @@ public class CharacterUpdate extends BaseServerPacket {
 	private UserId userId;
 	private Text characterName;
 
-	public CharacterUpdate(DataInputStream input) throws IOException {
+	public CharacterUpdate(DataInputStream input) {
 		this.userId = new UserId(input);
 		this.characterName = new Text(input);
 	}

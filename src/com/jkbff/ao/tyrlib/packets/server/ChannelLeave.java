@@ -13,7 +13,7 @@ public class ChannelLeave extends BaseServerPacket {
 	
 	private ChatGroupId chatGroupId;
 
-	public ChannelLeave(DataInputStream input) throws IOException {
+	public ChannelLeave(DataInputStream input) {
 		this.chatGroupId = new ChatGroupId(input);
 	}
 	

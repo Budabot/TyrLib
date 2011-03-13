@@ -21,7 +21,7 @@ public class PrivateChannelMessage extends BaseClientPacket {
 	private Text text;
 	private Text raw;
 	
-	public PrivateChannelMessage(DataInputStream input) throws IOException {
+	public PrivateChannelMessage(DataInputStream input) {
 		userId = new UserId(input);
 		text = new Text(input);
 		raw = new Text(input);

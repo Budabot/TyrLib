@@ -7,7 +7,7 @@ public class Helper {
 	public static String print(byte[] bytes) {
 		StringBuilder returnValue = new StringBuilder();
 		for (byte abyte: bytes) {
-			returnValue.append(bytesToInt(abyte)  + " ");
+			returnValue.append((int)abyte  + " ");
 		}
 		return returnValue.toString();
 	}

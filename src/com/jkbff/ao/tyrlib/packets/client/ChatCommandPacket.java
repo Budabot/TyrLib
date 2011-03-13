@@ -17,12 +17,16 @@ public class ChatCommandPacket extends BaseClientPacket {
 	
 	private Text[] command;
 	
-	public ChatCommandPacket(DataInputStream input) throws IOException {
-		List<Text> texts = new ArrayList<Text>();
-		while (input.available() > 0) {
-			texts.add(new Text(input));
+	public ChatCommandPacket(DataInputStream input) {
+		try {
+			List<Text> texts = new ArrayList<Text>();
+			while (input.available() > 0) {
+				texts.add(new Text(input));
+			}
+			command = texts.toArray(new Text[]{});
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		command = texts.toArray(new Text[]{});
 	}
 	
 	public ChatCommandPacket(String[] command) {

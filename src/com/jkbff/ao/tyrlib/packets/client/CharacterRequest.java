@@ -13,7 +13,7 @@ public class CharacterRequest extends BaseClientPacket {
 	
 	private Text name;
 	
-	public CharacterRequest(DataInputStream input) throws IOException {
+	public CharacterRequest(DataInputStream input) {
 		name = new Text(input);
 	}
 	

@@ -14,7 +14,7 @@ public class PrivateChannelCharacterLeave extends BaseServerPacket {
 	private UserId userId1;
 	private UserId userId2;
 
-	public PrivateChannelCharacterLeave(DataInputStream input) throws IOException {
+	public PrivateChannelCharacterLeave(DataInputStream input) {
 		this.userId1 = new UserId(input);
 		this.userId2 = new UserId(input);
 	}
