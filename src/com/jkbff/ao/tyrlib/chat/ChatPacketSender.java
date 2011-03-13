@@ -6,13 +6,16 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.log4j.Logger;
+
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 
 public class ChatPacketSender extends Thread {
 
 	private OutputStream outputStream;
 	private BlockingQueue<BaseClientPacket> packetQueue = new ArrayBlockingQueue<BaseClientPacket>(1000);
-	private AOBot aoBot;
+	private AOSingleConnection aoBot;
+	private Logger log = Logger.getLogger(this.getClass());
 
 	@Override
 	public void run() {
@@ -24,16 +27,16 @@ public class ChatPacketSender extends Thread {
                 	outputStream.write(bytes);
                 }
             } catch (InterruptedException e) {
-
+            	log.error(e);
             } catch (IOException e) {
-                e.printStackTrace();
+            	log.error(e);
             }
         }
 
         try {
             outputStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+        	log.error(e);
         }
 	}
 
@@ -42,5 +45,5 @@ public class ChatPacketSender extends Thread {
 	}
 
 	public void setOutputStream(OutputStream outputStream) { this.outputStream = outputStream; }
-	public void setAOBot(AOBot aoBot) { this.aoBot = aoBot; }
+	public void setAOBot(AOSingleConnection aoBot) { this.aoBot = aoBot; }
 }

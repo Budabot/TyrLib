@@ -60,7 +60,7 @@ public class ExtendedMessage {
 					params.add(b85g(dataInputStream));
 					break;
 
-				case 'S':	
+				case 'S':
 					// string
 					int stringLength = dataInputStream.readShort();
 					byte[] bytes = new byte[stringLength];

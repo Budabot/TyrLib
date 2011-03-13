@@ -4,107 +4,90 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import com.jkbff.ao.tyrlib.chat.AOBot;
-import com.jkbff.ao.tyrlib.packets.server.AdminMuxInfoPacket;
-import com.jkbff.ao.tyrlib.packets.server.AnonymousVicinityMessagePacket;
-import com.jkbff.ao.tyrlib.packets.server.BuddyAddedPacket;
-import com.jkbff.ao.tyrlib.packets.server.BuddyRemovedPacket;
-import com.jkbff.ao.tyrlib.packets.server.ChatMessagePacket;
-import com.jkbff.ao.tyrlib.packets.server.ClientLookupPacket;
-import com.jkbff.ao.tyrlib.packets.server.ClientNamePacket;
+import com.jkbff.ao.tyrlib.packets.server.BroadcastMessage;
+import com.jkbff.ao.tyrlib.packets.server.ChannelLeave;
+import com.jkbff.ao.tyrlib.packets.server.ChannelMessage;
+import com.jkbff.ao.tyrlib.packets.server.ChannelUpdate;
+import com.jkbff.ao.tyrlib.packets.server.CharacterList;
+import com.jkbff.ao.tyrlib.packets.server.CharacterReply;
+import com.jkbff.ao.tyrlib.packets.server.CharacterUpdate;
 import com.jkbff.ao.tyrlib.packets.server.ClientUnknownPacket;
-import com.jkbff.ao.tyrlib.packets.server.ForwardPacket;
-import com.jkbff.ao.tyrlib.packets.server.GroupAnnouncePacket;
-import com.jkbff.ao.tyrlib.packets.server.GroupMessagePacket;
-import com.jkbff.ao.tyrlib.packets.server.GroupPartPacket;
-import com.jkbff.ao.tyrlib.packets.server.LoginCharacterListPacket;
-import com.jkbff.ao.tyrlib.packets.server.LoginErrorPacket;
-import com.jkbff.ao.tyrlib.packets.server.LoginOkPacket;
-import com.jkbff.ao.tyrlib.packets.server.LoginSeedPacket;
-import com.jkbff.ao.tyrlib.packets.server.PingResponsePacket;
-import com.jkbff.ao.tyrlib.packets.server.PrivateGroupClientJoinedPacket;
-import com.jkbff.ao.tyrlib.packets.server.PrivateGroupClientPartPacket;
-import com.jkbff.ao.tyrlib.packets.server.PrivateGroupInvitedPacket;
-import com.jkbff.ao.tyrlib.packets.server.PrivateGroupKickedPacket;
-import com.jkbff.ao.tyrlib.packets.server.PrivateGroupMessagePacket;
+import com.jkbff.ao.tyrlib.packets.server.FriendRemove;
+import com.jkbff.ao.tyrlib.packets.server.FriendUpdate;
+import com.jkbff.ao.tyrlib.packets.server.LoginError;
+import com.jkbff.ao.tyrlib.packets.server.LoginOk;
+import com.jkbff.ao.tyrlib.packets.server.LoginSeed;
+import com.jkbff.ao.tyrlib.packets.server.Ping;
+import com.jkbff.ao.tyrlib.packets.server.PrivateChannelCharacterJoin;
+import com.jkbff.ao.tyrlib.packets.server.PrivateChannelCharacterLeave;
+import com.jkbff.ao.tyrlib.packets.server.PrivateChannelInvite;
+import com.jkbff.ao.tyrlib.packets.server.PrivateChannelKick;
+import com.jkbff.ao.tyrlib.packets.server.PrivateChannelMessage;
 import com.jkbff.ao.tyrlib.packets.server.PrivateGroupPartPacket;
 import com.jkbff.ao.tyrlib.packets.server.PrivateGroupRefuseInvitePacket;
-import com.jkbff.ao.tyrlib.packets.server.PrivateMessagePacket;
-import com.jkbff.ao.tyrlib.packets.server.SystemMessagePacket;
-import com.jkbff.ao.tyrlib.packets.server.VicinityMessagePacket;
+import com.jkbff.ao.tyrlib.packets.server.PrivateMessageReceive;
+import com.jkbff.ao.tyrlib.packets.server.SimpleSystemMessage;
+import com.jkbff.ao.tyrlib.packets.server.SystemMessage;
+import com.jkbff.ao.tyrlib.packets.server.VicinityMessage;
 
 public abstract class BaseServerPacket extends BasePacket {
-	
-	private AOBot aoBot;
-	
 	public static BaseServerPacket createInstance(int packetId, byte[] payload) throws IOException {
 		ByteArrayInputStream byteStream = new ByteArrayInputStream(payload);
 		DataInputStream dataStream = new DataInputStream(byteStream);
 
 		switch (packetId) {
-			case AdminMuxInfoPacket.TYPE:
-				return new AdminMuxInfoPacket(dataStream);
-			case AnonymousVicinityMessagePacket.TYPE:
-				return new AnonymousVicinityMessagePacket(dataStream);
-			case BuddyAddedPacket.TYPE:
-				return new BuddyAddedPacket(dataStream);
-			case BuddyRemovedPacket.TYPE:
-				return new BuddyRemovedPacket(dataStream);
-			case ChatMessagePacket.TYPE:
-				return new ChatMessagePacket(dataStream);
-			case ClientLookupPacket.TYPE:
-				return new ClientLookupPacket(dataStream);
-			case ClientNamePacket.TYPE:
-				return new ClientNamePacket(dataStream);
+			case BroadcastMessage.TYPE:
+				return new BroadcastMessage(dataStream);
+			case FriendUpdate.TYPE:
+				return new FriendUpdate(dataStream);
+			case FriendRemove.TYPE:
+				return new FriendRemove(dataStream);
+			case SystemMessage.TYPE:
+				return new SystemMessage(dataStream);
+			case CharacterReply.TYPE:
+				return new CharacterReply(dataStream);
+			case CharacterUpdate.TYPE:
+				return new CharacterUpdate(dataStream);
 			case ClientUnknownPacket.TYPE:
 				return new ClientUnknownPacket(dataStream);
-			case ForwardPacket.TYPE:
-				return new ForwardPacket(dataStream);
-			case GroupAnnouncePacket.TYPE:
-				return new GroupAnnouncePacket(dataStream);
-			case GroupMessagePacket.TYPE:
-				return new GroupMessagePacket(dataStream);
-			case GroupPartPacket.TYPE:
-				return new GroupPartPacket(dataStream);
-			case LoginCharacterListPacket.TYPE:
-				return new LoginCharacterListPacket(dataStream);
-			case LoginErrorPacket.TYPE:
-				return new LoginErrorPacket(dataStream);
-			case LoginOkPacket.TYPE:
-				return new LoginOkPacket(dataStream);
-			case LoginSeedPacket.TYPE:
-				return new LoginSeedPacket(dataStream);
-			case PingResponsePacket.TYPE:
-				return new PingResponsePacket(dataStream);
-			case PrivateGroupClientJoinedPacket.TYPE:
-				return new PrivateGroupClientJoinedPacket(dataStream);
-			case PrivateGroupClientPartPacket.TYPE:
-				return new PrivateGroupClientPartPacket(dataStream);
-			case PrivateGroupInvitedPacket.TYPE:
-				return new PrivateGroupInvitedPacket(dataStream);
-			case PrivateGroupKickedPacket.TYPE:
-				return new PrivateGroupKickedPacket(dataStream);
-			case PrivateGroupMessagePacket.TYPE:
-				return new PrivateGroupMessagePacket(dataStream);
+			case ChannelUpdate.TYPE:
+				return new ChannelUpdate(dataStream);
+			case ChannelMessage.TYPE:
+				return new ChannelMessage(dataStream);
+			case ChannelLeave.TYPE:
+				return new ChannelLeave(dataStream);
+			case CharacterList.TYPE:
+				return new CharacterList(dataStream);
+			case LoginError.TYPE:
+				return new LoginError(dataStream);
+			case LoginOk.TYPE:
+				return new LoginOk(dataStream);
+			case LoginSeed.TYPE:
+				return new LoginSeed(dataStream);
+			case Ping.TYPE:
+				return new Ping(dataStream);
+			case PrivateChannelCharacterJoin.TYPE:
+				return new PrivateChannelCharacterJoin(dataStream);
+			case PrivateChannelCharacterLeave.TYPE:
+				return new PrivateChannelCharacterLeave(dataStream);
+			case PrivateChannelInvite.TYPE:
+				return new PrivateChannelInvite(dataStream);
+			case PrivateChannelKick.TYPE:
+				return new PrivateChannelKick(dataStream);
+			case PrivateChannelMessage.TYPE:
+				return new PrivateChannelMessage(dataStream);
 			case PrivateGroupPartPacket.TYPE:
 				return new PrivateGroupPartPacket(dataStream);
 			case PrivateGroupRefuseInvitePacket.TYPE:
 				return new PrivateGroupRefuseInvitePacket(dataStream);
-			case PrivateMessagePacket.TYPE:
-				return new PrivateMessagePacket(dataStream);
-			case SystemMessagePacket.TYPE:
-				return new SystemMessagePacket(dataStream);
-			case VicinityMessagePacket.TYPE:
-				return new VicinityMessagePacket(dataStream);
+			case PrivateMessageReceive.TYPE:
+				return new PrivateMessageReceive(dataStream);
+			case SimpleSystemMessage.TYPE:
+				return new SimpleSystemMessage(dataStream);
+			case VicinityMessage.TYPE:
+				return new VicinityMessage(dataStream);
 			default:
 				return null;
 		}
-	}
-	
-	public AOBot getAOBot() {
-		return aoBot;
-	}
-	public void setAOBot(AOBot aoBot) {
-		this.aoBot = aoBot;
 	}
 }

@@ -18,7 +18,6 @@ import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 public class GroupDataSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 64;
-	public static final String NAME = "AOCP_GROUP_DATA_SET";
 	
 	private ChatGroupId chatGroupId;
 	private Int flags;
@@ -46,7 +45,7 @@ public class GroupDataSetPacket extends BaseClientPacket {
 	
 	public String toString() {
 		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tChatGroupId: ").append(chatGroupId)
 			.append("\n\tFlags: ").append(flags)
 			.append("\n\tMute: ").append(mute)

@@ -11,7 +11,6 @@ import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 public class GroupClientModeSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 66;
-	public static final String NAME = "AOCP_GROUP_CLIENT_MODE_SET";
 	
 	private ChatGroupId chatGroupId;
 	private Int unknownInt1;
@@ -45,7 +44,7 @@ public class GroupClientModeSetPacket extends BaseClientPacket {
 	
 	public String toString() {
 		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tChatGroupId: ").append(chatGroupId)
 			.append("\n\tUnknownInt1: ").append(unknownInt1)
 			.append("\n\tUnknownInt2: ").append(unknownInt2)

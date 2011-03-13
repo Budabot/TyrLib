@@ -7,17 +7,17 @@ import sk.sigp.aobot.client.types.UserId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
-public class PrivateGroupPartPacket extends BaseServerPacket {
+public class PrivateChannelKick extends BaseServerPacket {
 
-	public static final int TYPE = 53;
+	public static final int TYPE = 51;
 	
 	private UserId userId;
 
-	public PrivateGroupPartPacket(DataInputStream input) throws IOException {
+	public PrivateChannelKick(DataInputStream input) throws IOException {
 		this.userId = new UserId(input);
 	}
 	
-	public PrivateGroupPartPacket(int userId) {
+	public PrivateChannelKick(long userId) {
 		this.userId = new UserId(userId);
 	}
 	
@@ -26,7 +26,7 @@ public class PrivateGroupPartPacket extends BaseServerPacket {
 	}
 	
 	public int getPacketType() {
-		return PrivateGroupPartPacket.TYPE;
+		return PrivateChannelKick.TYPE;
 	}
 	
 	public byte[] getBytes() throws IOException {

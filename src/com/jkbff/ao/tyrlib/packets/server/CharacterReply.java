@@ -3,40 +3,49 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.UserId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
-public class PrivateGroupPartPacket extends BaseServerPacket {
+public class CharacterReply extends BaseServerPacket {
 
-	public static final int TYPE = 53;
+	public static final int TYPE = 21;
 	
 	private UserId userId;
+	private Text characterName;
 
-	public PrivateGroupPartPacket(DataInputStream input) throws IOException {
+	public CharacterReply(DataInputStream input) throws IOException {
 		this.userId = new UserId(input);
+		this.characterName = new Text(input);
 	}
 	
-	public PrivateGroupPartPacket(int userId) {
+	public CharacterReply(long userId, String characterName) {
 		this.userId = new UserId(userId);
+		this.characterName = new Text(characterName);
 	}
 	
 	public long getUserId() {
 		return this.userId.getLongData();
 	}
 	
+	public String getCharacterName() {
+		return this.characterName.getStringData();
+	}
+
 	public int getPacketType() {
-		return PrivateGroupPartPacket.TYPE;
+		return CharacterReply.TYPE;
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(userId);
+		return getBytes(userId, characterName);
 	}
 	
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tUserId: ").append(userId)
+			.append("\n\tCharacterName: ").append(characterName)
 			.toString();
 	
 		return output;

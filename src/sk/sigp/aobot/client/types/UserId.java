@@ -42,7 +42,7 @@ public class UserId extends AbstractType {
 	public UserId(DataInputStream input) throws IOException {
 		byte[] data = new byte[size()];
 		input.readFully(data, 0, size());
-		mydata = Helper.bytesTolong(data);
+		mydata = Helper.bytesToLong(data);
 	}
 
 	public boolean equals(long i) {

@@ -6,11 +6,13 @@ import java.io.RandomAccessFile;
 import no.geosoft.cc.util.ByteSwapper;
 
 public class MMDBParser {
+	public static String fileLocation = "text.mdb";
+	
 	public static String getMessage(long categoryId, long instanceId) {
 		RandomAccessFile in = null;
 		
 		try {
-			in = new RandomAccessFile("text.mdb", "r");
+			in = new RandomAccessFile(fileLocation, "r");
 			
 			Entry category = findEntry(in, categoryId, 8);
 			if (category == null) {
@@ -33,7 +35,7 @@ public class MMDBParser {
 				try {
 					in.close();
 				} catch (Exception e) {
-					
+					throw new RuntimeException(e);
 				}
 			}
 		}

@@ -37,8 +37,9 @@ public abstract class AbstractType {
 	public String toString() {
 		String s = this.getClass().getName();
 		int i = s.indexOf(".");
-		if (i > 0)
+		if (i > 0) {
 			s = s.substring(i + 1);
+		}
 		return s;
 	}
 

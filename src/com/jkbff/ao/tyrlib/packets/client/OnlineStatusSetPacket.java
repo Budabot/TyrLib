@@ -15,7 +15,6 @@ import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 public class OnlineStatusSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 42;
-	public static final String NAME = "AOCP_ONLINE_STATUS_SET";
 	
 	private Int status;
 	
@@ -37,7 +36,7 @@ public class OnlineStatusSetPacket extends BaseClientPacket {
 	
 	public String toString() {
 		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tStatus: ").append(status)
 			.toString();
 	

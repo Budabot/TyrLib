@@ -1,36 +1,36 @@
-package com.jkbff.ao.tyrlib.packets.server;
+package com.jkbff.ao.tyrlib.packets.client;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 
 import sk.sigp.aobot.client.types.UserId;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
+import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 
-public class PrivateGroupPartPacket extends BaseServerPacket {
+public class FriendRemove extends BaseClientPacket {
 
-	public static final int TYPE = 53;
+	public static final int TYPE = 41;
 	
 	private UserId userId;
-
-	public PrivateGroupPartPacket(DataInputStream input) throws IOException {
+	
+	public FriendRemove(DataInputStream input) throws IOException {
 		this.userId = new UserId(input);
 	}
 	
-	public PrivateGroupPartPacket(int userId) {
+	public FriendRemove(long userId) {
 		this.userId = new UserId(userId);
 	}
 	
 	public long getUserId() {
-		return this.userId.getLongData();
-	}
-	
-	public int getPacketType() {
-		return PrivateGroupPartPacket.TYPE;
+		return userId.getLongData();
 	}
 	
 	public byte[] getBytes() throws IOException {
 		return getBytes(userId);
+	}
+	
+	public int getPacketType() {
+		return FriendRemove.TYPE;
 	}
 	
 	public String toString() {

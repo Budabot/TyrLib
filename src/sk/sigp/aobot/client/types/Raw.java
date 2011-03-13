@@ -26,8 +26,6 @@ package sk.sigp.aobot.client.types;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import com.jkbff.ao.tyrlib.chat.Helper;
-
 
 public class Raw extends AbstractType {
 	public byte[] mydata;
@@ -38,8 +36,9 @@ public class Raw extends AbstractType {
 
 	public Raw(byte[] d) {
 		mydata = new byte[d.length];
-		for (int i = d.length - 1; i >= 0; i--)
+		for (int i = d.length - 1; i >= 0; i--) {
 			mydata[i] = d[i];
+		}
 	}
 
 	public Raw(DataInputStream input) throws IOException {
@@ -90,21 +89,13 @@ public class Raw extends AbstractType {
 	}
 	
 	public String getStringData() {
-
-		char c = 10;
 		String str = "'";
-		for (int i = 0, lcnt = 0; i < mydata.length; i++, lcnt++) {
-			if (lcnt == 0) {
-				if (mydata.length < 12)
-					str += " ";
-				else
-					str += c + "          ";
-			} else
+		for (int i = 0; i < mydata.length; i++) {
+			if (i != 0) {
 				str += " ";
+			}
 			String x = "0000" + Integer.toHexString((int) mydata[i]);
-			str += x.substring(x.length() - 2);
-			if (lcnt == 15)
-				lcnt = -1;
+			str += x.substring(x.length() - 2) + " ";
 		}
 		str += "'";
 		
@@ -128,8 +119,7 @@ public class Raw extends AbstractType {
 			String ret = new String(mydata, offset + 2, size, ENCODING);
 			return ret;
 		} catch (Exception e) {
-			e.printStackTrace();
-			return "";
+			throw new RuntimeException(e);
 		}
 	}
 }

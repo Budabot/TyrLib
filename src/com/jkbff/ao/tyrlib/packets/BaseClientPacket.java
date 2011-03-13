@@ -4,26 +4,26 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import com.jkbff.ao.tyrlib.packets.client.BuddyAddPacket;
-import com.jkbff.ao.tyrlib.packets.client.BuddyRemovePacket;
+import com.jkbff.ao.tyrlib.packets.client.FriendUpdate;
+import com.jkbff.ao.tyrlib.packets.client.FriendRemove;
 import com.jkbff.ao.tyrlib.packets.client.ChatCommandPacket;
-import com.jkbff.ao.tyrlib.packets.client.ClientLookupPacket;
+import com.jkbff.ao.tyrlib.packets.client.CharacterRequest;
 import com.jkbff.ao.tyrlib.packets.client.ClientModeGetPacket;
 import com.jkbff.ao.tyrlib.packets.client.ClientModeSetPacket;
 import com.jkbff.ao.tyrlib.packets.client.GroupClientModeSetPacket;
 import com.jkbff.ao.tyrlib.packets.client.GroupDataSetPacket;
-import com.jkbff.ao.tyrlib.packets.client.LoginRequestPacket;
-import com.jkbff.ao.tyrlib.packets.client.LoginSelectCharacterPacket;
+import com.jkbff.ao.tyrlib.packets.client.LoginRequest;
+import com.jkbff.ao.tyrlib.packets.client.LoginSelect;
 import com.jkbff.ao.tyrlib.packets.client.OnlineStatusSetPacket;
-import com.jkbff.ao.tyrlib.packets.client.OutgoingGroupMessagePacket;
-import com.jkbff.ao.tyrlib.packets.client.OutgoingPrivateGroupMessagePacket;
-import com.jkbff.ao.tyrlib.packets.client.OutgoingPrivateMessagePacket;
-import com.jkbff.ao.tyrlib.packets.client.PingPacket;
-import com.jkbff.ao.tyrlib.packets.client.PrivateGroupInviteRequestPacket;
-import com.jkbff.ao.tyrlib.packets.client.PrivateGroupJoinResponsePacket;
-import com.jkbff.ao.tyrlib.packets.client.PrivateGroupKickAllRequestPacket;
-import com.jkbff.ao.tyrlib.packets.client.PrivateGroupKickRequestPacket;
-import com.jkbff.ao.tyrlib.packets.client.PrivateGroupPartPacket;
+import com.jkbff.ao.tyrlib.packets.client.ChannelMessage;
+import com.jkbff.ao.tyrlib.packets.client.PrivateChannelMessage;
+import com.jkbff.ao.tyrlib.packets.client.PrivateMessageSend;
+import com.jkbff.ao.tyrlib.packets.client.Ping;
+import com.jkbff.ao.tyrlib.packets.client.PrivateChannelInvite;
+import com.jkbff.ao.tyrlib.packets.client.PrivateChannelAccept;
+import com.jkbff.ao.tyrlib.packets.client.PrivateChannelKickAll;
+import com.jkbff.ao.tyrlib.packets.client.PrivateChannelKick;
+import com.jkbff.ao.tyrlib.packets.client.PrivateChannelLeave;
 
 
 public abstract class BaseClientPacket extends BasePacket {
@@ -32,14 +32,14 @@ public abstract class BaseClientPacket extends BasePacket {
 		DataInputStream dataStream = new DataInputStream(byteStream);
 
 		switch (packetId) {
-			case BuddyAddPacket.TYPE:
-				return new BuddyAddPacket(dataStream);
-			case BuddyRemovePacket.TYPE:
-				return new BuddyRemovePacket(dataStream);
+			case FriendUpdate.TYPE:
+				return new FriendUpdate(dataStream);
+			case FriendRemove.TYPE:
+				return new FriendRemove(dataStream);
 			case ChatCommandPacket.TYPE:
 				return new ChatCommandPacket(dataStream);
-			case ClientLookupPacket.TYPE:
-				return new ClientLookupPacket(dataStream);
+			case CharacterRequest.TYPE:
+				return new CharacterRequest(dataStream);
 			case ClientModeGetPacket.TYPE:
 				return new ClientModeGetPacket(dataStream);
 			case ClientModeSetPacket.TYPE:
@@ -48,30 +48,30 @@ public abstract class BaseClientPacket extends BasePacket {
 				return new GroupClientModeSetPacket(dataStream);
 			case GroupDataSetPacket.TYPE:
 				return new GroupDataSetPacket(dataStream);
-			case LoginRequestPacket.TYPE:
-				return new LoginRequestPacket(dataStream);
-			case LoginSelectCharacterPacket.TYPE:
-				return new LoginSelectCharacterPacket(dataStream);
+			case LoginRequest.TYPE:
+				return new LoginRequest(dataStream);
+			case LoginSelect.TYPE:
+				return new LoginSelect(dataStream);
 			case OnlineStatusSetPacket.TYPE:
 				return new OnlineStatusSetPacket(dataStream);
-			case OutgoingGroupMessagePacket.TYPE:
-				return new OutgoingGroupMessagePacket(dataStream);
-			case OutgoingPrivateGroupMessagePacket.TYPE:
-				return new OutgoingPrivateGroupMessagePacket(dataStream);
-			case OutgoingPrivateMessagePacket.TYPE:
-				return new OutgoingPrivateMessagePacket(dataStream);
-			case PingPacket.TYPE:
-				return new PingPacket(dataStream);
-			case PrivateGroupInviteRequestPacket.TYPE:
-				return new PrivateGroupInviteRequestPacket(dataStream);
-			case PrivateGroupJoinResponsePacket.TYPE:
-				return new PrivateGroupJoinResponsePacket(dataStream);
-			case PrivateGroupKickAllRequestPacket.TYPE:
-				return new PrivateGroupKickAllRequestPacket(dataStream);
-			case PrivateGroupKickRequestPacket.TYPE:
-				return new PrivateGroupKickRequestPacket(dataStream);
-			case PrivateGroupPartPacket.TYPE:
-				return new PrivateGroupPartPacket(dataStream);
+			case ChannelMessage.TYPE:
+				return new ChannelMessage(dataStream);
+			case PrivateChannelMessage.TYPE:
+				return new PrivateChannelMessage(dataStream);
+			case PrivateMessageSend.TYPE:
+				return new PrivateMessageSend(dataStream);
+			case Ping.TYPE:
+				return new Ping(dataStream);
+			case PrivateChannelInvite.TYPE:
+				return new PrivateChannelInvite(dataStream);
+			case PrivateChannelAccept.TYPE:
+				return new PrivateChannelAccept(dataStream);
+			case PrivateChannelKickAll.TYPE:
+				return new PrivateChannelKickAll(dataStream);
+			case PrivateChannelKick.TYPE:
+				return new PrivateChannelKick(dataStream);
+			case PrivateChannelLeave.TYPE:
+				return new PrivateChannelLeave(dataStream);
 			default:
 				return null;
 		}

@@ -7,19 +7,19 @@ import sk.sigp.aobot.client.types.UserId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
-public class PrivateGroupRefuseInvitePacket extends BaseServerPacket {
+public class PrivateChannelCharacterJoin extends BaseServerPacket {
 
-	public static final int TYPE = 58;
+	public static final int TYPE = 55;
 	
 	private UserId userId1;
 	private UserId userId2;
 
-	public PrivateGroupRefuseInvitePacket(DataInputStream input) throws IOException {
+	public PrivateChannelCharacterJoin(DataInputStream input) throws IOException {
 		this.userId1 = new UserId(input);
 		this.userId2 = new UserId(input);
 	}
 	
-	public PrivateGroupRefuseInvitePacket(long userId1, long userId2) {
+	public PrivateChannelCharacterJoin(long userId1, long userId2) {
 		this.userId1 = new UserId(userId1);
 		this.userId2 = new UserId(userId2);
 	}
@@ -33,7 +33,7 @@ public class PrivateGroupRefuseInvitePacket extends BaseServerPacket {
 	}
 	
 	public int getPacketType() {
-		return PrivateGroupRefuseInvitePacket.TYPE;
+		return PrivateChannelCharacterJoin.TYPE;
 	}
 	
 	public byte[] getBytes() throws IOException {

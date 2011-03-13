@@ -7,17 +7,17 @@ import sk.sigp.aobot.client.types.UserId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
-public class PrivateGroupPartPacket extends BaseServerPacket {
+public class FriendRemove extends BaseServerPacket {
 
-	public static final int TYPE = 53;
+	public static final int TYPE = 41;
 	
 	private UserId userId;
 
-	public PrivateGroupPartPacket(DataInputStream input) throws IOException {
+	public FriendRemove(DataInputStream input) throws IOException {
 		this.userId = new UserId(input);
 	}
 	
-	public PrivateGroupPartPacket(int userId) {
+	public FriendRemove(long userId) {
 		this.userId = new UserId(userId);
 	}
 	
@@ -26,7 +26,7 @@ public class PrivateGroupPartPacket extends BaseServerPacket {
 	}
 	
 	public int getPacketType() {
-		return PrivateGroupPartPacket.TYPE;
+		return FriendRemove.TYPE;
 	}
 	
 	public byte[] getBytes() throws IOException {

@@ -48,7 +48,7 @@ public class TextBlob extends AbstractType {
 		try {
 			mydata = new String(bytes, ENCODING);
 		} catch (Exception e) {
-			mydata = "";
+			throw new RuntimeException(e);
 		}
 	}
 

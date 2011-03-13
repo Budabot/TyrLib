@@ -14,7 +14,6 @@ import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 public class ChatCommandPacket extends BaseClientPacket {
 	
 	public static final int TYPE = 120;
-	public static final String NAME = "AOCP_CHAT_COMMAND";
 	
 	private Text[] command;
 	
@@ -63,7 +62,7 @@ public class ChatCommandPacket extends BaseClientPacket {
 	
 	public String toString() {
 		StringBuffer output = new StringBuffer()
-			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")");
+			.append(TYPE).append(" ").append(this.getClass().getSimpleName());
 		
 		int i = 0;
 		for (Text text: command) {

@@ -10,7 +10,6 @@ import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 public class ClientModeSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 71;
-	public static final String NAME = "AOCP_CLIENT_MODE_SET";
 	
 	private Int unknownInt1;
 	private Int unknownInt2;
@@ -41,7 +40,7 @@ public class ClientModeSetPacket extends BaseClientPacket {
 	
 	public String toString() {
 		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tUnknownInt1: ").append(unknownInt1)
 			.append("\n\tUnknownInt2: ").append(unknownInt2)
 			.append("\n\tUnknownInt3: ").append(unknownInt3)

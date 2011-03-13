@@ -1,20 +1,18 @@
 package com.jkbff.ao.tyrlib.chat;
 
-
 public class Helper {
 	
 	public static final int CHATGROUPIDSIZE = 5;
 	
-	public static String printByteArray(byte[] bytes) {
-		StringBuffer returnValue = new StringBuffer();
+	public static String print(byte[] bytes) {
+		StringBuilder returnValue = new StringBuilder();
 		for (byte abyte: bytes) {
-			returnValue.append((int)abyte);
+			returnValue.append(bytesToInt(abyte)  + " ");
 		}
-		
 		return returnValue.toString();
 	}
 	
-	public static <T> String printArray(T[] array) {
+	public static <T> String print(T[] array) {
 		StringBuilder str = new StringBuilder();
 		for (T obj : array) {
 			str.append(obj.toString() + " ");
@@ -22,14 +20,15 @@ public class Helper {
 		return str.toString();
 	}
 	
-	public static void longToBytes(long from, byte[] to, int off) {
+	protected static void longToBytes(long from, byte[] to, int off) {
+		
 		to[off + 0] = (byte) ((from >> 24) & 0xFF);
 		to[off + 1] = (byte) ((from >> 16) & 0xFF);
 		to[off + 2] = (byte) ((from >> 8) & 0xFF);
 		to[off + 3] = (byte) ((from >> 0) & 0xFF);
 	}
 
-	public static void shortToBytes(int from, byte[] to, int off) {
+	protected static void shortToBytes(int from, byte[] to, int off) {
 		to[off + 0] = (byte) ((from >> 8) & 0xFF);
 		to[off + 1] = (byte) ((from >> 0) & 0xFF);
 	}
@@ -49,7 +48,7 @@ public class Helper {
 		}
 	}
 	
-	public static long bytesTolong (byte[] bytes) {
+	public static long bytesToLong (byte[] bytes) {
 		long newLong = 0;
 		for (int i = 0; i < bytes.length; i++) {
 			long tempLong = bytes[i];

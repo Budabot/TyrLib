@@ -4,12 +4,15 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.log4j.Logger;
+
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
 public class ChatPacketListener extends Thread {
 	
     private DataInputStream dataInputStream;
-    private AOBot aoBot;
+    private AOSingleConnection aoBot;
+    private Logger log = Logger.getLogger(this.getClass());
 
     @Override
     public void run() {
@@ -26,28 +29,21 @@ public class ChatPacketListener extends Thread {
 
                 BaseServerPacket packet = BaseServerPacket.createInstance(packetId, payload);
                 if (packet == null) {
-                	System.err.println("Unknow packet!! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
+                	log.error("Unknown packet!! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
                 } else {
                 	aoBot.processIncomingPacket(packet);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
-                break;
+            	if (!aoBot.shouldStop) {
+            		log.error("Bot Character: '" + aoBot.getCharacter() + "'", e);
+            	}
+            	aoBot.shutdown();
             } catch (Exception e) {
-                System.err.println("packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
-                e.printStackTrace();
+                log.error("Bot Character: '" + aoBot.getCharacter() + "' packet id: '" + packetId + "'", e);
             }
-        }
-
-        try {
-        	dataInputStream.close();
-        } catch (Exception e) {
-        	e.printStackTrace();
-        } finally {
-        	dataInputStream = null;
         }
     }
 
     public void setInputStream(InputStream inputStream) { dataInputStream = new DataInputStream(inputStream); }
-    public void setAOBot(AOBot aoBot) { this.aoBot = aoBot; }
+    public void setAOBot(AOSingleConnection aoBot) { this.aoBot = aoBot; }
 }

@@ -10,7 +10,6 @@ import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 public class ClientUnknownPacket extends BaseServerPacket {
 
 	public static final int TYPE = 10;
-	public static final String NAME = "CLIENT_UNKNOWN";
 	
 	private Int unknownInt;
 
@@ -36,7 +35,7 @@ public class ClientUnknownPacket extends BaseServerPacket {
 	
 	public String toString() {
 		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(NAME).append(" (").append(this.getClass().getName()).append(")")
+			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tUnknownInt: ").append(unknownInt)
 			.toString();
 	
