@@ -65,11 +65,11 @@ public class AOSingleConnection extends Thread implements AOConnection {
             chatPacketSender.setName("chatPacketSender");
             chatPacketSender.start();
         } catch (UnknownHostException e) {
-        	shutdown();
-            throw new RuntimeException("(UnknownHostException)Could not connect to chat server " + serverName + ":" + portNumber, e);
+            log.error("(UnknownHostException)Could not connect to chat server " + serverName + ":" + portNumber, e);
+            shutdown();
         } catch (IOException e) {
+        	log.error("(IOException)Could not connect to chat server " + serverName + ":" + portNumber, e);
         	shutdown();
-            throw new RuntimeException("(IOException)Could not connect to chat server " + serverName + ":" + portNumber, e);
         }
         
         // send pings periodically to keep the connection alive
