@@ -3,7 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.UserId;
+import sk.sigp.aobot.client.types.CharacterId;
 
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 
@@ -16,18 +16,18 @@ public class PrivateChannelLeave extends BaseClientPacket {
 
 	public static final int TYPE = 53;
 	
-	private UserId userId;
+	private CharacterId charId;
 	
 	public PrivateChannelLeave(DataInputStream input) {
-		userId = new UserId(input);
+		charId = new CharacterId(input);
 	}
 	
-	public PrivateChannelLeave(long userId) {
-		this.userId = new UserId(userId);
+	public PrivateChannelLeave(long charId) {
+		this.charId = new CharacterId(charId);
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(userId);
+		return getBytes(charId);
 	}
 	
 	public int getPacketType() {
@@ -37,7 +37,7 @@ public class PrivateChannelLeave extends BaseClientPacket {
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tUserId: ").append(userId)
+			.append("\n\tCharId: ").append(charId)
 			.toString();
 	
 		return output;

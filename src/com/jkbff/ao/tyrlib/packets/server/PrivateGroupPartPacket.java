@@ -3,7 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.UserId;
+import sk.sigp.aobot.client.types.CharacterId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
@@ -11,18 +11,18 @@ public class PrivateGroupPartPacket extends BaseServerPacket {
 
 	public static final int TYPE = 53;
 	
-	private UserId userId;
+	private CharacterId charId;
 
 	public PrivateGroupPartPacket(DataInputStream input) {
-		this.userId = new UserId(input);
+		this.charId = new CharacterId(input);
 	}
 	
-	public PrivateGroupPartPacket(int userId) {
-		this.userId = new UserId(userId);
+	public PrivateGroupPartPacket(int charId) {
+		this.charId = new CharacterId(charId);
 	}
 	
-	public long getUserId() {
-		return this.userId.getLongData();
+	public long getCharId() {
+		return this.charId.getLongData();
 	}
 	
 	public int getPacketType() {
@@ -30,13 +30,13 @@ public class PrivateGroupPartPacket extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(userId);
+		return getBytes(charId);
 	}
 	
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tUserId: ").append(userId)
+			.append("\n\tCharId: ").append(charId)
 			.toString();
 	
 		return output;

@@ -14,7 +14,7 @@ public class ChatPacketSender extends Thread {
 
 	private OutputStream outputStream;
 	private BlockingQueue<BaseClientPacket> packetQueue = new ArrayBlockingQueue<BaseClientPacket>(1000);
-	private AOSingleConnection aoBot;
+	private AOConnection aoBot;
 	private Logger log = Logger.getLogger(this.getClass());
 
 	@Override
@@ -45,5 +45,5 @@ public class ChatPacketSender extends Thread {
 	}
 
 	public void setOutputStream(OutputStream outputStream) { this.outputStream = outputStream; }
-	public void setAOBot(AOSingleConnection aoBot) { this.aoBot = aoBot; }
+	public void setAOBot(AOConnection aoBot) { this.aoBot = aoBot; }
 }

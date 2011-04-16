@@ -149,4 +149,20 @@ public class Helper {
 			return false;
 		}
 	}
+	
+	public static String getLongAsBitString(long longValue) {
+		StringBuffer bitString = new StringBuffer();
+		
+		for (int i = Long.SIZE; i >= 0; i--) {
+			double value = Math.pow(2, i);
+			if (longValue >= value) {
+				bitString.append("1");
+				longValue -= value;
+			} else {
+				bitString.append("0");
+			}
+		}
+		
+		return bitString.toString();
+	}
 }

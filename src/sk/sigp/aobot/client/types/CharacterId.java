@@ -28,19 +28,19 @@ import java.io.IOException;
 
 import com.jkbff.ao.tyrlib.chat.Helper;
 
-public class UserId extends AbstractType {
+public class CharacterId extends AbstractType {
 	
 	protected long mydata;
 
-	public UserId() {
+	public CharacterId() {
 		mydata = 0;
 	}
 
-	public UserId(long i) {
+	public CharacterId(long i) {
 		mydata = i;
 	}
 
-	public UserId(DataInputStream input) {
+	public CharacterId(DataInputStream input) {
 		try {
 			byte[] data = new byte[size()];
 			input.readFully(data, 0, size());
@@ -54,7 +54,7 @@ public class UserId extends AbstractType {
 		return mydata == i;
 	}
 
-	public boolean equals(UserId i) {
+	public boolean equals(CharacterId i) {
 		return mydata == i.mydata;
 	}
 

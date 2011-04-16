@@ -8,7 +8,7 @@ import java.io.IOException;
 import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
-import sk.sigp.aobot.client.types.UserId;
+import sk.sigp.aobot.client.types.CharacterId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
@@ -16,7 +16,7 @@ public class CharacterList extends BaseServerPacket {
 	
 	public static final int TYPE = 7;
 	
-	private UserId[] userId;
+	private CharacterId[] userId;
 	private Text[] name;
 	private Int[] level;
 	private Int[] online;
@@ -24,9 +24,9 @@ public class CharacterList extends BaseServerPacket {
 	public CharacterList(DataInputStream input) {
 		try {
 			int userIdSize = input.readUnsignedShort();
-			this.userId = new UserId[userIdSize];
+			this.userId = new CharacterId[userIdSize];
 			for(int i = 0; i < userIdSize; i++) {
-				this.userId[i] = new UserId(input);
+				this.userId[i] = new CharacterId(input);
 			}
 			
 			int nameSize = input.readUnsignedShort();
@@ -52,9 +52,9 @@ public class CharacterList extends BaseServerPacket {
 	}
 	
 	public CharacterList(long[] userId, String[] name, int[] level, int[] online) {
-		this.userId = new UserId[userId.length];
+		this.userId = new CharacterId[userId.length];
 		for(int i = 0; i < userId.length; i++) {
-			this.userId[i] = new UserId(userId[i]);
+			this.userId[i] = new CharacterId(userId[i]);
 		}
 		
 		this.name = new Text[name.length];
@@ -133,7 +133,7 @@ public class CharacterList extends BaseServerPacket {
 		return size;
 	}
 
-	public UserId[] getUserId() {
+	public CharacterId[] getUserId() {
 		return userId;
 	}
 
@@ -165,7 +165,7 @@ public class CharacterList extends BaseServerPacket {
 		private int level;
 		private int online;
 		
-		public LoginUser(UserId userId, Text name, Int level, Int online) {
+		public LoginUser(CharacterId userId, Text name, Int level, Int online) {
 			this.userId = userId.getLongData();
 			this.name = name.getStringData();
 			this.level = level.getIntData();

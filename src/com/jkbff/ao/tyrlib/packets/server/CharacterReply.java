@@ -4,7 +4,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import sk.sigp.aobot.client.types.Text;
-import sk.sigp.aobot.client.types.UserId;
+import sk.sigp.aobot.client.types.CharacterId;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
@@ -12,21 +12,21 @@ public class CharacterReply extends BaseServerPacket {
 
 	public static final int TYPE = 21;
 	
-	private UserId userId;
+	private CharacterId charId;
 	private Text characterName;
 
 	public CharacterReply(DataInputStream input) {
-		this.userId = new UserId(input);
+		this.charId = new CharacterId(input);
 		this.characterName = new Text(input);
 	}
 	
-	public CharacterReply(long userId, String characterName) {
-		this.userId = new UserId(userId);
+	public CharacterReply(long charId, String characterName) {
+		this.charId = new CharacterId(charId);
 		this.characterName = new Text(characterName);
 	}
 	
-	public long getUserId() {
-		return this.userId.getLongData();
+	public long getCharId() {
+		return this.charId.getLongData();
 	}
 	
 	public String getCharacterName() {
@@ -38,13 +38,13 @@ public class CharacterReply extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(userId, characterName);
+		return getBytes(charId, characterName);
 	}
 	
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tUserId: ").append(userId)
+			.append("\n\tCharId: ").append(charId)
 			.append("\n\tCharacterName: ").append(characterName)
 			.toString();
 	

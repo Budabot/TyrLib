@@ -11,7 +11,7 @@ import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 public class ChatPacketListener extends Thread {
 	
     private DataInputStream dataInputStream;
-    private AOSingleConnection aoBot;
+    private AOConnection aoBot;
     private Logger log = Logger.getLogger(this.getClass());
 
     @Override
@@ -48,5 +48,5 @@ public class ChatPacketListener extends Thread {
     }
 
     public void setInputStream(InputStream inputStream) { dataInputStream = new DataInputStream(inputStream); }
-    public void setAOBot(AOSingleConnection aoBot) { this.aoBot = aoBot; }
+    public void setAOBot(AOConnection aoBot) { this.aoBot = aoBot; }
 }
