@@ -20,25 +20,22 @@ import com.jkbff.ao.tyrlib.packets.server.FriendUpdate;
 import com.jkbff.ao.tyrlib.packets.server.LoginError;
 import com.jkbff.ao.tyrlib.packets.server.LoginOk;
 import com.jkbff.ao.tyrlib.packets.server.LoginSeed;
+import com.jkbff.ao.tyrlib.packets.server.Pong;
 
-public class AOConnection extends Thread {
+public class AOSocket extends Thread {
 
     private ChatPacketListener chatPacketListener;
     private ChatPacketSender chatPacketSender;
     private ChatPacketHandler chatPacketHandler;
-    private String username;
-    private String password;
-    private String character;
-    private String serverName;
-    private int portNumber;
+    private AOSocketInfo socketInfo;
     private Socket socket;
     private STATUS loginStatus = STATUS.WAITING_FOR_SEED;
     
     private Map<Long, Friend> friendlist = new HashMap<Long, Friend>();
     
     private long lastReceivedPing = 0;
-    private static final String PING_PAYLOAD = "abcdefghijklmnopqrstuvwxyzabcdefghi";
-    private static final int PING_INTERVAL = 60000;
+    public static String PING_PAYLOAD = "abcdefghijklmnopqrstuvwxyzabcdefghi";
+    public static int PING_INTERVAL = 60000;
     
     private Logger log = Logger.getLogger(this.getClass());
     
@@ -49,75 +46,87 @@ public class AOConnection extends Thread {
     enum STATUS {
         WAITING_FOR_SEED, WAITING_FOR_CHAR_LIST, WAITING_FOR_LOGIN_OK, LOGGED_ON
     };
+    
+    public AOSocket(AOSocketInfo socketInfo, ChatPacketHandler chatPacketHandler) {
+    	this.socketInfo = socketInfo;
+    	this.chatPacketHandler = chatPacketHandler;
+    }
 
     @Override
     public void run() {
         try {
-            socket = new Socket(serverName, portNumber);
+            socket = new Socket(socketInfo.server, socketInfo.portNumber);
 
-            chatPacketListener = new ChatPacketListener();
-            chatPacketListener.setInputStream(socket.getInputStream());
-            chatPacketListener.setAOBot(this);
+            chatPacketListener = new ChatPacketListener(socket.getInputStream(), this);
             chatPacketListener.setName("chatPacketListener");
             chatPacketListener.start();
 
-            chatPacketSender = new ChatPacketSender();
-            chatPacketSender.setOutputStream(socket.getOutputStream());
-            chatPacketSender.setAOBot(this);
+            chatPacketSender = new ChatPacketSender(socket.getOutputStream(), this);
             chatPacketSender.setName("chatPacketSender");
             chatPacketSender.start();
-        } catch (UnknownHostException e) {
-            log.error("(UnknownHostException)Could not connect to chat server " + serverName + ":" + portNumber, e);
-            shutdown();
-        } catch (IOException e) {
-        	log.error("(IOException)Could not connect to chat server " + serverName + ":" + portNumber, e);
-        	shutdown();
-        }
-        
-        // send pings periodically to keep the connection alive
-        lastReceivedPing = System.currentTimeMillis();
-        while (!shouldStop) {
-        	if (loginStatus == STATUS.LOGGED_ON) {
-        		sendPacket(new Ping(PING_PAYLOAD));
-        	}
+            
+            // send pings periodically to keep the connection alive
+            lastReceivedPing = System.currentTimeMillis();
+            while (!shouldStop) {
+            	if (loginStatus == STATUS.LOGGED_ON) {
+            		sendPacket(new Ping(PING_PAYLOAD));
+            	}
 
-        	synchronized (this) {
-        		try {
-					this.wait(PING_INTERVAL);
-				} catch (InterruptedException e) {
-					log.error(e);
-				}
-        	}
-        	
-        	if (System.currentTimeMillis() - lastReceivedPing > (2 * PING_INTERVAL)) {
-        		log.error("ping reply not received past two times");
-        		shutdown();
+            	synchronized (this) {
+            		try {
+    					this.wait(PING_INTERVAL);
+    				} catch (InterruptedException e) {
+    					log.error(e);
+    				}
+            	}
+            	
+            	if (System.currentTimeMillis() - lastReceivedPing > (2 * PING_INTERVAL)) {
+            		log.error("ping reply not received past two times");
+            		shutdown();
+            	}
+            }
+        } catch (UnknownHostException e) {
+            log.error("(UnknownHostException)Could not connect to chat server " + socketInfo.server + ":" + socketInfo.portNumber, e);
+        } catch (IOException e) {
+        	log.error("(IOException)Could not connect to chat server " + socketInfo.server + ":" + socketInfo.portNumber, e);
+        } finally {
+        	stopAllThreads();
+        	chatPacketHandler.shutdownEvent();
+        	try {
+        		if (socket != null) {
+        			socket.close();
+        		}
+        	} catch (IOException e) {
+        		log.error(e);
         	}
         }
     }
     
     public void shutdown() {
-    	log.info(character + " shutting down.");
-    	
     	shouldStop = true;
+    	
+    	// wake up from waiting to send next ping
     	synchronized (this) {
     		notify();
     	}
+    }
+    
+    private void stopAllThreads() {
+    	log.info(socketInfo.character + " shutting down.");
     	
-    	// threads have two seconds to cleanup before the socket closes
+    	// threads have up to five seconds each to shutdown
+    	long start = System.currentTimeMillis();
     	try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			log.error(e);
-		}
-    	
-    	try {
-    		if (socket != null) {
-    			socket.close();
+    		if (chatPacketListener != null) {
+    			chatPacketListener.join(5000);
     		}
-    	} catch (IOException e) {
-    		log.error(e);
-    	}
+    		if (chatPacketSender != null) {
+    			chatPacketSender.join(5000);
+    		}
+		} catch (InterruptedException e) {
+			log.error("", e);
+		}
+		log.info("Shut down time for " + socketInfo.character + ": " + (System.currentTimeMillis() - start));
     }
 
     void processIncomingPacket(BaseServerPacket packet) {
@@ -125,7 +134,7 @@ public class AOConnection extends Thread {
     	
         // If logged on, dispatch packet to handlers, otherwise, complete login sequence
         if (loginStatus == STATUS.LOGGED_ON) {
-        	if (packet instanceof com.jkbff.ao.tyrlib.packets.server.Ping) {
+        	if (packet instanceof Pong) {
         		lastReceivedPing = System.currentTimeMillis();
         	}
         	if (packet instanceof FriendUpdate) {
@@ -138,25 +147,25 @@ public class AOConnection extends Thread {
             LoginSeed loginSeed = (LoginSeed) packet;
 
             String randomPrefix = Crypto.randomHexString(8);
-            String loginString = username + "|" + loginSeed.getSeed() + "|" + password;
+            String loginString = socketInfo.username + "|" + loginSeed.getSeed() + "|" + socketInfo.password;
 
             String key = Crypto.generateKey(randomPrefix, loginString);
 
-            LoginRequest loginRequest = new LoginRequest(0, username, key);
+            LoginRequest loginRequest = new LoginRequest(0, socketInfo.username, key);
             sendPacket(loginRequest);
             loginStatus = STATUS.WAITING_FOR_CHAR_LIST;
         } else if (packet instanceof CharacterList) {
             CharacterList characterListPacket = (CharacterList) packet;
 
             for (CharacterList.LoginUser loginUser : characterListPacket.getLoginUsers()) {
-                if (character.equalsIgnoreCase(loginUser.getName())) {
+                if (socketInfo.character.equalsIgnoreCase(loginUser.getName())) {
                 	characterId = loginUser.getUserId();
                     break;
                 }
             }
 
             if (characterId == null) {
-                throw new RuntimeException("Could not find character with name '" + character + "' on account '" + username + "'");
+                throw new RuntimeException("Could not find character with name '" + socketInfo.character + "' on account '" + socketInfo.username + "'");
             }
 
             LoginSelect selectCharacterPacket = new LoginSelect(characterId);
@@ -173,17 +182,13 @@ public class AOConnection extends Thread {
         }
     }
     
-    public void processPacket(BaseServerPacket packet) {
+    private void processPacket(BaseServerPacket packet) {
    		chatPacketHandler.processPacket(packet, this);
     }
 
     public void sendPacket(BaseClientPacket packet) {
     	log.debug("CLIENT " + packet);
         chatPacketSender.sendPacket(packet);
-    }
-
-    public void setChatPacketHandler(ChatPacketHandler chatPacketHandler) {
-    	this.chatPacketHandler = chatPacketHandler;
     }
     
     public Boolean isOnline(long charId) {
@@ -197,15 +202,9 @@ public class AOConnection extends Thread {
     
     public Map<Long, Friend> getFriendlist() { return friendlist; }
     
-    public String getCharacter() { return character; }
+    public String getCharacter() { return socketInfo.character; }
     public Long getCharacterId() { return characterId; }
 
-    public void setUsername(String username) { this.username = username; }
-    public void setPassword(String password) { this.password = password; }
-    public void setCharacter(String character) { this.character = character; }
-    public void setServerName(String serverName) { this.serverName = serverName; }
-    public void setPortNumber(int portNumber) { this.portNumber = portNumber; }
-    
     private class Friend {
     	private long charid;
     	private boolean online;

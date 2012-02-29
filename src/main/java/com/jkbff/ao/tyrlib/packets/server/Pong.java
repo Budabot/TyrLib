@@ -7,17 +7,17 @@ import sk.sigp.aobot.client.types.Text;
 
 import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
-public class Ping extends BaseServerPacket {
+public class Pong extends BaseServerPacket {
 
 	public static final int TYPE = 100;
 	
 	private Text raw;
 	
-	public Ping(DataInputStream input) {
+	public Pong(DataInputStream input) {
 		raw = new Text(input);
 	}
 	
-	public Ping(String raw) {
+	public Pong(String raw) {
 		this.raw = new Text(raw);
 	}
 	

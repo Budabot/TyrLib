@@ -61,6 +61,13 @@ public class ChannelUpdate extends BaseServerPacket {
 		return getBytes(chatGroupId, groupName, unknownInt, flags);
 	}
 	
+	public long getGuildId() {
+		if (chatGroupId.isGuildChannel()) {
+			return getChatGroupId() & 0xFFFFFFFFL;
+		}
+		return 0;
+	}
+	
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())

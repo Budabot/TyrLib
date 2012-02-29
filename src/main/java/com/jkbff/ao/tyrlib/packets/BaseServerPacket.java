@@ -16,7 +16,7 @@ import com.jkbff.ao.tyrlib.packets.server.FriendUpdate;
 import com.jkbff.ao.tyrlib.packets.server.LoginError;
 import com.jkbff.ao.tyrlib.packets.server.LoginOk;
 import com.jkbff.ao.tyrlib.packets.server.LoginSeed;
-import com.jkbff.ao.tyrlib.packets.server.Ping;
+import com.jkbff.ao.tyrlib.packets.server.Pong;
 import com.jkbff.ao.tyrlib.packets.server.PrivateChannelCharacterJoin;
 import com.jkbff.ao.tyrlib.packets.server.PrivateChannelCharacterLeave;
 import com.jkbff.ao.tyrlib.packets.server.PrivateChannelInvite;
@@ -63,8 +63,8 @@ public abstract class BaseServerPacket extends BasePacket {
 				return new LoginOk(dataStream);
 			case LoginSeed.TYPE:
 				return new LoginSeed(dataStream);
-			case Ping.TYPE:
-				return new Ping(dataStream);
+			case Pong.TYPE:
+				return new Pong(dataStream);
 			case PrivateChannelCharacterJoin.TYPE:
 				return new PrivateChannelCharacterJoin(dataStream);
 			case PrivateChannelCharacterLeave.TYPE:

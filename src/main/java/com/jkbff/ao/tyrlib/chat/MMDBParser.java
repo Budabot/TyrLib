@@ -29,7 +29,7 @@ public class MMDBParser {
 			return message;
 			
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException("CategoryId: '" + categoryId + "' InstanceId: '" + instanceId + "'", e);
 		} finally {
 			if (in != null) {
 				try {

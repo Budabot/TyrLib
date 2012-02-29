@@ -22,9 +22,9 @@ public class ExtendedMessage {
 	public ExtendedMessage(long categoryId, long instanceId, String paramString) {
 		this.categoryId = categoryId;
 		this.instanceId = instanceId;
-		this.message = MMDBParser.getMessage(categoryId, instanceId);
-		
+
 		try {
+			message = MMDBParser.getMessage(categoryId, instanceId);
 			params = parseParams(new DataInputStream(new ByteArrayInputStream(paramString.getBytes("UTF-8"))));
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -34,9 +34,9 @@ public class ExtendedMessage {
 	public ExtendedMessage(DataInputStream dataInputStream) {
 		this.categoryId = b85g(dataInputStream);
 		this.instanceId = b85g(dataInputStream);
-		this.message = MMDBParser.getMessage(categoryId, instanceId);
 
 		try {
+			message = MMDBParser.getMessage(categoryId, instanceId);
 			params = parseParams(dataInputStream);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

@@ -10,9 +10,14 @@ import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 
 public class ChatPacketListener extends Thread {
 	
-    private DataInputStream dataInputStream;
-    private AOConnection aoBot;
-    private Logger log = Logger.getLogger(this.getClass());
+    private final DataInputStream dataInputStream;
+    private final AOSocket aoBot;
+    private final Logger log = Logger.getLogger(this.getClass());
+    
+    public ChatPacketListener(InputStream inputStream, AOSocket aoBot) {
+    	this.dataInputStream = new DataInputStream(inputStream);
+    	this.aoBot = aoBot;
+    }
 
     @Override
     public void run() {
@@ -27,26 +32,28 @@ public class ChatPacketListener extends Thread {
                 packetLength = dataInputStream.readUnsignedShort();
                 payload = new byte[packetLength];
                 dataInputStream.readFully(payload);
+                
+                // create a packet from the bytes read in and send to the bot to process
+                try {
+    	            BaseServerPacket packet = BaseServerPacket.createInstance(packetId, payload);
+    	            if (packet == null) {
+    	            	log.error("Unknown packet!! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
+    	            } else {
+    	            	aoBot.processIncomingPacket(packet);
+    	            }
+                } catch (Exception e) {
+                    log.error("Bot Character: '" + aoBot.getCharacter() + "' packet id: '" + packetId + "'", e);
+                }
             } catch (IOException e) {
-            	if (!aoBot.shouldStop) {
-            		log.error("Bot Character: '" + aoBot.getCharacter() + "'", e);
-            	}
-            }
-            
-            // create a packet from the bytes read in and send to the bot to process
-            try {
-	            BaseServerPacket packet = BaseServerPacket.createInstance(packetId, payload);
-	            if (packet == null) {
-	            	log.error("Unknown packet!! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
-	            } else {
-	            	aoBot.processIncomingPacket(packet);
-	            }
-            } catch (Exception e) {
-                log.error("Bot Character: '" + aoBot.getCharacter() + "' packet id: '" + packetId + "'", e);
+            	log.error("Bot Character: '" + aoBot.getCharacter() + "'", e);
+            	aoBot.shutdown();
             }
         }
+        
+        try {
+            dataInputStream.close();
+        } catch (Exception e) {
+        	log.error("", e);
+        }
     }
-
-    public void setInputStream(InputStream inputStream) { dataInputStream = new DataInputStream(inputStream); }
-    public void setAOBot(AOConnection aoBot) { this.aoBot = aoBot; }
 }

@@ -87,89 +87,89 @@ public class ChatGroupId extends AbstractType {
 		}
 	}
 	
-	public static boolean isOrgChat(long chatGroupId) {
-		if ((chatGroupId & 0xFF00000000L) >> 32 == 3) {
+	public boolean isGuildChannel() {
+		if ((mydata & 0xFF00000000L) >> 32 == 3) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isOOC(long chatGroupId) {
+	public boolean isOOC() {
 		//if ((chatGroupId & 0xFF00000000L) >> 32 == 135) {
-		if ((chatGroupId & 0xFF) == 16) {
+		if ((mydata & 0xFF) == 16) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isJpnOOC(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 17) {
+	public boolean isJpnOOC() {
+		if ((mydata & 0xFF) == 17) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isShopping100(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 9) {
+	public boolean isShopping100() {
+		if ((mydata & 0xFF) == 9) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean isShopping50to100(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 5) {
+	public boolean isShopping50to100() {
+		if ((mydata & 0xFF) == 5) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isShopping11to50(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 0) {
+	public boolean isShopping11to50() {
+		if ((mydata & 0xFF) == 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isShopping(long chatGroupId) {
-		if ((chatGroupId & 0xFF00000000L) >> 32 == 134) {
+	public boolean isShopping() {
+		if ((mydata & 0xFF00000000L) >> 32 == 134) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isNotumWars(long chatGroupId) {
-		if ((chatGroupId & 0xFF00000000L) >> 32 == 10) {
+	public boolean isNotumWars() {
+		if ((mydata & 0xFF00000000L) >> 32 == 10) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	public static boolean isOmni(long chatGroupId) {
-		if ((chatGroupId & 0xFF00L) >> 8 == 2) {
+	public boolean isOmni() {
+		if ((mydata & 0xFF00L) >> 8 == 2) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean isNeut(long chatGroupId) {
-		if ((chatGroupId & 0xFF00L) >> 8 == 0) {
+	public boolean isNeut() {
+		if ((mydata & 0xFF00L) >> 8 == 0) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	public static boolean isClan(long chatGroupId) {
-		if ((chatGroupId & 0xFF00L) >> 8 == 1) {
+	public boolean isClan() {
+		if ((mydata & 0xFF00L) >> 8 == 1) {
 			return true;
 		} else {
 			return false;

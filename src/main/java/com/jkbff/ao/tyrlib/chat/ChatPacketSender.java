@@ -2,8 +2,8 @@ package com.jkbff.ao.tyrlib.chat;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -12,10 +12,15 @@ import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 
 public class ChatPacketSender extends Thread {
 
-	private OutputStream outputStream;
-	private BlockingQueue<BaseClientPacket> packetQueue = new ArrayBlockingQueue<BaseClientPacket>(1000);
-	private AOConnection aoBot;
-	private Logger log = Logger.getLogger(this.getClass());
+	private final OutputStream outputStream;
+	private final BlockingQueue<BaseClientPacket> packetQueue = new LinkedBlockingQueue<BaseClientPacket>();
+	private final AOSocket aoBot;
+	private final Logger log = Logger.getLogger(this.getClass());
+	
+	public ChatPacketSender(OutputStream outputStream, AOSocket aoBot) {
+		this.outputStream = outputStream;
+		this.aoBot = aoBot;
+	}
 
 	@Override
 	public void run() {
@@ -27,23 +32,21 @@ public class ChatPacketSender extends Thread {
                 	outputStream.write(bytes);
                 }
             } catch (InterruptedException e) {
-            	log.error(e);
+            	log.error("", e);
             } catch (IOException e) {
-            	log.error(e);
+            	log.error("", e);
+            	aoBot.shutdown();
             }
         }
 
         try {
             outputStream.close();
         } catch (Exception e) {
-        	log.error(e);
+        	log.error("", e);
         }
 	}
 
 	public void sendPacket(BaseClientPacket packet) {
 		packetQueue.add(packet);
 	}
-
-	public void setOutputStream(OutputStream outputStream) { this.outputStream = outputStream; }
-	public void setAOBot(AOConnection aoBot) { this.aoBot = aoBot; }
 }
