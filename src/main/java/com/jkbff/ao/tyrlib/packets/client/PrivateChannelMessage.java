@@ -27,7 +27,7 @@ public class PrivateChannelMessage extends BaseClientPacket {
 		raw = new Text(input);
 	}
 	
-	public PrivateChannelMessage(int charId, String text, String raw) {
+	public PrivateChannelMessage(long charId, String text, String raw) {
 		this.charId = new CharacterId(charId);
 		this.text = new Text(text);
 		this.raw = new Text(raw);
