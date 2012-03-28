@@ -37,6 +37,14 @@ public class ChatCommandPacket extends BaseClientPacket {
 		}
 	}
 	
+	public String[] getCommand() {
+		String[] commands = new String[command.length];
+		for (int i = 0; i < command.length; i++) {
+			commands[i] = command[i].getStringData();
+		}
+		return commands;
+	}
+	
 	public byte[] getBytes() throws IOException {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 		DataOutputStream outputStream = new DataOutputStream(byteStream);

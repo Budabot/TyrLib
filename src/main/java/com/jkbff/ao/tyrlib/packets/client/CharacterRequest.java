@@ -21,6 +21,10 @@ public class CharacterRequest extends BaseClientPacket {
 		this.name = new Text(name);
 	}
 	
+	public String getName() {
+		return name.getStringData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(name);
 	}

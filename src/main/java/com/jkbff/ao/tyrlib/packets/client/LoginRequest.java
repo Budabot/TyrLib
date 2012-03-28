@@ -34,6 +34,18 @@ public class LoginRequest extends BaseClientPacket {
 		this.key = new Text(key);
 	}
 	
+	public int getUnknownInt() {
+		return unknownInt.getIntData();
+	}
+	
+	public String getUsername() {
+		return username.getStringData();
+	}
+	
+	public String getKey() {
+		return key.getStringData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(unknownInt, username, key);
 	}

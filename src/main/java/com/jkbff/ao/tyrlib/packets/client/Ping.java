@@ -27,6 +27,10 @@ public class Ping extends BaseClientPacket {
 		this.raw = new Text(raw);
 	}
 	
+	public String getRaw() {
+		return raw.getStringData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(raw);
 	}

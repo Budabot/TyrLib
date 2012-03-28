@@ -18,23 +18,35 @@ public class ChannelMessage extends BaseClientPacket {
 	public static final int TYPE = 65;
 	
 	private ChatGroupId chatGroupId;
-	private Text text;
+	private Text message;
 	private Text raw;
 	
 	public ChannelMessage(DataInputStream input) {
 		chatGroupId = new ChatGroupId(input);
-		text = new Text(input);
+		message = new Text(input);
 		raw = new Text(input);
 	}
 	
 	public ChannelMessage(long chatGroupId, String text, String raw) {
 		this.chatGroupId = new ChatGroupId(chatGroupId);
-		this.text = new Text(text);
+		this.message = new Text(text);
 		this.raw = new Text(raw);
 	}
 	
+	public long getChatGroupId() {
+		return chatGroupId.getLongData();
+	}
+
+	public String getMessage() {
+		return message.getStringData();
+	}
+
+	public String getRaw() {
+		return raw.getStringData();
+	}
+	
 	public byte[] getBytes() throws IOException {
-		return getBytes(chatGroupId, text, raw);
+		return getBytes(chatGroupId, message, raw);
 	}
 	
 	public int getPacketType() {
@@ -45,7 +57,7 @@ public class ChannelMessage extends BaseClientPacket {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tChatGroupId: ").append(chatGroupId)
-			.append("\n\tText: ").append(text)
+			.append("\n\tMessage: ").append(message)
 			.append("\n\tRaw: ").append(raw)
 			.toString();
 	

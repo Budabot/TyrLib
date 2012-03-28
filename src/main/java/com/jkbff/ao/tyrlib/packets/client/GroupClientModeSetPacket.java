@@ -34,6 +34,26 @@ public class GroupClientModeSetPacket extends BaseClientPacket {
 		this.unknownInt4 = new Int(unknownInt4);
 	}
 	
+	public long getChatGroupId() {
+		return chatGroupId.getLongData();
+	}
+	
+	public int getUnknownInt1() {
+		return unknownInt1.getIntData();
+	}
+	
+	public int getUnknownInt2() {
+		return unknownInt2.getIntData();
+	}
+	
+	public int getUnknownInt3() {
+		return unknownInt3.getIntData();
+	}
+	
+	public int getUnknownInt4() {
+		return unknownInt4.getIntData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(chatGroupId, unknownInt1, unknownInt2, unknownInt3, unknownInt4);
 	}

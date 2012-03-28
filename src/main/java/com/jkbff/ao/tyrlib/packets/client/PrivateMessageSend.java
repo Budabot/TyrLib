@@ -18,23 +18,35 @@ public class PrivateMessageSend extends BaseClientPacket {
 	public static final int TYPE = 30;
 	
 	private CharacterId charId;
-	private Text text;
+	private Text message;
 	private Text raw;
 	
 	public PrivateMessageSend(DataInputStream input) {
 		charId = new CharacterId(input);
-		text = new Text(input);
+		message = new Text(input);
 		raw = new Text(input);
 	}
 	
 	public PrivateMessageSend(long charId, String text, String raw) {
 		this.charId = new CharacterId(charId);
-		this.text = new Text(text);
+		this.message = new Text(text);
 		this.raw = new Text(raw);
 	}
 	
+	public long getCharId() {
+		return charId.getLongData();
+	}
+	
+	public String getMessage() {
+		return message.getStringData();
+	}
+	
+	public String getRaw() {
+		return raw.getStringData();
+	}
+	
 	public byte[] getBytes() throws IOException {
-		return getBytes(charId, text, raw);
+		return getBytes(charId, message, raw);
 	}
 	
 	public int getPacketType() {
@@ -45,7 +57,7 @@ public class PrivateMessageSend extends BaseClientPacket {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
 			.append("\n\tCharId: ").append(charId)
-			.append("\n\tText: ").append(text)
+			.append("\n\tMessage: ").append(message)
 			.append("\n\tRaw: ").append(raw)
 			.toString();
 	

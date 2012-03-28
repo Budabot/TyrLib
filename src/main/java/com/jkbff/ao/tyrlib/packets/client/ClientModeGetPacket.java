@@ -25,6 +25,14 @@ public class ClientModeGetPacket extends BaseClientPacket {
 		this.chatGroupId = new ChatGroupId(channelId);
 	}
 	
+	public int getUnknownInt() {
+		return unknownInt.getIntData();
+	}
+	
+	public long getChatGroupId() {
+		return chatGroupId.getLongData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(unknownInt, chatGroupId);
 	}

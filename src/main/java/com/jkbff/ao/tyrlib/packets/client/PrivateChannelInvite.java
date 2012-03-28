@@ -26,6 +26,10 @@ public class PrivateChannelInvite extends BaseClientPacket {
 		this.charId = new CharacterId(charId);
 	}
 	
+	public long getCharId() {
+		return charId.getLongData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(charId);
 	}

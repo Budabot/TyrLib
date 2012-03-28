@@ -35,6 +35,18 @@ public class GroupDataSetPacket extends BaseClientPacket {
 		this.mute = new Text(mute);
 	}
 	
+	public long getChatGroupId() {
+		return chatGroupId.getLongData();
+	}
+	
+	public int getFlags() {
+		return flags.getIntData();
+	}
+	
+	public String getMute() {
+		return mute.getStringData();
+	}
+	
 	public byte[] getBytes() throws IOException {
 		return getBytes(chatGroupId, flags, mute);
 	}
