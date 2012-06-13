@@ -27,7 +27,11 @@ public class AOSocket extends Thread {
     private ChatPacketListener chatPacketListener;
     private ChatPacketSender chatPacketSender;
     private ChatPacketHandler chatPacketHandler;
-    private AOSocketInfo socketInfo;
+    private String username;
+    private String password;
+    private String character;
+    private String server;
+    private int portNumber;
     private Socket socket;
     private STATUS loginStatus = STATUS.WAITING_FOR_SEED;
     
@@ -35,7 +39,7 @@ public class AOSocket extends Thread {
     
     private long lastReceivedPing = 0;
     public static String PING_PAYLOAD = "abcdefghijklmnopqrstuvwxyzabcdefghi";
-    public static int PING_INTERVAL = 60000;
+    private int pingInterval = 60000;
     
     private Logger log = Logger.getLogger(this.getClass());
     
@@ -47,15 +51,14 @@ public class AOSocket extends Thread {
         WAITING_FOR_SEED, WAITING_FOR_CHAR_LIST, WAITING_FOR_LOGIN_OK, LOGGED_ON
     };
     
-    public AOSocket(AOSocketInfo socketInfo, ChatPacketHandler chatPacketHandler) {
-    	this.socketInfo = socketInfo;
+    public AOSocket(ChatPacketHandler chatPacketHandler) {
     	this.chatPacketHandler = chatPacketHandler;
     }
 
     @Override
     public void run() {
         try {
-            socket = new Socket(socketInfo.server, socketInfo.portNumber);
+            socket = new Socket(server, portNumber);
 
             chatPacketListener = new ChatPacketListener(socket.getInputStream(), this);
             chatPacketListener.setName("chatPacketListener");
@@ -74,21 +77,21 @@ public class AOSocket extends Thread {
 
             	synchronized (this) {
             		try {
-    					this.wait(PING_INTERVAL);
+    					this.wait(pingInterval);
     				} catch (InterruptedException e) {
     					log.error(e);
     				}
             	}
             	
-            	if (System.currentTimeMillis() - lastReceivedPing > (2 * PING_INTERVAL)) {
+            	if (System.currentTimeMillis() - lastReceivedPing > (2 * pingInterval)) {
             		log.error("ping reply not received past two times");
             		shutdown();
             	}
             }
         } catch (UnknownHostException e) {
-            log.error("(UnknownHostException)Could not connect to chat server " + socketInfo.server + ":" + socketInfo.portNumber, e);
+            log.error("Could not connect to chat server " + server + ":" + portNumber, e);
         } catch (IOException e) {
-        	log.error("(IOException)Could not connect to chat server " + socketInfo.server + ":" + socketInfo.portNumber, e);
+        	log.error("Could not connect to chat server " + server + ":" + portNumber, e);
         } finally {
         	stopAllThreads();
         	chatPacketHandler.shutdownEvent();
@@ -112,7 +115,7 @@ public class AOSocket extends Thread {
     }
     
     private void stopAllThreads() {
-    	log.info(socketInfo.character + " shutting down.");
+    	log.info(character + " shutting down.");
     	
     	// threads have up to five seconds each to shutdown
     	long start = System.currentTimeMillis();
@@ -126,7 +129,7 @@ public class AOSocket extends Thread {
 		} catch (InterruptedException e) {
 			log.error("", e);
 		}
-		log.info("Shut down time for " + socketInfo.character + ": " + (System.currentTimeMillis() - start));
+		log.info("Shut down time for " + character + ": " + (System.currentTimeMillis() - start));
     }
 
     void processIncomingPacket(BaseServerPacket packet) {
@@ -147,25 +150,25 @@ public class AOSocket extends Thread {
             LoginSeed loginSeed = (LoginSeed) packet;
 
             String randomPrefix = Crypto.randomHexString(8);
-            String loginString = socketInfo.username + "|" + loginSeed.getSeed() + "|" + socketInfo.password;
+            String loginString = username + "|" + loginSeed.getSeed() + "|" + password;
 
             String key = Crypto.generateKey(randomPrefix, loginString);
 
-            LoginRequest loginRequest = new LoginRequest(0, socketInfo.username, key);
+            LoginRequest loginRequest = new LoginRequest(0, username, key);
             sendPacket(loginRequest);
             loginStatus = STATUS.WAITING_FOR_CHAR_LIST;
         } else if (packet instanceof CharacterList) {
             CharacterList characterListPacket = (CharacterList) packet;
 
             for (CharacterList.LoginUser loginUser : characterListPacket.getLoginUsers()) {
-                if (socketInfo.character.equalsIgnoreCase(loginUser.getName())) {
+                if (character.equalsIgnoreCase(loginUser.getName())) {
                 	characterId = loginUser.getUserId();
                     break;
                 }
             }
 
             if (characterId == null) {
-                throw new RuntimeException("Could not find character with name '" + socketInfo.character + "' on account '" + socketInfo.username + "'");
+                throw new RuntimeException("Could not find character with name '" + character + "' on account '" + username + "'");
             }
 
             LoginSelect selectCharacterPacket = new LoginSelect(characterId);
@@ -202,10 +205,21 @@ public class AOSocket extends Thread {
     
     public Map<Long, Friend> getFriendlist() { return friendlist; }
     
-    public String getCharacter() { return socketInfo.character; }
+    public String getCharacter() { return character; }
     public Long getCharacterId() { return characterId; }
+    public int getPingInterval() { return pingInterval; }
+    public void setPingInterval(int pingInterval) { this.pingInterval = pingInterval; }
+    public String getUsername() { return username; }
+	public void setUsername(String username) { this.username = username; }
+	public String getPassword() { return password; }
+	public void setPassword(String password) { this.password = password; }
+	public String getServer() { return server; }
+	public void setServer(String server) { this.server = server; }
+	public int getPortNumber() { return portNumber; }
+	public void setPortNumber(int portNumber) { this.portNumber = portNumber; }
+	public void setCharacter(String character) { this.character = character; }
 
-    private class Friend {
+	private class Friend {
     	private long charid;
     	private boolean online;
     	private String status;
