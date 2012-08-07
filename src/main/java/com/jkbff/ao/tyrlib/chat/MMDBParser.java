@@ -27,7 +27,8 @@ public class MMDBParser {
 			in.seek(instance.offset);
 			String message = readString(in);
 			return message;
-			
+		} catch (RuntimeException e) {
+			throw e;
 		} catch (Exception e) {
 			throw new RuntimeException("CategoryId: '" + categoryId + "' InstanceId: '" + instanceId + "'", e);
 		} finally {
