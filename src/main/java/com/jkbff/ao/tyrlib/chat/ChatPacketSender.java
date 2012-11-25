@@ -19,10 +19,10 @@ public class ChatPacketSender extends Thread {
 	private final AOSocket aoBot;
 	private final Logger log = Logger.getLogger(this.getClass());
 	private long queueTime = 0;
-	
+
 	public static final long TIME_BETWEEN_PACKETS = 2000;
 	public static final long BURST_PACKETS = 3;
-	
+
 	public ChatPacketSender(OutputStream outputStream, AOSocket aoBot) {
 		this.outputStream = outputStream;
 		this.aoBot = aoBot;
@@ -30,44 +30,43 @@ public class ChatPacketSender extends Thread {
 
 	@Override
 	public void run() {
-        while (!aoBot.shouldStop) {
-            try {
-                BaseClientPacket packet = getNextPacket();
-                if (packet != null) {
-                	byte[] bytes = packet.getBytes();
-                	outputStream.write(bytes);
-                } else {
-                	long newTime = System.currentTimeMillis() - queueTime;
-                	if (newTime > 0) {
-                		synchronized(this) {
-                			this.wait(newTime);
-                		}
-                	}
-                }
-            } catch (InterruptedException e) {
-            	log.error("", e);
-            } catch (IOException e) {
-            	log.error("", e);
-            	aoBot.shutdown();
-            }
-        }
-
-        try {
-            outputStream.close();
-        } catch (Exception e) {
-        	log.error("", e);
-        }
-	}
-	
-	private BaseClientPacket getNextPacket() throws InterruptedException {
-		if (throttledPacketQueue.peek() != null) {
-			if (queueTime < System.currentTimeMillis()) {
-				queueTime = Math.max(System.currentTimeMillis() - TIME_BETWEEN_PACKETS * BURST_PACKETS, queueTime);
-				queueTime += TIME_BETWEEN_PACKETS;
-				return throttledPacketQueue.poll();
+		while (!aoBot.shouldStop) {
+			try {
+				BaseClientPacket packet = getNextPacket();
+				if (packet != null) {
+					byte[] bytes = packet.getBytes();
+					outputStream.write(bytes);
+				} else {
+					long newTime = System.currentTimeMillis() - queueTime;
+					if (newTime > 0) {
+						synchronized (this) {
+							this.wait(newTime);
+						}
+					}
+				}
+			} catch (InterruptedException e) {
+				log.error("", e);
+			} catch (IOException e) {
+				log.error("", e);
+				aoBot.shutdown();
 			}
 		}
-		return packetQueue.poll();
+
+		try {
+			outputStream.close();
+		} catch (Exception e) {
+			log.error("", e);
+		}
+	}
+
+	private BaseClientPacket getNextPacket() throws InterruptedException {
+		if (throttledPacketQueue.peek() != null && queueTime < System.currentTimeMillis()) {
+			queueTime = Math.max(System.currentTimeMillis() - TIME_BETWEEN_PACKETS * BURST_PACKETS, queueTime);
+			queueTime += TIME_BETWEEN_PACKETS;
+			return throttledPacketQueue.poll();
+		} else {
+			return packetQueue.poll();
+		}
 	}
 
 	public void sendPacket(BaseClientPacket packet) {
@@ -80,7 +79,7 @@ public class ChatPacketSender extends Thread {
 				packetQueue.add(packet);
 				break;
 		}
-		synchronized(this) {
+		synchronized (this) {
 			notify();
 		}
 	}
