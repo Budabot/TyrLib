@@ -20,8 +20,8 @@ public class ChatPacketSender extends Thread {
 	private final Logger log = Logger.getLogger(this.getClass());
 	private long queueTime = 0;
 
-	public static final long TIME_BETWEEN_PACKETS = 2000;
-	public static final long BURST_PACKETS = 3;
+	private long timeBetweenPackets = 2000;
+	private long numBurstPackets = 3;
 
 	public ChatPacketSender(OutputStream outputStream, AOSocket aoBot) {
 		this.outputStream = outputStream;
@@ -36,13 +36,6 @@ public class ChatPacketSender extends Thread {
 				if (packet != null) {
 					byte[] bytes = packet.getBytes();
 					outputStream.write(bytes);
-				} else {
-					long newTime = System.currentTimeMillis() - queueTime;
-					if (newTime > 0) {
-						synchronized (this) {
-							this.wait(newTime);
-						}
-					}
 				}
 			} catch (InterruptedException e) {
 				log.error("", e);
@@ -59,17 +52,33 @@ public class ChatPacketSender extends Thread {
 		}
 	}
 
-	private BaseClientPacket getNextPacket() throws InterruptedException {
-		if (throttledPacketQueue.peek() != null && queueTime < System.currentTimeMillis()) {
-			queueTime = Math.max(System.currentTimeMillis() - TIME_BETWEEN_PACKETS * BURST_PACKETS, queueTime);
-			queueTime += TIME_BETWEEN_PACKETS;
-			return throttledPacketQueue.poll();
-		} else {
-			return packetQueue.poll();
+	private synchronized BaseClientPacket getNextPacket() throws InterruptedException {
+		BaseClientPacket packet = null;
+		while (packet == null) {
+			long currentTime = System.currentTimeMillis();
+			if (throttledPacketQueue.peek() != null && queueTime <= currentTime) {
+				queueTime = Math.max(currentTime - (timeBetweenPackets * numBurstPackets), queueTime);
+				queueTime += timeBetweenPackets;
+				packet = throttledPacketQueue.poll();
+			} else {
+				packet = packetQueue.poll();
+			}
+			if (packet == null) {
+				if (aoBot.shouldStop) {
+					break;
+				}
+				long newTime = queueTime - currentTime;
+				if (newTime > 0) {
+					wait(newTime);
+				} else {
+					wait();
+				}
+			}
 		}
+		return packet;
 	}
 
-	public void sendPacket(BaseClientPacket packet) {
+	public synchronized void sendPacket(BaseClientPacket packet) {
 		switch (packet.getPacketType()) {
 			case ChannelMessage.TYPE:
 			case PrivateMessageSend.TYPE:
@@ -79,8 +88,22 @@ public class ChatPacketSender extends Thread {
 				packetQueue.add(packet);
 				break;
 		}
-		synchronized (this) {
-			notify();
-		}
+		notify();
+	}
+
+	public long getTimeBetweenPackets() {
+		return timeBetweenPackets;
+	}
+
+	public void setTimeBetweenPackets(long timeBetweenPackets) {
+		this.timeBetweenPackets = timeBetweenPackets;
+	}
+
+	public long getNumBurstPackets() {
+		return numBurstPackets;
+	}
+
+	public void setNumBurstPackets(long numBurstPackets) {
+		this.numBurstPackets = numBurstPackets;
 	}
 }
