@@ -5,6 +5,11 @@
 	<artifactId>tyrlib</artifactId>
 	<version>1.4</version>
 	<packaging>jar</packaging>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<releaseDir>${project.build.directory}/release/${project.name}-${project.version}</releaseDir>
+	</properties>
 
 	<distributionManagement>
 		<!-- use the following if you're not using a snapshot version. -->
@@ -25,7 +30,7 @@
 		<dependency>
 			<groupId>org.scala-lang</groupId>
 			<artifactId>scala-library</artifactId>
-			<version>2.9.2</version>
+			<version>2.10.3</version>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
