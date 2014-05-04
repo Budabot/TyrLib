@@ -31,4 +31,10 @@ class AOClientSocket(socket: Socket) {
 		}
 		packet
 	}
+	
+	def close(): Unit = {
+		inputStream.close()
+		outputStream.close()
+		socket.close()
+	}
 }

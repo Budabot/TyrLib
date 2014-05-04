@@ -19,10 +19,6 @@ class ChatPacketSender(outputStream: OutputStream, aoBot: AOSocket) extends Thre
 				}
 			} catch {
 				case e: Exception => log.error("", e)
-				case e: Exception => {
-					log.error("", e)
-					aoBot.shutdown()
-				}
 			}
 		}
 
