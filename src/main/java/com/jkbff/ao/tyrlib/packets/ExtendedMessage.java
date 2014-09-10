@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
+
 import com.jkbff.ao.tyrlib.chat.Helper;
 import com.jkbff.ao.tyrlib.chat.MMDBParser;
 
@@ -103,7 +106,8 @@ public class ExtendedMessage {
 				}
 
 				default:
-					throw new RuntimeException("Unknown param type in extended message: '" + paramType + "'");
+					byte[] bytes64 = Base64.encodeBase64(IOUtils.toByteArray(dataInputStream));
+					throw new RuntimeException("Unknown param type in extended message: '" + paramType + "' with payload(base64): '" + new String(bytes64) + "'");
 			}
 		}
 
