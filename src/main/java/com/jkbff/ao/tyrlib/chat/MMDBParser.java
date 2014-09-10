@@ -7,8 +7,6 @@ import java.io.RandomAccessFile;
 import no.geosoft.cc.util.ByteSwapper;
 
 public class MMDBParser {
-	public static String fileLocation = "text.mdb";
-	
 	public static String getMessage(long categoryId, long instanceId) {
 		RandomAccessFile in = null;
 		
