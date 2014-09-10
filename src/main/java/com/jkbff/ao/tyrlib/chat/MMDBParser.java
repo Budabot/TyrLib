@@ -1,5 +1,6 @@
 package com.jkbff.ao.tyrlib.chat;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -12,7 +13,7 @@ public class MMDBParser {
 		RandomAccessFile in = null;
 		
 		try {
-			in = new RandomAccessFile(fileLocation, "r");
+			in = new RandomAccessFile(new File(MMDBParser.class.getResource("/text.mdb").toURI()), "r");
 			
 			Entry category = findEntry(in, categoryId, 8);
 			if (category == null) {
