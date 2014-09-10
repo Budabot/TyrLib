@@ -1,5 +1,8 @@
 package com.jkbff.ao.tyrlib.chat;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class Helper {
 	
 	public static final int CHATGROUPIDSIZE = 5;
@@ -164,5 +167,17 @@ public class Helper {
 		}
 		
 		return bitString.toString();
+	}
+	
+	public static long b85g(InputStream input) {
+		try {
+			long n = 0;
+			for (int i = 0; i < 5; i++) {
+				n = (n * 85) + input.read() - 33;
+			}
+			return n;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
