@@ -15,7 +15,7 @@ import com.jkbff.ao.tyrlib.chat.MMDBParser;
 public class ExtendedMessage {
 
 	public static final String ENCODING = "ISO-8859-1";
-
+	
 	private long categoryId;
 	private long instanceId;
 	private String message;
@@ -30,7 +30,7 @@ public class ExtendedMessage {
 			message = MMDBParser.getMessage(categoryId, instanceId);
 			params = parseParams(new DataInputStream(new ByteArrayInputStream(paramString.getBytes("UTF-8"))));
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new RuntimeException(String.format("for categoryId: '%d'; instanceId: '%d'; paramString: '%s'", categoryId, instanceId, paramString), e);
 		}
 	}
 

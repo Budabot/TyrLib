@@ -24,7 +24,6 @@ public class Helper {
 	}
 	
 	protected static void longToBytes(long from, byte[] to, int off) {
-		
 		to[off + 0] = (byte) ((from >> 24) & 0xFF);
 		to[off + 1] = (byte) ((from >> 16) & 0xFF);
 		to[off + 2] = (byte) ((from >> 8) & 0xFF);
