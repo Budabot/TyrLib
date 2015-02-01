@@ -3,8 +3,8 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.CharacterId;
+import sk.sigp.aobot.client.types.Text;
 
 import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
 

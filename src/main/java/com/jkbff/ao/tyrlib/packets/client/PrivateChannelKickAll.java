@@ -23,7 +23,7 @@ public class PrivateChannelKickAll extends BaseClientPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes();
+		return new byte[] {};
 	}
 	
 	public int getPacketType() {
