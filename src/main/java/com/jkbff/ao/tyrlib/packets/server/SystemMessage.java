@@ -3,6 +3,8 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
@@ -20,6 +22,8 @@ public class SystemMessage extends BaseServerPacket {
 	private ExtendedMessage extendedMessage;
 	
 	private static final int CATEGORY_ID = 20000;
+	
+	private Logger log = Logger.getLogger(getClass());
 
 	public SystemMessage(DataInputStream input) {
 		this.clientId = new Int(input);
@@ -27,7 +31,14 @@ public class SystemMessage extends BaseServerPacket {
 		this.messageId = new Int(input);
 		this.messageArgs = new Text(input);
 
-		extendedMessage = new ExtendedMessage(CATEGORY_ID, messageId.getIntData(), messageArgs.getStringData());
+		try {
+			extendedMessage = new ExtendedMessage(CATEGORY_ID, messageId.getIntData(), messageArgs.getStringData());
+		} catch (Exception e) {
+			log.warn("Could not parse extended message info for categoryId: '" +
+					CATEGORY_ID + "', instanceId: '" +
+					messageId.getIntData() + "', paramString: '" +
+					messageArgs.getStringData(), e);
+		}
 	}
 	
 	public SystemMessage(int clientId, int windowId, int messageId, String messageArgs) {

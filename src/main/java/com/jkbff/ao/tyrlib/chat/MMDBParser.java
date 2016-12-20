@@ -1,10 +1,12 @@
 package com.jkbff.ao.tyrlib.chat;
 
+import no.geosoft.cc.util.ByteSwapper;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
-import no.geosoft.cc.util.ByteSwapper;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MMDBParser {
 	public static String getMessage(long categoryId, long instanceId) {
@@ -41,7 +43,7 @@ public class MMDBParser {
 		}
 	}
 	
-	private static Entry readEntry(RandomAccessFile in) throws IOException {
+	public static Entry readEntry(RandomAccessFile in) throws IOException {
 		Entry entry = new Entry();
 		entry.entryId = ByteSwapper.swap(in.readInt());
 		entry.offset = ByteSwapper.swap(in.readInt());
@@ -49,24 +51,40 @@ public class MMDBParser {
 		return entry;
 	}
 	
-	private static Entry findEntry(RandomAccessFile in, long entryId, long offset) throws IOException {
+	public static Entry findEntry(RandomAccessFile in, long entryId, long offset) throws IOException {
 		in.seek(offset);
 
-		Entry previousEntry = null;
-		Entry currentEntry = null;
-		do {
-			previousEntry = currentEntry;
-			currentEntry = readEntry(in);
-			
-			if (previousEntry != null && currentEntry.entryId < previousEntry.entryId) {
-				return null;
+		long previousId = -1;
+		Entry currentEntry = readEntry(in);
+		while (currentEntry.entryId > previousId) {
+			if (currentEntry.entryId == entryId) {
+				return currentEntry;
 			}
-		} while (entryId != currentEntry.entryId);
 
-		return currentEntry;
+			previousId = currentEntry.entryId;
+			currentEntry = readEntry(in);
+		}
+
+		return null;
+	}
+
+	public static List<Entry> getAllEntries(RandomAccessFile in, long offset) throws IOException {
+		in.seek(offset);
+
+		List<Entry> entries = new ArrayList<Entry>();
+
+		long previousId = -1;
+		Entry currentEntry = readEntry(in);
+		while (currentEntry.entryId > previousId) {
+			entries.add(currentEntry);
+			previousId = currentEntry.entryId;
+			currentEntry = readEntry(in);
+		}
+
+		return entries;
 	}
 	
-	private static String readString(RandomAccessFile in) throws IOException {
+	public static String readString(RandomAccessFile in) throws IOException {
 		String message = "";
 		char character;
 		
@@ -79,7 +97,7 @@ public class MMDBParser {
 		return message;
 	}
 	
-	private static class Entry {
+	public static class Entry {
 		public long entryId;
 		public long offset;
 	}
