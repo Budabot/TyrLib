@@ -60,7 +60,7 @@ public class ChannelMessage extends BaseServerPacket {
 		if (extendedMessage == null && charId.getLongData() == 0 && message.getStringData().startsWith("~&") && message.getStringData().endsWith("~")) {
 			// remove leading ~& and trailing ~
 			String parseMessage = message.getStringData();
-			parseMessage = parseMessage.substring(2, parseMessage.length() - 2);
+			parseMessage = parseMessage.substring(2, parseMessage.length() - 1);
 
 			extendedMessage = new ExtendedMessage(new DataInputStream(new ByteArrayInputStream(parseMessage.getBytes("UTF-8"))));
 		}
