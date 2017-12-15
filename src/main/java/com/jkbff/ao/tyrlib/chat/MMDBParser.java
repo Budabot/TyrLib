@@ -53,7 +53,7 @@ public class MMDBParser {
 			}
 		}
 	}
-	
+
 	public Entry readEntry(RandomAccessFile in) throws IOException {
 		Entry entry = new Entry();
 		entry.entryId = ByteSwapper.swap(in.readInt());
@@ -111,5 +111,10 @@ public class MMDBParser {
 	public class Entry {
 		public long entryId;
 		public long offset;
+
+		@Override
+		public String toString() {
+			return "(" + entryId + ", " + offset + ")";
+		}
 	}
 }
