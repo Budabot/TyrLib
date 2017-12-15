@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.AbstractType;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-
 public class LoginOk extends BaseServerPacket {
 
 	public static final int TYPE = 5;

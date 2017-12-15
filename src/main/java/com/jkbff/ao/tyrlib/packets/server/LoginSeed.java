@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.Text;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-
 public class LoginSeed extends BaseServerPacket {
 	
 	public static final int TYPE = 0;

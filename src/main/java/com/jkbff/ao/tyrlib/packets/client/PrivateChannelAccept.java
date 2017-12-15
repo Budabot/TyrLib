@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 /**
  * @description Client accepts an invitation to join a private group
  * @responseTo com.jkbff.ao.tyrlib.packets.server.PrivateGroupJoinRequestPacket

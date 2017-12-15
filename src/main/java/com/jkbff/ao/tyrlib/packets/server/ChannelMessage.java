@@ -4,11 +4,12 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import com.jkbff.ao.tyrlib.chat.MMDBParser;
+import com.jkbff.ao.tyrlib.packets.ExtendedMessageParser;
 import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
 import com.jkbff.ao.tyrlib.packets.ExtendedMessage;
 
 public class ChannelMessage extends BaseServerPacket {
@@ -19,8 +20,6 @@ public class ChannelMessage extends BaseServerPacket {
 	private CharacterId charId;
 	private Text message;
 	private Text raw;
-	
-	private ExtendedMessage extendedMessage;
 
 	public ChannelMessage(DataInputStream input) {
 		this.chatGroupId = new ChatGroupId(input);
@@ -29,7 +28,7 @@ public class ChannelMessage extends BaseServerPacket {
 		this.raw = new Text(input);
 	}
 	
-	public ChannelMessage(int channelType, int channelId, long charId, String message, String raw) {
+	public ChannelMessage(long channelId, long charId, String message, String raw) {
 		this.chatGroupId = new ChatGroupId(channelId);
 		this.charId = new CharacterId(charId);
 		this.message = new Text(message);
@@ -56,15 +55,18 @@ public class ChannelMessage extends BaseServerPacket {
 		return ChannelMessage.TYPE;
 	}
 	
-	public ExtendedMessage getExtendedMessage() throws IOException {
-		if (extendedMessage == null && charId.getLongData() == 0 && message.getStringData().startsWith("~&") && message.getStringData().endsWith("~")) {
+	public ExtendedMessage getExtendedMessage(MMDBParser mmdbParser) throws IOException {
+		String parseMessage = message.getStringData();
+		if (charId.getLongData() == 0 && parseMessage.startsWith("~&") && parseMessage.endsWith("~")) {
 			// remove leading ~& and trailing ~
-			String parseMessage = message.getStringData();
 			parseMessage = parseMessage.substring(2, parseMessage.length() - 1);
 
-			extendedMessage = new ExtendedMessage(new DataInputStream(new ByteArrayInputStream(parseMessage.getBytes("UTF-8"))));
+			ExtendedMessageParser extendedMessageParser = new ExtendedMessageParser(mmdbParser);
+
+			return extendedMessageParser.parse(new DataInputStream(new ByteArrayInputStream(parseMessage.getBytes("UTF-8"))));
+		} else {
+			return null;
 		}
-		return extendedMessage;
 	}
 	
 	public byte[] getBytes() throws IOException {

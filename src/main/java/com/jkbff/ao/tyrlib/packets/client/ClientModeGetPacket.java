@@ -6,8 +6,6 @@ import java.io.IOException;
 import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Int;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 public class ClientModeGetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 70;

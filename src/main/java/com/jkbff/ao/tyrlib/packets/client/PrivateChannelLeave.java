@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 /**
  * @description Purpose unknown
  * @author Jason

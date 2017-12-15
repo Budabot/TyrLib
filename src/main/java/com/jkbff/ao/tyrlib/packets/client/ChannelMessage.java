@@ -6,8 +6,6 @@ import java.io.IOException;
 import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Text;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 /**
  * @description Client sends a message to a group. 
  * @author Jason

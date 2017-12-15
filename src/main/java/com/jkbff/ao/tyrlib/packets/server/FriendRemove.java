@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-
 public class FriendRemove extends BaseServerPacket {
 
 	public static final int TYPE = 41;

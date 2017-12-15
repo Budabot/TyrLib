@@ -9,8 +9,6 @@ import java.util.List;
 
 import sk.sigp.aobot.client.types.Text;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 public class ChatCommandPacket extends BaseClientPacket {
 	
 	public static final int TYPE = 120;

@@ -3,18 +3,30 @@ package com.jkbff.ao.tyrlib.chat;
 import no.geosoft.cc.util.ByteSwapper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MMDBParser {
-	public static String getMessage(long categoryId, long instanceId) {
-		RandomAccessFile in = null;
-		
+	private final RandomAccessFile in;
+
+	public static MMDBParser createInstanceFromClasspath() {
 		try {
-			in = new RandomAccessFile(new File(MMDBParser.class.getResource("/text.mdb").toURI()), "r");
-			
+			return new MMDBParser(new RandomAccessFile(new File(MMDBParser.class.getResource("/text.mdb").toURI()), "r"));
+		} catch (FileNotFoundException | URISyntaxException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public MMDBParser(RandomAccessFile in) {
+		this.in = in;
+	}
+
+	public String getMessage(long categoryId, long instanceId) {
+		try {
 			Entry category = findEntry(in, categoryId, 8);
 			if (category == null) {
 				throw new RuntimeException("Unknown Reference Type -- Could not find category. categoryId: '" + categoryId + "' instanceId: '" + instanceId + "'");
@@ -26,8 +38,7 @@ public class MMDBParser {
 			}
 			
 			in.seek(instance.offset);
-			String message = readString(in);
-			return message;
+			return readString(in);
 		} catch (RuntimeException e) {
 			throw e;
 		} catch (Exception e) {
@@ -37,13 +48,13 @@ public class MMDBParser {
 				try {
 					in.close();
 				} catch (Exception e) {
-					throw new RuntimeException(e);
+					// ignore exceptions here
 				}
 			}
 		}
 	}
 	
-	public static Entry readEntry(RandomAccessFile in) throws IOException {
+	public Entry readEntry(RandomAccessFile in) throws IOException {
 		Entry entry = new Entry();
 		entry.entryId = ByteSwapper.swap(in.readInt());
 		entry.offset = ByteSwapper.swap(in.readInt());
@@ -51,7 +62,7 @@ public class MMDBParser {
 		return entry;
 	}
 	
-	public static Entry findEntry(RandomAccessFile in, long entryId, long offset) throws IOException {
+	public Entry findEntry(RandomAccessFile in, long entryId, long offset) throws IOException {
 		in.seek(offset);
 
 		long previousId = -1;
@@ -68,7 +79,7 @@ public class MMDBParser {
 		return null;
 	}
 
-	public static List<Entry> getAllEntries(RandomAccessFile in, long offset) throws IOException {
+	public List<Entry> getAllEntries(RandomAccessFile in, long offset) throws IOException {
 		in.seek(offset);
 
 		List<Entry> entries = new ArrayList<Entry>();
@@ -84,7 +95,7 @@ public class MMDBParser {
 		return entries;
 	}
 	
-	public static String readString(RandomAccessFile in) throws IOException {
+	public String readString(RandomAccessFile in) throws IOException {
 		String message = "";
 		char character;
 		
@@ -97,7 +108,7 @@ public class MMDBParser {
 		return message;
 	}
 	
-	public static class Entry {
+	public class Entry {
 		public long entryId;
 		public long offset;
 	}

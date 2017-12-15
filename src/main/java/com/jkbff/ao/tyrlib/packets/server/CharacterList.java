@@ -10,8 +10,6 @@ import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-
 public class CharacterList extends BaseServerPacket {
 	
 	public static final int TYPE = 7;

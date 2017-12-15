@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 /**
  * @description Client requests a user to be kicked from private group
  * @author Jason

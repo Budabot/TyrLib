@@ -7,8 +7,6 @@ import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-
 /**
  * @description Announces to the client what chat channels are available.
  * @author Jason

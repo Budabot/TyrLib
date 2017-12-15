@@ -37,8 +37,9 @@ class ExtendedMessageTest extends FunSuite {
 		output.writeInt(value3.asInstanceOf[Int])
 		
 		val stream = new DataInputStream(new ByteArrayInputStream(baos.toByteArray))
-		
-		val result = ExtendedMessage.parseParams(stream)
+
+		val extendedMessageParser = new ExtendedMessageParser(MMDBParser.createInstanceFromClasspath())
+		val result = extendedMessageParser.parse(stream).getParams
 		assert(result.size() == 4)
 		assert(result.get(0) == value0)
 		assert(result.get(1) == value1)

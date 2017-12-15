@@ -88,91 +88,47 @@ public class ChatGroupId extends AbstractType {
 	}
 	
 	public boolean isGuildChannel() {
-		if ((mydata & 0xFF00000000L) >> 32 == 3) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF00000000L) >> 32 == 3;
 	}
 	
 	public boolean isOOC() {
 		//if ((chatGroupId & 0xFF00000000L) >> 32 == 135) {
-		if ((mydata & 0xFF) == 16) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF) == 16;
 	}
 	
 	public boolean isJpnOOC() {
-		if ((mydata & 0xFF) == 17) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF) == 17;
 	}
 	
 	public boolean isShopping100() {
-		if ((mydata & 0xFF) == 9) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF) == 9;
 	}
 
 	public boolean isShopping50to100() {
-		if ((mydata & 0xFF) == 5) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF) == 5;
 	}
 	
 	public boolean isShopping11to50() {
-		if ((mydata & 0xFF) == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF) == 0;
 	}
 	
 	public boolean isShopping() {
-		if ((mydata & 0xFF00000000L) >> 32 == 134) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF00000000L) >> 32 == 134;
 	}
 	
 	public boolean isNotumWars() {
-		if ((mydata & 0xFF00000000L) >> 32 == 10) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF00000000L) >> 32 == 10;
 	}
 	
 	public boolean isOmni() {
-		if ((mydata & 0xFF00L) >> 8 == 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF00L) >> 8 == 2;
 	}
 
 	public boolean isNeut() {
-		if ((mydata & 0xFF00L) >> 8 == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF00L) >> 8 == 0;
 	}
 
 	public boolean isClan() {
-		if ((mydata & 0xFF00L) >> 8 == 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return (mydata & 0xFF00L) >> 8 == 1;
 	}
 }

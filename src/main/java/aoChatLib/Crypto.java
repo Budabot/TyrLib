@@ -41,8 +41,9 @@ public class Crypto {
 	    
 		//toBeEncrypted needs to be 8*n long, add padding
 		String toBeEncrypted = randomPrefix + loginInfoLength + loginString;
-		while ((toBeEncrypted.length() % 8) != 0)
+		while ((toBeEncrypted.length() % 8) != 0) {
 			toBeEncrypted += " ";
+		}
 	    
 		//Encrypt it with TEA
 		String encrypted = encrypt(dhK_string, toBeEncrypted);

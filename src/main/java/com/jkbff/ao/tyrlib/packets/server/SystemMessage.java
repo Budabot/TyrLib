@@ -1,15 +1,13 @@
 package com.jkbff.ao.tyrlib.packets.server;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-
-import org.apache.log4j.Logger;
-
+import com.jkbff.ao.tyrlib.chat.MMDBParser;
+import com.jkbff.ao.tyrlib.packets.ExtendedMessage;
+import com.jkbff.ao.tyrlib.packets.ExtendedMessageParser;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-import com.jkbff.ao.tyrlib.packets.ExtendedMessage;
+import java.io.DataInputStream;
+import java.io.IOException;
 
 public class SystemMessage extends BaseServerPacket {
 
@@ -19,26 +17,14 @@ public class SystemMessage extends BaseServerPacket {
 	private Int windowId;
 	private Int messageId;
 	private Text messageArgs;
-	private ExtendedMessage extendedMessage;
-	
+
 	private static final int CATEGORY_ID = 20000;
-	
-	private Logger log = Logger.getLogger(getClass());
 
 	public SystemMessage(DataInputStream input) {
 		this.clientId = new Int(input);
 		this.windowId = new Int(input);
 		this.messageId = new Int(input);
 		this.messageArgs = new Text(input);
-
-		try {
-			extendedMessage = new ExtendedMessage(CATEGORY_ID, messageId.getIntData(), messageArgs.getStringData());
-		} catch (Exception e) {
-			log.warn("Could not parse extended message info for categoryId: '" +
-					CATEGORY_ID + "', instanceId: '" +
-					messageId.getIntData() + "', paramString: '" +
-					messageArgs.getStringData(), e);
-		}
 	}
 	
 	public SystemMessage(int clientId, int windowId, int messageId, String messageArgs) {
@@ -46,17 +32,6 @@ public class SystemMessage extends BaseServerPacket {
 		this.windowId = new Int(windowId);
 		this.messageId = new Int(messageId);
 		this.messageArgs = new Text(messageArgs);
-		
-		extendedMessage = new ExtendedMessage(CATEGORY_ID, messageId, messageArgs);
-	}
-	
-	public SystemMessage(int clientId, int windowId, ExtendedMessage extendedMessage) {
-		this.clientId = new Int(clientId);
-		this.windowId = new Int(windowId);
-		this.messageId = new Int((int) extendedMessage.getInstanceId());
-		this.messageArgs = new Text(extendedMessage.getMessage());
-		
-		this.extendedMessage = extendedMessage;
 	}
 
 	public int getClientId() {
@@ -75,8 +50,10 @@ public class SystemMessage extends BaseServerPacket {
 		return messageArgs.getStringData();
 	}
 	
-	public ExtendedMessage getExtendedMessage() {
-		return extendedMessage;
+	public ExtendedMessage getExtendedMessage(MMDBParser mmdbParser) {
+		ExtendedMessageParser extendedMessageParser = new ExtendedMessageParser(mmdbParser);
+
+		return extendedMessageParser.parse(CATEGORY_ID, messageId.getIntData(), messageArgs.toString());
 	}
 
 	public int getPacketType() {
@@ -94,7 +71,6 @@ public class SystemMessage extends BaseServerPacket {
 			.append("\n\tWindowId: ").append(windowId)
 			.append("\n\tMessageId: ").append(messageId)
 			.append("\n\tMessageArgs: ").append(messageArgs)
-			.append("\n\tExtendedMessage: ").append(extendedMessage)
 			.toString();
 
 		return output;

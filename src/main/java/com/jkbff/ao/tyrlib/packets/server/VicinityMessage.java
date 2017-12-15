@@ -7,8 +7,6 @@ import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.TextBlob;
 import sk.sigp.aobot.client.types.CharacterId;
 
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket;
-
 public class VicinityMessage extends BaseServerPacket {
 
 	public static final int TYPE = 34;

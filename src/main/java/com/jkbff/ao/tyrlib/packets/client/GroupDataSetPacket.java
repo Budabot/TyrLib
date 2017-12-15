@@ -7,8 +7,6 @@ import sk.sigp.aobot.client.types.ChatGroupId;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 /**
  * @description Deprecated. At one time, used to stop the server from sending channels to the client.
  * 	Essentially, muting channels on the server-side. see: http://aodevs.com/index.php/topic,181.0.html

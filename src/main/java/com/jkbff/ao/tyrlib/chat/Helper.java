@@ -10,7 +10,7 @@ public class Helper {
 	public static String print(byte[] bytes) {
 		StringBuilder returnValue = new StringBuilder();
 		for (byte abyte: bytes) {
-			returnValue.append((int)abyte  + " ");
+			returnValue.append((int) abyte).append(" ");
 		}
 		return returnValue.toString();
 	}
@@ -18,7 +18,7 @@ public class Helper {
 	public static <T> String print(T[] array) {
 		StringBuilder str = new StringBuilder();
 		for (T obj : array) {
-			str.append(obj.toString() + " ");
+			str.append(obj.toString()).append(" ");
 		}
 		return str.toString();
 	}
@@ -37,8 +37,9 @@ public class Helper {
 	
 	public static void copy(byte[] from, byte[] to, int toff) {
 		// stupid routine. make sure to.length >= from.length+toff
-		for (int i = from.length - 1; i >= 0; i--)
+		for (int i = from.length - 1; i >= 0; i--) {
 			to[toff + i] = from[i];
+		}
 	}
 
 	public static void integerToBytes(long from, byte[] to, int length, int off) {
@@ -65,95 +66,51 @@ public class Helper {
 	}
 	
 	public static boolean isOrgChat(long chatGroupId) {
-		if ((chatGroupId & 0xFF00000000L) >> 32 == 3) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF00000000L) >> 32 == 3;
 	}
 	
 	public static boolean isOOC(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 16) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF) == 16;
 	}
 	
 	public static boolean isJpnOOC(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 17) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF) == 17;
 	}
 	
 	public static boolean isShopping100(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 9) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF) == 9;
 	}
 
 	public static boolean isShopping50to100(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 5) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF) == 5;
 	}
 	
 	public static boolean isShopping11to50(long chatGroupId) {
-		if ((chatGroupId & 0xFF) == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF) == 0;
 	}
 	
 	public static boolean isShopping(long chatGroupId) {
-		if ((chatGroupId & 0xFF00000000L) >> 32 == 134) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF00000000L) >> 32 == 134;
 	}
 	
 	public static boolean isNotumWars(long chatGroupId) {
-		if ((chatGroupId & 0xFF00000000L) >> 32 == 10) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF00000000L) >> 32 == 10;
 	}
 	
 	public static boolean isOmni(long chatGroupId) {
-		if ((chatGroupId & 0xFF00L) >> 8 == 2) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF00L) >> 8 == 2;
 	}
 
 	public static boolean isNeut(long chatGroupId) {
-		if ((chatGroupId & 0xFF00L) >> 8 == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF00L) >> 8 == 0;
 	}
 
 	public static boolean isClan(long chatGroupId) {
-		if ((chatGroupId & 0xFF00L) >> 8 == 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return (chatGroupId & 0xFF00L) >> 8 == 1;
 	}
 	
 	public static String getLongAsBitString(long longValue) {
-		StringBuffer bitString = new StringBuffer();
+		StringBuilder bitString = new StringBuilder();
 		
 		for (int i = Long.SIZE; i >= 0; i--) {
 			double value = Math.pow(2, i);

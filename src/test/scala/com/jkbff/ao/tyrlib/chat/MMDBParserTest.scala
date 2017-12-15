@@ -7,6 +7,7 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class MMDBParserTest extends FunSuite {
 	test("test") {
-		println(MMDBParser.getMessage(20000L, 264474563L))
+		val mmdbParser = MMDBParser.createInstanceFromClasspath()
+		println(mmdbParser.getMessage(20000L, 264474563L))
 	}
 }

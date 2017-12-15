@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import sk.sigp.aobot.client.types.Int;
 
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket;
-
 public class ClientModeSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 71;

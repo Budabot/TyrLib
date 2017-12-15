@@ -55,7 +55,7 @@ public class Raw extends AbstractType {
 	}
 
 	public Raw(String textblob) {
-		byte[] str = new byte[0];
+		byte[] str;
 		try {
 			str = textblob.getBytes(ENCODING);
 		} catch (UnsupportedEncodingException e) {
@@ -73,10 +73,12 @@ public class Raw extends AbstractType {
 
 	public void append(Raw raw) {
 		byte[] b = new byte[mydata.length + raw.mydata.length];
-		for (int i = mydata.length - 1; i >= 0; i--)
+		for (int i = mydata.length - 1; i >= 0; i--) {
 			b[i] = mydata[i];
-		for (int i = b.length - 1, j = raw.mydata.length - 1; j >= 0; i--, j--)
+		}
+		for (int i = b.length - 1, j = raw.mydata.length - 1; j >= 0; i--, j--) {
 			b[i] = raw.mydata[j];
+		}
 		mydata = b;
 	}
 
@@ -124,8 +126,7 @@ public class Raw extends AbstractType {
 	public String bytesToString(int offset) {
 		int size = bytesToShort(offset);
 		try {
-			String ret = new String(mydata, offset + 2, size, ENCODING);
-			return ret;
+			return new String(mydata, offset + 2, size, ENCODING);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

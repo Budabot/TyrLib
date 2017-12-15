@@ -1,12 +1,18 @@
-package com.jkbff.ao.tyrlib.chat
+package com.jkbff.ao.tyrlib.chat.socket
 
+import java.io.{DataInputStream, OutputStream}
 import java.net.Socket
-import com.jkbff.ao.tyrlib.packets.BaseServerPacket
-import com.jkbff.ao.tyrlib.packets.BaseClientPacket
-import java.io.OutputStream
-import java.io.DataInputStream
 
-class AOServerSocket(socket: Socket) {
+import com.jkbff.ao.tyrlib.packets.client.BaseClientPacket
+import com.jkbff.ao.tyrlib.packets.server.BaseServerPacket
+
+/**
+	* Sends and receives packets as if AO Chat Server
+	*
+	* @param socket
+	* @param clientPacketFactory
+	*/
+class AOServerSocket(socket: Socket, clientPacketFactory: ClientPacketFactory) {
 	val outputStream: OutputStream = socket.getOutputStream()
 	val inputStream: DataInputStream = new DataInputStream(socket.getInputStream())
 
@@ -23,7 +29,7 @@ class AOServerSocket(socket: Socket) {
 		inputStream.readFully(payload)
 
 		// create a packet from the bytes read in and send to the bot to process
-		val packet = BaseClientPacket.createInstance(packetId, payload)
+		val packet = clientPacketFactory.createInstance(packetId, payload)
 		if (packet == null) {
 			throw new Exception("Unknown packet! packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'")
 		}
