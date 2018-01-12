@@ -82,7 +82,7 @@ public class MMDBParser {
 	public List<Entry> getAllEntries(RandomAccessFile in, long offset) throws IOException {
 		in.seek(offset);
 
-		List<Entry> entries = new ArrayList<Entry>();
+		List<Entry> entries = new ArrayList<>();
 
 		long previousId = -1;
 		Entry currentEntry = readEntry(in);
@@ -96,16 +96,16 @@ public class MMDBParser {
 	}
 	
 	public String readString(RandomAccessFile in) throws IOException {
-		String message = "";
+		StringBuilder message = new StringBuilder();
 		char character;
 		
 		character = (char)in.readByte();
 		while (character != 0) {
-			message += character;
+			message.append(character);
 			character = (char)in.readByte();
 		}
 		
-		return message;
+		return message.toString();
 	}
 	
 	public class Entry {

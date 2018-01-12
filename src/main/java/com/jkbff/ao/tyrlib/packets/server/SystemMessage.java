@@ -35,25 +35,25 @@ public class SystemMessage extends BaseServerPacket {
 	}
 
 	public int getClientId() {
-		return clientId.getIntData();
+		return clientId.getData();
 	}
 
 	public int getWindowId() {
-		return windowId.getIntData();
+		return windowId.getData();
 	}
 
 	public int getMessageId() {
-		return messageId.getIntData();
+		return messageId.getData();
 	}
 
 	public String getMessageArgs() {
-		return messageArgs.getStringData();
+		return messageArgs.getData();
 	}
 	
 	public ExtendedMessage getExtendedMessage(MMDBParser mmdbParser) {
 		ExtendedMessageParser extendedMessageParser = new ExtendedMessageParser(mmdbParser);
 
-		return extendedMessageParser.parse(CATEGORY_ID, messageId.getIntData(), messageArgs.toString());
+		return extendedMessageParser.parse(CATEGORY_ID, messageId.getData(), messageArgs.toString());
 	}
 
 	public int getPacketType() {

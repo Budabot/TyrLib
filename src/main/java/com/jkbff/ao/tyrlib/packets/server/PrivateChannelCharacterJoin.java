@@ -23,11 +23,11 @@ public class PrivateChannelCharacterJoin extends BaseServerPacket {
 	}
 	
 	public long getCharId1() {
-		return this.charId1.getLongData();
+		return this.charId1.getData();
 	}
 	
 	public long getCharId2() {
-		return this.charId2.getLongData();
+		return this.charId2.getData();
 	}
 	
 	public int getPacketType() {

@@ -29,19 +29,19 @@ public class ClientModeSetPacket extends BaseClientPacket {
 	}
 	
 	public int getUnknownInt1() {
-		return unknownInt1.getIntData();
+		return unknownInt1.getData();
 	}
 	
 	public int getUnknownInt2() {
-		return unknownInt2.getIntData();
+		return unknownInt2.getData();
 	}
 	
 	public int getUnknownInt3() {
-		return unknownInt3.getIntData();
+		return unknownInt3.getData();
 	}
 	
 	public int getUnknownInt4() {
-		return unknownInt4.getIntData();
+		return unknownInt4.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

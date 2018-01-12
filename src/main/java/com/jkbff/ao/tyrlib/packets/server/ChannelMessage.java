@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import com.jkbff.ao.tyrlib.chat.MMDBParser;
 import com.jkbff.ao.tyrlib.packets.ExtendedMessageParser;
-import sk.sigp.aobot.client.types.ChatGroupId;
+import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.CharacterId;
 
@@ -16,39 +16,39 @@ public class ChannelMessage extends BaseServerPacket {
 
 	public static final int TYPE = 65;
 	
-	private ChatGroupId chatGroupId;
+	private ChannelId channelId;
 	private CharacterId charId;
 	private Text message;
 	private Text raw;
 
 	public ChannelMessage(DataInputStream input) {
-		this.chatGroupId = new ChatGroupId(input);
+		this.channelId = new ChannelId(input);
 		this.charId = new CharacterId(input);
 		this.message = new Text(input);
 		this.raw = new Text(input);
 	}
 	
 	public ChannelMessage(long channelId, long charId, String message, String raw) {
-		this.chatGroupId = new ChatGroupId(channelId);
+		this.channelId = new ChannelId(channelId);
 		this.charId = new CharacterId(charId);
 		this.message = new Text(message);
 		this.raw = new Text(raw);
 	}
 	
-	public long getChatGroupId() {
-		return chatGroupId.getLongData();
+	public long getChannelId() {
+		return channelId.getData();
 	}
 
 	public long getCharId() {
-		return charId.getLongData();
+		return charId.getData();
 	}
 
 	public String getMessage() {
-		return message.getStringData();
+		return message.getData();
 	}
 
 	public String getRaw() {
-		return raw.getStringData();
+		return raw.getData();
 	}
 
 	public int getPacketType() {
@@ -56,8 +56,8 @@ public class ChannelMessage extends BaseServerPacket {
 	}
 	
 	public ExtendedMessage getExtendedMessage(MMDBParser mmdbParser) throws IOException {
-		String parseMessage = message.getStringData();
-		if (charId.getLongData() == 0 && parseMessage.startsWith("~&") && parseMessage.endsWith("~")) {
+		String parseMessage = message.getData();
+		if (charId.getData() == 0 && parseMessage.startsWith("~&") && parseMessage.endsWith("~")) {
 			// remove leading ~& and trailing ~
 			parseMessage = parseMessage.substring(2, parseMessage.length() - 1);
 
@@ -70,13 +70,13 @@ public class ChannelMessage extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(chatGroupId, charId, message, raw);
+		return getBytes(channelId, charId, message, raw);
 	}
 	
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tChannelId: ").append(channelId)
 			.append("\n\tCharId: ").append(charId)
 			.append("\n\tMessage: ").append(message)
 			.append("\n\tRaw: ").append(raw)

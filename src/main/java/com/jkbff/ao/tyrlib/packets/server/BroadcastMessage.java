@@ -26,15 +26,15 @@ public class BroadcastMessage extends BaseServerPacket {
 	}
 	
 	public String getText() {
-		return this.text.getStringData();
+		return this.text.getData();
 	}
 	
 	public String getMessage() {
-		return this.message.getStringData();
+		return this.message.getData();
 	}
 	
 	public String getRaw() {
-		return this.raw.getStringData();
+		return this.raw.getData();
 	}
 	
 	public int getPacketType() {

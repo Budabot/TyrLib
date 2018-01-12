@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Helper {
-	
-	public static final int CHATGROUPIDSIZE = 5;
-	
 	public static String print(byte[] bytes) {
 		StringBuilder returnValue = new StringBuilder();
 		for (byte abyte: bytes) {
@@ -72,11 +69,7 @@ public class Helper {
 	public static boolean isOOC(long chatGroupId) {
 		return (chatGroupId & 0xFF) == 16;
 	}
-	
-	public static boolean isJpnOOC(long chatGroupId) {
-		return (chatGroupId & 0xFF) == 17;
-	}
-	
+
 	public static boolean isShopping100(long chatGroupId) {
 		return (chatGroupId & 0xFF) == 9;
 	}
@@ -84,7 +77,7 @@ public class Helper {
 	public static boolean isShopping50to100(long chatGroupId) {
 		return (chatGroupId & 0xFF) == 5;
 	}
-	
+
 	public static boolean isShopping11to50(long chatGroupId) {
 		return (chatGroupId & 0xFF) == 0;
 	}

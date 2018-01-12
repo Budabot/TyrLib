@@ -24,11 +24,11 @@ public class CharacterReply extends BaseServerPacket {
 	}
 	
 	public long getCharId() {
-		return this.charId.getLongData();
+		return this.charId.getData();
 	}
 	
 	public String getCharacterName() {
-		return this.characterName.getStringData();
+		return this.characterName.getData();
 	}
 
 	public int getPacketType() {

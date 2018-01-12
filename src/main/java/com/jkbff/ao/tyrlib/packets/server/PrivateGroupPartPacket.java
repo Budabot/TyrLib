@@ -20,7 +20,7 @@ public class PrivateGroupPartPacket extends BaseServerPacket {
 	}
 	
 	public long getCharId() {
-		return this.charId.getLongData();
+		return this.charId.getData();
 	}
 	
 	public int getPacketType() {

@@ -18,6 +18,10 @@ public class Pong extends BaseServerPacket {
 	public Pong(String raw) {
 		this.raw = new Text(raw);
 	}
+
+	public String getText() {
+		return raw.getData();
+	}
 	
 	public byte[] getBytes() throws IOException {
 		return getBytes(raw);

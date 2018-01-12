@@ -24,11 +24,11 @@ public class FriendUpdate extends BaseClientPacket {
 	}
 	
 	public long getCharId() {
-		return charId.getLongData();
+		return charId.getData();
 	}
 
 	public String getStatus() {
-		return status.getStringData();
+		return status.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

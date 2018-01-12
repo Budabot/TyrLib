@@ -1,17 +1,14 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
-import com.jkbff.ao.tyrlib.packets.client.BaseClientPacket;
 import com.jkbff.ao.tyrlib.packets.client.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 
-public class ClientPacketFactory {
-    public BaseClientPacket createInstance(int packetId, byte[] payload) throws IOException {
+public class ClientPacketFactory implements PacketFactory<BaseClientPacket> {
+    public BaseClientPacket createInstance(int packetId, byte[] payload) {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(payload);
         DataInputStream dataStream = new DataInputStream(byteStream);
-
         switch (packetId) {
             case FriendUpdate.TYPE:
                 return new FriendUpdate(dataStream);

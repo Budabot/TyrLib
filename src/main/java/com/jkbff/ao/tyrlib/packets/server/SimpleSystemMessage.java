@@ -20,7 +20,7 @@ public class SimpleSystemMessage extends BaseServerPacket {
 	}
 	
 	public String getMessage() {
-		return this.message.getStringData();
+		return this.message.getData();
 	}
 	
 	public int getPacketType() {

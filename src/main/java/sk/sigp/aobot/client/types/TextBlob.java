@@ -30,14 +30,10 @@ import com.jkbff.ao.tyrlib.chat.Helper;
 
 
 public class TextBlob extends AbstractType {
-	protected String mydata;
-
-	public TextBlob() {
-		mydata = "";
-	}
+	protected final String data;
 
 	public TextBlob(String str) {
-		mydata = str;
+		data = str;
 	}
 
 	public TextBlob(DataInputStream input) {
@@ -46,25 +42,22 @@ public class TextBlob extends AbstractType {
 			int size = input.readInt();
 			byte[] bytes = new byte[size];
 			input.readFully(bytes);
-			mydata = new String(bytes, ENCODING);
+			data = new String(bytes, ENCODING);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public TextBlob(Raw d) {
-		mydata = d.bytesToString(16);
-	}
-
-	public String getStringData() {
-		return mydata;
+	public String getData() {
+		return data;
 	}
 
 	public byte[] getRaw() {
 		byte[] str = new byte[0];
 		try {
-			str = mydata.getBytes(ENCODING);
+			str = data.getBytes(ENCODING);
 		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 		byte[] raw = new byte[str.length + 20];
 
@@ -79,12 +72,8 @@ public class TextBlob extends AbstractType {
 		return raw;
 	}
 
-	public int size() {
-		return getRaw().length;
-	}
-
 	@Override
 	public String toString() {
-		return mydata;
+		return data;
 	}
 }

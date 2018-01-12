@@ -30,19 +30,19 @@ public class PrivateChannelMessage extends BaseServerPacket {
 	}
 	
 	public long getCharId1() {
-		return this.charId1.getLongData();
+		return this.charId1.getData();
 	}
 	
 	public long getCharId2() {
-		return this.charId2.getLongData();
+		return this.charId2.getData();
 	}
 	
 	public String getMessage() {
-		return this.message.getStringData();
+		return this.message.getData();
 	}
 	
 	public String getRaw() {
-		return this.raw.getStringData();
+		return this.raw.getData();
 	}
 	
 	public int getPacketType() {

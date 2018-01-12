@@ -20,7 +20,7 @@ public class FriendRemove extends BaseClientPacket {
 	}
 	
 	public long getCharId() {
-		return charId.getLongData();
+		return charId.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

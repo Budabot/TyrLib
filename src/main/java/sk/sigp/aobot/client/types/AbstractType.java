@@ -31,8 +31,6 @@ public abstract class AbstractType {
 	
 	public abstract byte[] getRaw();
 
-	public abstract int size();
-
 	@Override
 	public String toString() {
 		String s = this.getClass().getName();

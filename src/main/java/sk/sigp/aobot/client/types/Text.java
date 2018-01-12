@@ -30,14 +30,10 @@ import com.jkbff.ao.tyrlib.chat.Helper;
 
 
 public class Text extends AbstractType {
-	protected String mydata;
-
-	public Text() {
-		mydata = "";
-	}
+	protected final String data;
 
 	public Text(String str) {
-		mydata = str;
+		data = str;
 	}
 
 	public Text(DataInputStream input) {
@@ -45,44 +41,30 @@ public class Text extends AbstractType {
 			int size = input.readUnsignedShort();
 			byte[] bytes = new byte[size];
 			input.readFully(bytes);
-			mydata = new String(bytes, ENCODING);
+			data = new String(bytes, ENCODING);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public boolean equals(String s) {
-		return mydata.equalsIgnoreCase(s);
-	}
-
-	public boolean equals(Text s) {
-		return mydata.equalsIgnoreCase(s.mydata);
-	}
-
-	public String getStringData() {
-		return mydata;
+	public String getData() {
+		return data;
 	}
 
 	public byte[] getRaw() {
 		try {
-			byte[] str = mydata.getBytes(ENCODING);
+			byte[] str = data.getBytes(ENCODING);
 			byte[] ret = new byte[str.length + 2];
 			Helper.integerToBytes(str.length, ret, 2, 0);
 			Helper.copy(str, ret, 2);
 			return ret;
 		} catch (Exception e) {
-			byte[] ret = new byte[2];
-			Helper.integerToBytes(0, ret, 2, 0);
-			return ret;
+			throw new RuntimeException(e);
 		}
-	}
-
-	public int size() {
-		return getRaw().length;
 	}
 
 	@Override
 	public String toString() {
-		return mydata;
+		return data;
 	}
 }

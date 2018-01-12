@@ -38,7 +38,7 @@ public class ChatCommandPacket extends BaseClientPacket {
 	public String[] getCommand() {
 		String[] commands = new String[command.length];
 		for (int i = 0; i < command.length; i++) {
-			commands[i] = command[i].getStringData();
+			commands[i] = command[i].getData();
 		}
 		return commands;
 	}
@@ -59,8 +59,8 @@ public class ChatCommandPacket extends BaseClientPacket {
 		
 		// write array length
 		outputStream.writeShort(command.length);
-		for (int i = 0; i < command.length; i++) {
-			outputStream.write(command[i].getRaw());
+		for (Text aCommand : command) {
+			outputStream.write(aCommand.getRaw());
 		}
 		
 		return byteStream.toByteArray();

@@ -33,15 +33,15 @@ public class LoginRequest extends BaseClientPacket {
 	}
 	
 	public int getUnknownInt() {
-		return unknownInt.getIntData();
+		return unknownInt.getData();
 	}
 	
 	public String getUsername() {
-		return username.getStringData();
+		return username.getData();
 	}
 	
 	public String getKey() {
-		return key.getStringData();
+		return key.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

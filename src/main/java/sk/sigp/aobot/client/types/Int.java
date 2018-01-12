@@ -30,39 +30,27 @@ import com.jkbff.ao.tyrlib.chat.Helper;
 
 
 public class Int extends AbstractType {
-	protected int mydata;
-
-	public Int() {
-		mydata = 0;
-	}
+	protected final int data;
 
 	public Int(int i) {
-		mydata = i;
+		data = i;
 	}
 
 	public Int(DataInputStream input) {
 		try {
-			mydata = input.readInt();
+			data = input.readInt();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public boolean equals(int i) {
-		return mydata == i;
-	}
-
-	public boolean equals(Int i) {
-		return mydata == i.mydata;
-	}
-
-	public int getIntData() {
-		return mydata;
+	public int getData() {
+		return data;
 	}
 
 	public byte[] getRaw() {
-		byte[] ret = new byte[4];
-		Helper.integerToBytes(mydata, ret, size(), 0);
+		byte[] ret = new byte[size()];
+		Helper.integerToBytes(data, ret, size(), 0);
 		return ret;
 	}
 
@@ -72,6 +60,6 @@ public class Int extends AbstractType {
 
     @Override
 	public String toString() {
-		return String.valueOf(mydata);
+		return String.valueOf(data);
 	}
 }

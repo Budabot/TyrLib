@@ -28,15 +28,15 @@ public class VicinityMessage extends BaseServerPacket {
 	}
 	
 	public long getCharId() {
-		return this.charId.getLongData();
+		return this.charId.getData();
 	}
 	
 	public String getMessage() {
-		return this.message.getStringData();
+		return this.message.getData();
 	}
 	
 	public String getBlob() {
-		return this.blob.getStringData();
+		return this.blob.getData();
 	}
 	
 	public int getPacketType() {

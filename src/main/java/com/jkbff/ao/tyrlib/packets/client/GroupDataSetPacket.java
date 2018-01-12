@@ -3,7 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.ChatGroupId;
+import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
@@ -17,36 +17,36 @@ public class GroupDataSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 64;
 	
-	private ChatGroupId chatGroupId;
+	private ChannelId channelId;
 	private Int flags;
 	private Text mute;
 	
 	public GroupDataSetPacket(DataInputStream input) {
-		chatGroupId = new ChatGroupId(input);
+		channelId = new ChannelId(input);
 		flags = new Int(input);
 		mute = new Text(input);
 	}
 	
-	public GroupDataSetPacket(int chatGroupId, int flags, String mute) {
-		this.chatGroupId = new ChatGroupId(chatGroupId);
+	public GroupDataSetPacket(int channelId, int flags, String mute) {
+		this.channelId = new ChannelId(channelId);
 		this.flags = new Int(flags);
 		this.mute = new Text(mute);
 	}
 	
-	public long getChatGroupId() {
-		return chatGroupId.getLongData();
+	public long getChannelId() {
+		return channelId.getData();
 	}
 	
 	public int getFlags() {
-		return flags.getIntData();
+		return flags.getData();
 	}
 	
 	public String getMute() {
-		return mute.getStringData();
+		return mute.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(chatGroupId, flags, mute);
+		return getBytes(channelId, flags, mute);
 	}
 	
 	public int getPacketType() {
@@ -56,7 +56,7 @@ public class GroupDataSetPacket extends BaseClientPacket {
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tChannelId: ").append(channelId)
 			.append("\n\tFlags: ").append(flags)
 			.append("\n\tMute: ").append(mute)
 			.toString();

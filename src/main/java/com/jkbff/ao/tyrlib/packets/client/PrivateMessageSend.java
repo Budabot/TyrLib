@@ -32,15 +32,15 @@ public class PrivateMessageSend extends BaseClientPacket {
 	}
 	
 	public long getCharId() {
-		return charId.getLongData();
+		return charId.getData();
 	}
 	
 	public String getMessage() {
-		return message.getStringData();
+		return message.getData();
 	}
 	
 	public String getRaw() {
-		return raw.getStringData();
+		return raw.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

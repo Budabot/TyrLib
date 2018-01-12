@@ -20,7 +20,7 @@ public class CharacterRequest extends BaseClientPacket {
 	}
 	
 	public String getName() {
-		return name.getStringData();
+		return name.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

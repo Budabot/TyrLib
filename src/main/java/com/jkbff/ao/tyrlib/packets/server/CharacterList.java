@@ -96,26 +96,26 @@ public class CharacterList extends BaseServerPacket {
 		
 		// write array length
 		outputStream.writeShort(userId.length);
-		for (int i = 0; i < userId.length; i++) {
-			outputStream.write(userId[i].getRaw());
+		for (CharacterId anUserId : userId) {
+			outputStream.write(anUserId.getRaw());
 		}
 		
 		// write array length
 		outputStream.writeShort(name.length);
-		for (int i = 0; i < name.length; i++) {
-			outputStream.write(name[i].getRaw());
+		for (Text aName : name) {
+			outputStream.write(aName.getRaw());
 		}
 		
 		// write array length
 		outputStream.writeShort(level.length);
-		for (int i = 0; i < level.length; i++) {
-			outputStream.write(level[i].getRaw());
+		for (Int aLevel : level) {
+			outputStream.write(aLevel.getRaw());
 		}
 		
 		// write array length
 		outputStream.writeShort(online.length);
-		for (int i = 0; i < online.length; i++) {
-			outputStream.write(online[i].getRaw());
+		for (Int anOnline : online) {
+			outputStream.write(anOnline.getRaw());
 		}
 		
 		return byteStream.toByteArray();
@@ -124,8 +124,7 @@ public class CharacterList extends BaseServerPacket {
 	private int getAbstractArraySize(AbstractType[] abstractTypes) {
 		int size = 0;
 		for (AbstractType abstractType: abstractTypes) {
-			
-			size += abstractType.size();
+			size += abstractType.getRaw().length;
 		}
 		
 		return size;
@@ -164,10 +163,10 @@ public class CharacterList extends BaseServerPacket {
 		private int online;
 		
 		public LoginUser(CharacterId userId, Text name, Int level, Int online) {
-			this.userId = userId.getLongData();
-			this.name = name.getStringData();
-			this.level = level.getIntData();
-			this.online = online.getIntData();
+			this.userId = userId.getData();
+			this.name = name.getData();
+			this.level = level.getData();
+			this.online = online.getData();
 		}
 
 		public long getUserId() {

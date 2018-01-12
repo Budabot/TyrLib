@@ -29,42 +29,29 @@ import java.io.IOException;
 import com.jkbff.ao.tyrlib.chat.Helper;
 
 public class CharacterId extends AbstractType {
-	
-	protected long mydata;
-
-	public CharacterId() {
-		mydata = 0;
-	}
+	protected final long data;
 
 	public CharacterId(long i) {
-		mydata = i;
+		data = i;
 	}
 
 	public CharacterId(DataInputStream input) {
 		try {
-			byte[] data = new byte[size()];
-			input.readFully(data, 0, size());
-			mydata = Helper.bytesToLong(data);
+			byte[] newData = new byte[size()];
+			input.readFully(newData, 0, size());
+			data = Helper.bytesToLong(newData);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public boolean equals(long i) {
-		return mydata == i;
-	}
-
-	public boolean equals(CharacterId i) {
-		return mydata == i.mydata;
-	}
-
-	public long getLongData() {
-		return mydata;
+	public long getData() {
+		return data;
 	}
 
 	public byte[] getRaw() {
-		byte[] ret = new byte[4];
-		Helper.integerToBytes(mydata, ret, 4, 0);
+		byte[] ret = new byte[size()];
+		Helper.integerToBytes(data, ret, size(), 0);
 		return ret;
 	}
 
@@ -74,6 +61,6 @@ public class CharacterId extends AbstractType {
 
 	@Override
 	public String toString() {
-		return String.valueOf(mydata);
+		return String.valueOf(data);
 	}
 }

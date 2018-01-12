@@ -20,7 +20,7 @@ public class LoginSeed extends BaseServerPacket {
 	}
 	
 	public String getSeed() {
-		return this.seed.getStringData();
+		return this.seed.getData();
 	}
 
 	public int getPacketType() {

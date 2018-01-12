@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jkbff.ao</groupId>
 	<artifactId>tyrlib</artifactId>
-	<version>1.7</version>
+	<version>1.8</version>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -14,11 +14,6 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>2.11.6</version>
-		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -78,33 +73,6 @@
 								<source>${basedir}/src/test/scala</source>
 							</sources>
 						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.scala-tools</groupId>
-				<artifactId>maven-scala-plugin</artifactId>
-				<version>2.15.2</version>
-				<executions>
-					<execution>
-						<id>compile</id>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<phase>compile</phase>
-					</execution>
-					<execution>
-						<id>test-compile</id>
-						<goals>
-							<goal>testCompile</goal>
-						</goals>
-						<phase>test-compile</phase>
-					</execution>
-					<execution>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>

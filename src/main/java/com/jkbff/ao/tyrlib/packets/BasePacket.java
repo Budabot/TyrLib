@@ -3,6 +3,8 @@ package com.jkbff.ao.tyrlib.packets;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 import sk.sigp.aobot.client.types.AbstractType;
 
@@ -21,19 +23,21 @@ public abstract class BasePacket {
         outputStream.writeShort(getPacketType());
 
         // write packet payload length
-        int length = 0;
         if (abstractTypeArray != null) {
-            for (AbstractType type : abstractTypeArray) {
-                length += type.size();
-            }
-        }
-        outputStream.writeShort(length);
+            final Stream<byte[]> bytesArrays = Arrays.stream(abstractTypeArray).map(AbstractType::getRaw);
+            int size = bytesArrays.map(bytes -> bytes.length).reduce( (length1, length2) -> length1 + length2).orElse(0);
 
-        // write payload
-        if (abstractTypeArray != null) {
-            for (AbstractType type : abstractTypeArray) {
-                outputStream.write(type.getRaw());
-            }
+            // write size
+            outputStream.writeShort(size);
+
+            bytesArrays.forEach(bytes -> {
+                try {
+                    // write payload
+                    outputStream.write(bytes);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }
 
         return byteStream.toByteArray();
@@ -41,11 +45,6 @@ public abstract class BasePacket {
 
     @Override
     public String toString() {
-
-        String output = new StringBuffer()
-            .append(getPacketType()).append(" ").append(" (").append(this.getClass().getName()).append(")")
-            .toString();
-
-        return output;
+        return String.valueOf(getPacketType()) + " " + " (" + this.getClass().getName() + ")";
     }
 }

@@ -20,7 +20,7 @@ public class ClientUnknownPacket extends BaseServerPacket {
 	}
 	
 	public int getUnknownInt() {
-		return this.unknownInt.getIntData();
+		return this.unknownInt.getData();
 	}
 	
 	public int getPacketType() {

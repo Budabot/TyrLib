@@ -25,7 +25,7 @@ public class OnlineStatusSetPacket extends BaseClientPacket {
 	}
 	
 	public int getStatus() {
-		return status.getIntData();
+		return status.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {

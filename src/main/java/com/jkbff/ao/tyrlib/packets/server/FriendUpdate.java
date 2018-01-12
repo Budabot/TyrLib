@@ -28,15 +28,15 @@ public class FriendUpdate extends BaseServerPacket {
 	}
 
 	public long getCharId() {
-		return charId.getLongData();
+		return charId.getData();
 	}
 
 	public int getOnline() {
-		return online.getIntData();
+		return online.getData();
 	}
 
 	public String getStatus() {
-		return status.getStringData();
+		return status.getData();
 	}
 	
 	public int getPacketType() {

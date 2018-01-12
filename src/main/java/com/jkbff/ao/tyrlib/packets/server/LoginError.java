@@ -20,7 +20,7 @@ public class LoginError extends BaseServerPacket {
 	}
 	
 	public String getMessage() {
-		return this.message.getStringData();
+		return this.message.getData();
 	}
 
 	public int getPacketType() {

@@ -26,39 +26,41 @@ package sk.sigp.aobot.client.types;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import com.jkbff.ao.tyrlib.chat.Helper;
 
-/**
- * we don't support map data. this is a dummy class.
- */
-public class Map extends AbstractType {
-	protected static byte[] nulldata = new byte[] { 0 };
+public class ChannelId extends AbstractType {
+	protected final long data;
 
-	public Map() {
+	public ChannelId(long i) {
+		data = i;
 	}
 
-	public Map(DataInputStream input) {
+	public ChannelId(DataInputStream input) {
 		try {
-			int size = input.readUnsignedByte();
-			for (int i = 0; i < size; i++) {
-				int s = input.readUnsignedByte();
-				int i5 = (s & 0xf000) >>> 12;
-				int j5 = s & 0xfff;
-				input.skipBytes(i5 + j5);
-			}
+			byte[] newData = new byte[size()];
+			input.readFully(newData, 0, size());
+			data = Helper.bytesToLong(newData);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
+	public long getData() {
+		return data;
+	}
+
 	public byte[] getRaw() {
-		return nulldata;
+		byte[] ret = new byte[size()];
+		Helper.integerToBytes(data, ret, size(), 0);
+		return ret;
 	}
 
 	public int size() {
-		return 1;
+		return 5;
 	}
 
+	@Override
 	public String toString() {
-		return super.toString() + "( 0 )";
+		return String.valueOf(data);
 	}
 }

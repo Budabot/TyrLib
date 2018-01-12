@@ -3,57 +3,57 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import sk.sigp.aobot.client.types.ChatGroupId;
+import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Int;
 
 public class GroupClientModeSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 66;
 	
-	private ChatGroupId chatGroupId;
+	private ChannelId channelId;
 	private Int unknownInt1;
 	private Int unknownInt2;
 	private Int unknownInt3;
 	private Int unknownInt4;
 	
 	public GroupClientModeSetPacket(DataInputStream input) {
-		chatGroupId = new ChatGroupId(input);
+		channelId = new ChannelId(input);
 		unknownInt1 = new Int(input);
 		unknownInt2 = new Int(input);
 		unknownInt3 = new Int(input);
 		unknownInt4 = new Int(input);
 	}
 	
-	public GroupClientModeSetPacket(int chatGroupId, int unknownInt1, int unknownInt2, int unknownInt3, int unknownInt4) {
-		this.chatGroupId = new ChatGroupId(chatGroupId);
+	public GroupClientModeSetPacket(int channelId, int unknownInt1, int unknownInt2, int unknownInt3, int unknownInt4) {
+		this.channelId = new ChannelId(channelId);
 		this.unknownInt1 = new Int(unknownInt1);
 		this.unknownInt2 = new Int(unknownInt2);
 		this.unknownInt3 = new Int(unknownInt3);
 		this.unknownInt4 = new Int(unknownInt4);
 	}
 	
-	public long getChatGroupId() {
-		return chatGroupId.getLongData();
+	public long getChannelId() {
+		return channelId.getData();
 	}
 	
 	public int getUnknownInt1() {
-		return unknownInt1.getIntData();
+		return unknownInt1.getData();
 	}
 	
 	public int getUnknownInt2() {
-		return unknownInt2.getIntData();
+		return unknownInt2.getData();
 	}
 	
 	public int getUnknownInt3() {
-		return unknownInt3.getIntData();
+		return unknownInt3.getData();
 	}
 	
 	public int getUnknownInt4() {
-		return unknownInt4.getIntData();
+		return unknownInt4.getData();
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(chatGroupId, unknownInt1, unknownInt2, unknownInt3, unknownInt4);
+		return getBytes(channelId, unknownInt1, unknownInt2, unknownInt3, unknownInt4);
 	}
 	
 	public int getPacketType() {
@@ -63,7 +63,7 @@ public class GroupClientModeSetPacket extends BaseClientPacket {
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChatGroupId: ").append(chatGroupId)
+			.append("\n\tChannelId: ").append(channelId)
 			.append("\n\tUnknownInt1: ").append(unknownInt1)
 			.append("\n\tUnknownInt2: ").append(unknownInt2)
 			.append("\n\tUnknownInt3: ").append(unknownInt3)
