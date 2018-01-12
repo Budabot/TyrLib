@@ -5,8 +5,11 @@ import com.jkbff.ao.tyrlib.packets.server.BaseServerPacket;
 
 import java.net.Socket;
 
+/**
+ * Act as AO Server
+ */
 public class AOServerSocket extends AOSocket<BaseClientPacket, BaseServerPacket> {
-    public AOServerSocket(Socket socket, PacketFactory<BaseClientPacket> packetFactory) {
-        super(socket, packetFactory);
+    public AOServerSocket(String name, Socket socket, PacketFactory<BaseClientPacket> packetFactory) {
+        super(name, socket, packetFactory);
     }
 }
