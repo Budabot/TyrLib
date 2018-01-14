@@ -29,7 +29,7 @@ public abstract class AbstractType {
 	
 	public static final String ENCODING = "ISO-8859-1";
 	
-	public abstract byte[] getRaw();
+	public abstract byte[] getBytes();
 
 	@Override
 	public String toString() {
@@ -42,6 +42,6 @@ public abstract class AbstractType {
 	}
 
 	public void write(DataOutputStream output) throws IOException {
-		output.write(getRaw());
+		output.write(getBytes());
 	}
 }

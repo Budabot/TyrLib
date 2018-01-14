@@ -60,7 +60,7 @@ public class ChatCommandPacket extends BaseClientPacket {
 		// write array length
 		outputStream.writeShort(command.length);
 		for (Text aCommand : command) {
-			outputStream.write(aCommand.getRaw());
+			outputStream.write(aCommand.getBytes());
 		}
 		
 		return byteStream.toByteArray();

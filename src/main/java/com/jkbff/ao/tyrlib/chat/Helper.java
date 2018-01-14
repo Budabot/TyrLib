@@ -1,5 +1,7 @@
 package com.jkbff.ao.tyrlib.chat;
 
+import aoChatLib.Crypto;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -128,5 +130,10 @@ public class Helper {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static String generateLoginKey(String username, String password, String loginSeed) {
+		String loginString = username + "|" + loginSeed + "|" + password;
+		return Crypto.generateKey(Crypto.randomHexString(8), loginString);
 	}
 }

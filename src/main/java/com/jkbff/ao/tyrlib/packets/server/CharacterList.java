@@ -97,25 +97,25 @@ public class CharacterList extends BaseServerPacket {
 		// write array length
 		outputStream.writeShort(userId.length);
 		for (CharacterId anUserId : userId) {
-			outputStream.write(anUserId.getRaw());
+			outputStream.write(anUserId.getBytes());
 		}
 		
 		// write array length
 		outputStream.writeShort(name.length);
 		for (Text aName : name) {
-			outputStream.write(aName.getRaw());
+			outputStream.write(aName.getBytes());
 		}
 		
 		// write array length
 		outputStream.writeShort(level.length);
 		for (Int aLevel : level) {
-			outputStream.write(aLevel.getRaw());
+			outputStream.write(aLevel.getBytes());
 		}
 		
 		// write array length
 		outputStream.writeShort(online.length);
 		for (Int anOnline : online) {
-			outputStream.write(anOnline.getRaw());
+			outputStream.write(anOnline.getBytes());
 		}
 		
 		return byteStream.toByteArray();
@@ -124,7 +124,7 @@ public class CharacterList extends BaseServerPacket {
 	private int getAbstractArraySize(AbstractType[] abstractTypes) {
 		int size = 0;
 		for (AbstractType abstractType: abstractTypes) {
-			size += abstractType.getRaw().length;
+			size += abstractType.getBytes().length;
 		}
 		
 		return size;

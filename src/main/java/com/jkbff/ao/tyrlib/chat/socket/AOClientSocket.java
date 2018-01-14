@@ -9,7 +9,7 @@ import java.net.Socket;
  * Act as AO Client
  */
 public class AOClientSocket extends AOSocket<BaseServerPacket, BaseClientPacket> {
-    public AOClientSocket(String name, Socket socket, PacketFactory<BaseServerPacket> packetFactory) {
-        super(name, socket, packetFactory);
+    public AOClientSocket(String id, Socket socket, PacketFactory<BaseServerPacket> packetFactory) {
+        super(id, socket, packetFactory);
     }
 }

@@ -9,29 +9,29 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 public class AOSocket<T extends BasePacket, U extends BasePacket> {
-    private final String name;
+    private final String id;
     private final Socket socket;
     private final PacketListener<T> packetListener;
     private final PacketSender<U> packetSender;
     private final LinkedBlockingQueue<U> outboundQueue = new LinkedBlockingQueue<>();
     private final LinkedBlockingQueue<T> inboundQueue = new LinkedBlockingQueue<>();
 
-    public AOSocket(String name, Socket socket, PacketFactory<T> packetFactory) {
-        this.name = name;
+    public AOSocket(String id, Socket socket, PacketFactory<T> packetFactory) {
+        this.id = id;
         this.socket = socket;
         try {
             packetListener = new PacketListener<>(inboundQueue, new DataInputStream(socket.getInputStream()), packetFactory);
+            packetListener.setName(id + "PacketListener");
+
             packetSender = new PacketSender<>(outboundQueue, socket.getOutputStream());
+            packetSender.setName(id + "PacketSender");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void start() {
-        packetListener.setName(name + "PacketListener");
         packetListener.start();
-
-        packetSender.setName(name + "PacketSender");
         packetSender.start();
     }
 
@@ -52,16 +52,13 @@ public class AOSocket<T extends BasePacket, U extends BasePacket> {
     }
 
     public void close() {
-        packetListener.stopThread();
-        packetSender.stopThread();
+        System.out.println("closing AOSocket " + id);
+        packetListener.close();
+        packetSender.close();
         try {
             socket.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public String getName() {
-        return this.name;
     }
 }

@@ -27,12 +27,13 @@ public class PacketSender<T extends BasePacket> extends Thread {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                stopThread();
+                close();
             }
         }
     }
 
-    public void stopThread() {
+    public void close() {
+        System.out.println("closing PacketSender " + getName());
         stop = true;
         try {
             outputStream.close();

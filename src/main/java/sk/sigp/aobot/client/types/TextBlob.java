@@ -52,7 +52,7 @@ public class TextBlob extends AbstractType {
 		return data;
 	}
 
-	public byte[] getRaw() {
+	public byte[] getBytes() {
 		byte[] str = new byte[0];
 		try {
 			str = data.getBytes(ENCODING);

@@ -51,7 +51,7 @@ public class Text extends AbstractType {
 		return data;
 	}
 
-	public byte[] getRaw() {
+	public byte[] getBytes() {
 		try {
 			byte[] str = data.getBytes(ENCODING);
 			byte[] ret = new byte[str.length + 2];

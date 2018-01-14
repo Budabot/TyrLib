@@ -48,7 +48,7 @@ public class Int extends AbstractType {
 		return data;
 	}
 
-	public byte[] getRaw() {
+	public byte[] getBytes() {
 		byte[] ret = new byte[size()];
 		Helper.integerToBytes(data, ret, size(), 0);
 		return ret;

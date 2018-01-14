@@ -25,7 +25,7 @@ public class PacketListener<T extends BasePacket> extends Thread {
                 queue.offer(readPacket());
             } catch (Exception e) {
                 e.printStackTrace();
-                stopThread();
+                close();
             }
         }
     }
@@ -45,7 +45,8 @@ public class PacketListener<T extends BasePacket> extends Thread {
         return packet;
     }
 
-    public void stopThread() {
+    public void close() {
+        System.out.println("closing PacketListener " + getName());
         stop = true;
         try {
             inputStream.close();

@@ -60,7 +60,7 @@ public class Raw extends AbstractType {
 		return data;
 	}
 
-	public byte[] getRaw() {
+	public byte[] getBytes() {
 		byte ret[] = new byte[size()];
 		Helper.integerToBytes(data.length, ret, 2, 0);
 		Helper.copy(data, ret, 2);
