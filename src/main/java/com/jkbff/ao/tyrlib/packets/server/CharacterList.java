@@ -13,11 +13,11 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class CharacterList extends BaseServerPacket {
 	
 	public static final int TYPE = 7;
-	
-	private CharacterId[] userId;
-	private Text[] name;
-	private Int[] level;
-	private Int[] online;
+
+	protected final CharacterId[] userId;
+	protected final Text[] name;
+	protected final Int[] level;
+	protected final Int[] online;
 
 	public CharacterList(DataInputStream input) {
 		try {

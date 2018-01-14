@@ -12,11 +12,11 @@ import java.io.IOException;
 public class SystemMessage extends BaseServerPacket {
 
 	public static final int TYPE = 37;
-	
-	private Int clientId;
-	private Int windowId;
-	private Int messageId;
-	private Text messageArgs;
+
+	protected final Int clientId;
+	protected final Int windowId;
+	protected final Int messageId;
+	protected final Text messageArgs;
 
 	private static final int CATEGORY_ID = 20000;
 

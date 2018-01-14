@@ -8,11 +8,11 @@ import sk.sigp.aobot.client.types.Int;
 public class ClientModeSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 71;
-	
-	private Int unknownInt1;
-	private Int unknownInt2;
-	private Int unknownInt3;
-	private Int unknownInt4;
+
+	protected final Int unknownInt1;
+	protected final Int unknownInt2;
+	protected final Int unknownInt3;
+	protected final Int unknownInt4;
 	
 	public ClientModeSetPacket(DataInputStream input) {
 		unknownInt1 = new Int(input);

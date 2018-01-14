@@ -14,10 +14,10 @@ import sk.sigp.aobot.client.types.Text;
 public class ChannelMessage extends BaseClientPacket {
 
 	public static final int TYPE = 65;
-	
-	private ChannelId channelId;
-	private Text message;
-	private Text raw;
+
+	protected final ChannelId channelId;
+	protected final Text message;
+	protected final Text raw;
 	
 	public ChannelMessage(DataInputStream input) {
 		channelId = new ChannelId(input);

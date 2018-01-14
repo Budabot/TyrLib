@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.Text;
 public class LoginSeed extends BaseServerPacket {
 	
 	public static final int TYPE = 0;
-	
-	private Text seed = null;
+
+	protected final Text seed;
 
 	public LoginSeed(DataInputStream input) {
 		this.seed = new Text(input);

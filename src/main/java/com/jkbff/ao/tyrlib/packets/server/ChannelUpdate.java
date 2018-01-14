@@ -15,11 +15,11 @@ import sk.sigp.aobot.client.types.Text;
 public class ChannelUpdate extends BaseServerPacket {
 
 	public static final int TYPE = 60;
-	
-	private ChannelId channelId;
-	private Text groupName;
-	private Int unknownInt;
-	private Text flags;
+
+	protected final ChannelId channelId;
+	protected final Text groupName;
+	protected final Int unknownInt;
+	protected final Text flags;
 
 	public ChannelUpdate(DataInputStream input) {
 		this.channelId = new ChannelId(input);

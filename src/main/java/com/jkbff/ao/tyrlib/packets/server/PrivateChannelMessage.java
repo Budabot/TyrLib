@@ -9,11 +9,11 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class PrivateChannelMessage extends BaseServerPacket {
 
 	public static final int TYPE = 57;
-	
-	private CharacterId charId1;
-	private CharacterId charId2;
-	private Text message;
-	private Text raw;
+
+	protected final CharacterId charId1;
+	protected final CharacterId charId2;
+	protected final Text message;
+	protected final Text raw;
 
 	public PrivateChannelMessage(DataInputStream input) {
 		this.charId1 = new CharacterId(input);

@@ -16,10 +16,10 @@ import sk.sigp.aobot.client.types.Text;
 public class GroupDataSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 64;
-	
-	private ChannelId channelId;
-	private Int flags;
-	private Text mute;
+
+	protected final ChannelId channelId;
+	protected final Int flags;
+	protected final Text mute;
 	
 	public GroupDataSetPacket(DataInputStream input) {
 		channelId = new ChannelId(input);

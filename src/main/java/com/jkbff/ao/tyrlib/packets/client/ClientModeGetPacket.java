@@ -9,9 +9,9 @@ import sk.sigp.aobot.client.types.Int;
 public class ClientModeGetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 70;
-	
-	private Int unknownInt;
-	private ChannelId channelId;
+
+	protected final Int unknownInt;
+	protected final ChannelId channelId;
 	
 	public ClientModeGetPacket(DataInputStream input) {
 		unknownInt = new Int(input);

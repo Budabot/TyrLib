@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.ChannelId;
 public class ChannelLeave extends BaseServerPacket {
 
 	public static final int TYPE = 61;
-	
-	private ChannelId channelId;
+
+	protected final ChannelId channelId;
 
 	public ChannelLeave(DataInputStream input) {
 		this.channelId = new ChannelId(input);

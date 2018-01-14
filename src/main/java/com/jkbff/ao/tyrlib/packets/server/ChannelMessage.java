@@ -15,11 +15,11 @@ import com.jkbff.ao.tyrlib.packets.ExtendedMessage;
 public class ChannelMessage extends BaseServerPacket {
 
 	public static final int TYPE = 65;
-	
-	private ChannelId channelId;
-	private CharacterId charId;
-	private Text message;
-	private Text raw;
+
+	protected final ChannelId channelId;
+	protected final CharacterId charId;
+	protected final Text message;
+	protected final Text raw;
 
 	public ChannelMessage(DataInputStream input) {
 		this.channelId = new ChannelId(input);

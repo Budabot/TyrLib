@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.Text;
 public class Pong extends BaseServerPacket {
 
 	public static final int TYPE = 100;
-	
-	private Text raw;
+
+	protected final Text raw;
 	
 	public Pong(DataInputStream input) {
 		raw = new Text(input);

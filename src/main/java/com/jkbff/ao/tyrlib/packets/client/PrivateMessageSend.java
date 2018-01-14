@@ -14,10 +14,10 @@ import sk.sigp.aobot.client.types.Text;
 public class PrivateMessageSend extends BaseClientPacket {
 
 	public static final int TYPE = 30;
-	
-	private CharacterId charId;
-	private Text message;
-	private Text raw;
+
+	protected final CharacterId charId;
+	protected final Text message;
+	protected final Text raw;
 	
 	public PrivateMessageSend(DataInputStream input) {
 		charId = new CharacterId(input);

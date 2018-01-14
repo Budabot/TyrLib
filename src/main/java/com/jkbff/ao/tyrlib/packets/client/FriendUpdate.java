@@ -9,9 +9,9 @@ import sk.sigp.aobot.client.types.Text;
 public class FriendUpdate extends BaseClientPacket {
 
 	public static final int TYPE = 40;
-	
-	private CharacterId charId;
-	private Text status;
+
+	protected final CharacterId charId;
+	protected final Text status;
 	
 	public FriendUpdate(DataInputStream input) {
 		this.charId = new CharacterId(input);

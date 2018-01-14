@@ -14,8 +14,8 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class LoginSelect extends BaseClientPacket {
 
 	public static final int TYPE = 3;
-	
-	private CharacterId charId;
+
+	protected final CharacterId charId;
 	
 	public LoginSelect(DataInputStream input) {
 		charId = new CharacterId(input);

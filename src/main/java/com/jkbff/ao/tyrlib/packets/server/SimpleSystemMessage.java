@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.Text;
 public class SimpleSystemMessage extends BaseServerPacket {
 
 	public static final int TYPE = 36;
-	
-	private Text message;
+
+	protected final Text message;
 
 	public SimpleSystemMessage(DataInputStream input) {
 		this.message = new Text(input);

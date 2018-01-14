@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class FriendRemove extends BaseClientPacket {
 
 	public static final int TYPE = 41;
-	
-	private CharacterId charId;
+
+	protected final CharacterId charId;
 	
 	public FriendRemove(DataInputStream input) {
 		this.charId = new CharacterId(input);

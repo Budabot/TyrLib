@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.Int;
 public class ClientUnknownPacket extends BaseServerPacket {
 
 	public static final int TYPE = 10;
-	
-	private Int unknownInt;
+
+	protected final Int unknownInt;
 
 	public ClientUnknownPacket(DataInputStream input) {
 		this.unknownInt = new Int(input);

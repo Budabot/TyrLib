@@ -15,10 +15,10 @@ import sk.sigp.aobot.client.types.Text;
 public class LoginRequest extends BaseClientPacket {
 	
 	public static final int TYPE = 2;
-	
-	private Int unknownInt;
-	private Text username;
-	private Text key;
+
+	protected final Int unknownInt;
+	protected final Text username;
+	protected final Text key;
 	
 	public LoginRequest(DataInputStream input) {
 		unknownInt = new Int(input);

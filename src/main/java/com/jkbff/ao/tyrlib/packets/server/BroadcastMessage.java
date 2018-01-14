@@ -9,9 +9,9 @@ public class BroadcastMessage extends BaseServerPacket {
 
 	public static final int TYPE = 35;
 	
-	private Text text;
-	private Text message;
-	private Text raw;
+	protected final Text text;
+	protected final Text message;
+	protected final Text raw;
 
 	public BroadcastMessage(DataInputStream input) {
 		this.text = new Text(input);

@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.Text;
 public class LoginError extends BaseServerPacket {
 	
 	public static final int TYPE = 6;
-	
-	private Text message = null;
+
+	protected final Text message;
 
 	public LoginError(DataInputStream input) {
 		this.message = new Text(input);

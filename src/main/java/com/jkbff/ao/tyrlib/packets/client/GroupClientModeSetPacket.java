@@ -9,12 +9,12 @@ import sk.sigp.aobot.client.types.Int;
 public class GroupClientModeSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 66;
-	
-	private ChannelId channelId;
-	private Int unknownInt1;
-	private Int unknownInt2;
-	private Int unknownInt3;
-	private Int unknownInt4;
+
+	protected final ChannelId channelId;
+	protected final Int unknownInt1;
+	protected final Int unknownInt2;
+	protected final Int unknownInt3;
+	protected final Int unknownInt4;
 	
 	public GroupClientModeSetPacket(DataInputStream input) {
 		channelId = new ChannelId(input);

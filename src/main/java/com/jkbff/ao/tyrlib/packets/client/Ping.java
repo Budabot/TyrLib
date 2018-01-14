@@ -14,8 +14,8 @@ import sk.sigp.aobot.client.types.Text;
 public class Ping extends BaseClientPacket {
 
 	public static final int TYPE = 100;
-	
-	private Text raw;
+
+	protected final Text raw;
 	
 	public Ping(DataInputStream input) {
 		raw = new Text(input);

@@ -13,8 +13,8 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class PrivateChannelKick extends BaseClientPacket {
 
 	public static final int TYPE = 51;
-	
-	private CharacterId charId;
+
+	protected final CharacterId charId;
 	
 	public PrivateChannelKick(DataInputStream input) {
 		charId = new CharacterId(input);

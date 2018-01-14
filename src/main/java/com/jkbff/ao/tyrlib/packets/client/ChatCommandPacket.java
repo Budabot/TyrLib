@@ -12,8 +12,8 @@ import sk.sigp.aobot.client.types.Text;
 public class ChatCommandPacket extends BaseClientPacket {
 	
 	public static final int TYPE = 120;
-	
-	private Text[] command;
+
+	protected final Text[] command;
 	
 	public ChatCommandPacket(DataInputStream input) {
 		try {

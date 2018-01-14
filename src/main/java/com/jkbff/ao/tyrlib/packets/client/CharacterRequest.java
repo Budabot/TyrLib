@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.Text;
 public class CharacterRequest extends BaseClientPacket {
 
 	public static final int TYPE = 21;
-	
-	private Text name;
+
+	protected final Text name;
 	
 	public CharacterRequest(DataInputStream input) {
 		name = new Text(input);

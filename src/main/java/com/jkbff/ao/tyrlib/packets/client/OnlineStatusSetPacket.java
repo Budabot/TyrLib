@@ -13,8 +13,8 @@ import sk.sigp.aobot.client.types.Int;
 public class OnlineStatusSetPacket extends BaseClientPacket {
 
 	public static final int TYPE = 42;
-	
-	private Int status;
+
+	protected final Int status;
 	
 	public OnlineStatusSetPacket(DataInputStream input) {
 		status = new Int(input);

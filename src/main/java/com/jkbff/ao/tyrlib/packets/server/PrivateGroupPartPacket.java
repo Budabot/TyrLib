@@ -8,8 +8,8 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class PrivateGroupPartPacket extends BaseServerPacket {
 
 	public static final int TYPE = 53;
-	
-	private CharacterId charId;
+
+	protected final CharacterId charId;
 
 	public PrivateGroupPartPacket(DataInputStream input) {
 		this.charId = new CharacterId(input);

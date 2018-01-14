@@ -10,10 +10,10 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class VicinityMessage extends BaseServerPacket {
 
 	public static final int TYPE = 34;
-	
-	private CharacterId charId;
-	private Text message;
-	private TextBlob blob;
+
+	protected final CharacterId charId;
+	protected final Text message;
+	protected final TextBlob blob;
 
 	public VicinityMessage(DataInputStream input) {
 		this.charId = new CharacterId(input);

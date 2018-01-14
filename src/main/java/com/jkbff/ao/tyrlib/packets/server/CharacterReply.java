@@ -9,9 +9,9 @@ import sk.sigp.aobot.client.types.CharacterId;
 public class CharacterReply extends BaseServerPacket {
 
 	public static final int TYPE = 21;
-	
-	private CharacterId charId;
-	private Text characterName;
+
+	protected final CharacterId charId;
+	protected final Text characterName;
 
 	public CharacterReply(DataInputStream input) {
 		this.charId = new CharacterId(input);
