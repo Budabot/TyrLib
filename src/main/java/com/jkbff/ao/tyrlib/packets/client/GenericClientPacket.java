@@ -11,7 +11,7 @@ public class GenericClientPacket extends BaseClientPacket {
         this.packetType = packetType;
         this.data = new byte[size];
         try {
-            input.read(this.data);
+            input.readFully(this.data);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
