@@ -1,6 +1,8 @@
 package com.jkbff.ao.tyrlib.packets.server;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 
 public class GenericServerPacket extends BaseServerPacket {
@@ -29,6 +31,13 @@ public class GenericServerPacket extends BaseServerPacket {
 
     @Override
     public byte[] getBytes() throws IOException {
-        return data;
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        DataOutputStream outputStream = new DataOutputStream(byteStream);
+
+        outputStream.writeShort(packetType);
+        outputStream.writeShort(data.length);
+        outputStream.write(data);
+
+        return byteStream.toByteArray();
     }
 }
