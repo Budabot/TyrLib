@@ -1,6 +1,7 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
 import com.jkbff.ao.tyrlib.packets.BasePacket;
+import com.jkbff.ao.tyrlib.packets.PacketFactory;
 import org.apache.log4j.Logger;
 
 import java.io.DataInputStream;

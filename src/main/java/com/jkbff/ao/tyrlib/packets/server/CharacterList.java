@@ -1,74 +1,31 @@
 package com.jkbff.ao.tyrlib.packets.server;
 
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import sk.sigp.aobot.client.types.*;
 
-import sk.sigp.aobot.client.types.AbstractType;
-import sk.sigp.aobot.client.types.Int;
-import sk.sigp.aobot.client.types.Text;
-import sk.sigp.aobot.client.types.CharacterId;
+import java.io.DataInputStream;
+import java.io.IOException;
 
 public class CharacterList extends BaseServerPacket {
 	
 	public static final int TYPE = 7;
 
-	protected final CharacterId[] userId;
-	protected final Text[] name;
-	protected final Int[] level;
-	protected final Int[] online;
+	protected final CharacterIdArray userId;
+	protected final TextArray name;
+	protected final IntArray level;
+	protected final IntArray online;
 
 	public CharacterList(DataInputStream input) {
-		try {
-			int userIdSize = input.readUnsignedShort();
-			this.userId = new CharacterId[userIdSize];
-			for(int i = 0; i < userIdSize; i++) {
-				this.userId[i] = new CharacterId(input);
-			}
-			
-			int nameSize = input.readUnsignedShort();
-			this.name = new Text[nameSize];
-			for(int i = 0; i < nameSize; i++) {
-				this.name[i] = new Text(input);
-			}
-			
-			int levelSize = input.readUnsignedShort();
-			this.level = new Int[levelSize];
-			for(int i = 0; i < levelSize; i++) {
-				this.level[i] = new Int(input);
-			}
-			
-			int onlineSize = input.readUnsignedShort();
-			this.online = new Int[onlineSize];
-			for(int i = 0; i < onlineSize; i++) {
-				this.online[i] = new Int(input);
-			}
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		this.userId = new CharacterIdArray(input);
+		this.name = new TextArray(input);
+		this.level = new IntArray(input);
+		this.online = new IntArray(input);
 	}
 	
 	public CharacterList(long[] userId, String[] name, int[] level, int[] online) {
-		this.userId = new CharacterId[userId.length];
-		for(int i = 0; i < userId.length; i++) {
-			this.userId[i] = new CharacterId(userId[i]);
-		}
-		
-		this.name = new Text[name.length];
-		for(int i = 0; i < name.length; i++) {
-			this.name[i] = new Text(name[i]);
-		}
-		
-		this.level = new Int[level.length];
-		for(int i = 0; i < level.length; i++) {
-			this.level[i] = new Int(level[i]);
-		}
-		
-		this.online = new Int[online.length];
-		for(int i = 0; i < online.length; i++) {
-			this.online[i] = new Int(online[i]);
-		}
+		this.userId = new CharacterIdArray(userId);
+		this.name = new TextArray(name);
+		this.level = new IntArray(level);
+		this.online = new IntArray(online);
 	}
 	
 	public int getPacketType() {
@@ -76,81 +33,29 @@ public class CharacterList extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-		DataOutputStream outputStream = new DataOutputStream(byteStream);
-		
-		// write packet type
-		outputStream.writeShort(getPacketType());
-		
-		// write packet payload length
-		// +8 accounts for the 2 bytes that indicate the size of each array
-		int length = 8;
-		length += getAbstractArraySize(userId);
-		length += getAbstractArraySize(name);
-		length += getAbstractArraySize(level);
-		length += getAbstractArraySize(online);
-		
-		outputStream.writeShort(length);
-		
-		// write payload
-		
-		// write array length
-		outputStream.writeShort(userId.length);
-		for (CharacterId anUserId : userId) {
-			outputStream.write(anUserId.getBytes());
-		}
-		
-		// write array length
-		outputStream.writeShort(name.length);
-		for (Text aName : name) {
-			outputStream.write(aName.getBytes());
-		}
-		
-		// write array length
-		outputStream.writeShort(level.length);
-		for (Int aLevel : level) {
-			outputStream.write(aLevel.getBytes());
-		}
-		
-		// write array length
-		outputStream.writeShort(online.length);
-		for (Int anOnline : online) {
-			outputStream.write(anOnline.getBytes());
-		}
-		
-		return byteStream.toByteArray();
-	}
-	
-	private int getAbstractArraySize(AbstractType[] abstractTypes) {
-		int size = 0;
-		for (AbstractType abstractType: abstractTypes) {
-			size += abstractType.getBytes().length;
-		}
-		
-		return size;
+		return getBytes(userId, name, level, online);
 	}
 
 	public CharacterId[] getUserId() {
-		return userId;
+		return userId.getData();
 	}
 
 	public Text[] getName() {
-		return name;
+		return name.getData();
 	}
 
 	public Int[] getLevel() {
-		return level;
+		return level.getData();
 	}
 
 	public Int[] getOnline() {
-		return online;
+		return online.getData();
 	}
 	
 	public LoginUser[] getLoginUsers() {
-		LoginUser[] loginUsers = new LoginUser[userId.length];
-		for (int i = 0; i < userId.length; i++) {
-			
-			loginUsers[i] = new LoginUser(userId[i], name[i], level[i], online[i]);
+		LoginUser[] loginUsers = new LoginUser[getUserId().length];
+		for (int i = 0; i < getUserId().length; i++) {
+			loginUsers[i] = new LoginUser(getUserId()[i], getName()[i], getLevel()[i], getOnline()[i]);
 		}
 		
 		return loginUsers;

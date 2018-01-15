@@ -1,4 +1,4 @@
-package com.jkbff.ao.tyrlib.chat.socket;
+package com.jkbff.ao.tyrlib.packets;
 
 import com.jkbff.ao.tyrlib.packets.BasePacket;
 
