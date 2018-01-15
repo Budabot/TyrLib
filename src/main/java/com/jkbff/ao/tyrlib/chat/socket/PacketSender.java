@@ -1,20 +1,24 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
 import com.jkbff.ao.tyrlib.packets.BasePacket;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class PacketSender<T extends BasePacket> extends Thread {
+public class PacketSender<T extends BasePacket> extends Thread implements Closeable {
     private final BlockingQueue<T> queue;
     private final OutputStream outputStream;
+    private final Closeable onError;
     private boolean stop = false;
+    private final Logger logger = Logger.getLogger(getClass());
 
-    public PacketSender(BlockingQueue<T> queue, OutputStream outputStream) {
+    public PacketSender(BlockingQueue<T> queue, OutputStream outputStream, Closeable onError) {
         this.queue = queue;
         this.outputStream = outputStream;
+        this.onError = onError;
     }
 
     @Override
@@ -26,19 +30,19 @@ public class PacketSender<T extends BasePacket> extends Thread {
                     outputStream.write(packet.getBytes());
                 }
             } catch (Exception e) {
-                e.printStackTrace();
-                close();
+                logger.error("", e);
+                onError.close();
             }
         }
     }
 
     public void close() {
-        System.out.println("closing PacketSender " + getName());
         stop = true;
+        logger.warn("closing PacketSender " + getName());
         try {
             outputStream.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

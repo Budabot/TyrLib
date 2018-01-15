@@ -2,15 +2,12 @@ package com.jkbff.ao.tyrlib.chat;
 
 import no.geosoft.cc.util.ByteSwapper;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MMDBParser {
+public class MMDBParser implements AutoCloseable {
 	private final RandomAccessFile in;
 
 	public static MMDBParser createInstanceFromClasspath() {
@@ -116,5 +113,9 @@ public class MMDBParser {
 		public String toString() {
 			return "(" + entryId + ", " + offset + ")";
 		}
+	}
+
+	public void close() throws IOException {
+		in.close();
 	}
 }

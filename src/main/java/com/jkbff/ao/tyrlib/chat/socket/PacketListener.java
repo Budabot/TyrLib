@@ -1,21 +1,25 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
 import com.jkbff.ao.tyrlib.packets.BasePacket;
+import org.apache.log4j.Logger;
 
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 
-public class PacketListener<T extends BasePacket> extends Thread {
+public class PacketListener<T extends BasePacket> extends Thread implements Closeable {
     private final BlockingQueue<T> queue;
     private final DataInputStream inputStream;
     private final PacketFactory<T> packetFactory;
+    private final Closeable onError;
     private boolean stop = false;
+    private final Logger logger = Logger.getLogger(getClass());
 
-    public PacketListener(BlockingQueue<T> queue, DataInputStream inputStream, PacketFactory<T> packetFactory) {
+    public PacketListener(BlockingQueue<T> queue, DataInputStream inputStream, PacketFactory<T> packetFactory, Closeable onError) {
         this.queue = queue;
         this.inputStream = inputStream;
         this.packetFactory = packetFactory;
+        this.onError = onError;
     }
 
     @Override
@@ -24,8 +28,8 @@ public class PacketListener<T extends BasePacket> extends Thread {
             try {
                 queue.offer(readPacket());
             } catch (Exception e) {
-                e.printStackTrace();
-                close();
+                logger.error("", e);
+                onError.close();
             }
         }
     }
@@ -46,12 +50,12 @@ public class PacketListener<T extends BasePacket> extends Thread {
     }
 
     public void close() {
-        System.out.println("closing PacketListener " + getName());
         stop = true;
+        logger.warn("closing PacketListener " + getName());
         try {
             inputStream.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
