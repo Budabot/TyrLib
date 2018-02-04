@@ -131,9 +131,4 @@ public class Helper {
 			throw new RuntimeException(e);
 		}
 	}
-
-	public static String generateLoginKey(String username, String password, String loginSeed) {
-		String loginString = username + "|" + loginSeed + "|" + password;
-		return Crypto.generateKey(Crypto.randomHexString(8), loginString);
-	}
 }
