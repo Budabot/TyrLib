@@ -10,30 +10,30 @@ public class ClientPacketFactory implements PacketFactory<BaseClientPacket> {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(payload);
         DataInputStream dataStream = new DataInputStream(byteStream);
         switch (packetId) {
-            case FriendUpdate.TYPE:
-                return new FriendUpdate(dataStream);
-            case FriendRemove.TYPE:
-                return new FriendRemove(dataStream);
-            case ChatCommandPacket.TYPE:
-                return new ChatCommandPacket(dataStream);
-            case CharacterRequest.TYPE:
-                return new CharacterRequest(dataStream);
-            case ClientModeGetPacket.TYPE:
-                return new ClientModeGetPacket(dataStream);
-            case ClientModeSetPacket.TYPE:
-                return new ClientModeSetPacket(dataStream);
-            case GroupClientModeSetPacket.TYPE:
-                return new GroupClientModeSetPacket(dataStream);
-            case GroupDataSetPacket.TYPE:
-                return new GroupDataSetPacket(dataStream);
+            case BuddyAdd.TYPE:
+                return new BuddyAdd(dataStream);
+            case BuddyRemove.TYPE:
+                return new BuddyRemove(dataStream);
+            case ChatCommand.TYPE:
+                return new ChatCommand(dataStream);
+            case CharacterLookup.TYPE:
+                return new CharacterLookup(dataStream);
+            case ClientModeGet.TYPE:
+                return new ClientModeGet(dataStream);
+            case ClientModeSet.TYPE:
+                return new ClientModeSet(dataStream);
+            case PublicChannelClientModeSet.TYPE:
+                return new PublicChannelClientModeSet(dataStream);
+            case PublicChannelDataSet.TYPE:
+                return new PublicChannelDataSet(dataStream);
             case LoginRequest.TYPE:
                 return new LoginRequest(dataStream);
             case LoginSelect.TYPE:
                 return new LoginSelect(dataStream);
-            case OnlineStatusSetPacket.TYPE:
-                return new OnlineStatusSetPacket(dataStream);
-            case ChannelMessage.TYPE:
-                return new ChannelMessage(dataStream);
+            case OnlineStatusSet.TYPE:
+                return new OnlineStatusSet(dataStream);
+            case PublicChannelMessage.TYPE:
+                return new PublicChannelMessage(dataStream);
             case PrivateChannelMessage.TYPE:
                 return new PrivateChannelMessage(dataStream);
             case PrivateMessageSend.TYPE:

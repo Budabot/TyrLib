@@ -12,24 +12,24 @@ public class ServerPacketFactory implements PacketFactory<BaseServerPacket> {
         switch(packetId) {
             case BroadcastMessage.TYPE:
                 return new BroadcastMessage(dataStream);
-            case FriendUpdate.TYPE:
-                return new FriendUpdate(dataStream);
-            case FriendRemove.TYPE:
-                return new FriendRemove(dataStream);
+            case BuddyAdded.TYPE:
+                return new BuddyAdded(dataStream);
+            case BuddyRemoved.TYPE:
+                return new BuddyRemoved(dataStream);
             case SystemMessage.TYPE:
                 return new SystemMessage(dataStream);
             case CharacterReply.TYPE:
                 return new CharacterReply(dataStream);
             case CharacterUpdate.TYPE:
                 return new CharacterUpdate(dataStream);
-            case ClientUnknownPacket.TYPE:
-                return new ClientUnknownPacket(dataStream);
-            case ChannelUpdate.TYPE:
-                return new ChannelUpdate(dataStream);
-            case ChannelMessage.TYPE:
-                return new ChannelMessage(dataStream);
-            case ChannelLeave.TYPE:
-                return new ChannelLeave(dataStream);
+            case CharacterUnknown.TYPE:
+                return new CharacterUnknown(dataStream);
+            case PublicChannelJoined.TYPE:
+                return new PublicChannelJoined(dataStream);
+            case PublicChannelMessage.TYPE:
+                return new PublicChannelMessage(dataStream);
+            case PublicChannelLeft.TYPE:
+                return new PublicChannelLeft(dataStream);
             case CharacterList.TYPE:
                 return new CharacterList(dataStream);
             case LoginError.TYPE:
@@ -40,20 +40,20 @@ public class ServerPacketFactory implements PacketFactory<BaseServerPacket> {
                 return new LoginSeed(dataStream);
             case Pong.TYPE:
                 return new Pong(dataStream);
-            case PrivateChannelCharacterJoin.TYPE:
-                return new PrivateChannelCharacterJoin(dataStream);
-            case PrivateChannelCharacterLeave.TYPE:
-                return new PrivateChannelCharacterLeave(dataStream);
-            case PrivateChannelInvite.TYPE:
-                return new PrivateChannelInvite(dataStream);
-            case PrivateChannelKick.TYPE:
-                return new PrivateChannelKick(dataStream);
+            case PrivateChannelCharacterJoined.TYPE:
+                return new PrivateChannelCharacterJoined(dataStream);
+            case PrivateChannelCharacterLeft.TYPE:
+                return new PrivateChannelCharacterLeft(dataStream);
+            case PrivateChannelInvited.TYPE:
+                return new PrivateChannelInvited(dataStream);
+            case PrivateChannelKicked.TYPE:
+                return new PrivateChannelKicked(dataStream);
             case PrivateChannelMessage.TYPE:
                 return new PrivateChannelMessage(dataStream);
-            case PrivateGroupPartPacket.TYPE:
-                return new PrivateGroupPartPacket(dataStream);
-            case PrivateGroupRefuseInvitePacket.TYPE:
-                return new PrivateGroupRefuseInvitePacket(dataStream);
+            case PrivateChannelLeft.TYPE:
+                return new PrivateChannelLeft(dataStream);
+            case PrivateChannelInviteRefused.TYPE:
+                return new PrivateChannelInviteRefused(dataStream);
             case PrivateMessageReceive.TYPE:
                 return new PrivateMessageReceive(dataStream);
             case SimpleSystemMessage.TYPE:

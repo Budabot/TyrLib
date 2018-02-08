@@ -10,31 +10,31 @@ public class PrivateChannelMessage extends BaseServerPacket {
 
 	public static final int TYPE = 57;
 
-	protected final CharacterId charId1;
-	protected final CharacterId charId2;
+	protected final CharacterId privateChannelId;
+	protected final CharacterId charId;
 	protected final Text message;
 	protected final Text raw;
 
 	public PrivateChannelMessage(DataInputStream input) {
-		this.charId1 = new CharacterId(input);
-		this.charId2 = new CharacterId(input);
+		this.privateChannelId = new CharacterId(input);
+		this.charId = new CharacterId(input);
 		this.message = new Text(input);
 		this.raw = new Text(input);
 	}
 	
-	public PrivateChannelMessage(long charId1, long charId2, String message, String raw) {
-		this.charId1 = new CharacterId(charId1);
-		this.charId2 = new CharacterId(charId2);
+	public PrivateChannelMessage(long privateChannelId, long charId, String message, String raw) {
+		this.privateChannelId = new CharacterId(privateChannelId);
+		this.charId = new CharacterId(charId);
 		this.message = new Text(message);
 		this.raw = new Text(raw);
 	}
 	
-	public long getCharId1() {
-		return this.charId1.getData();
+	public long getPrivateChannelId() {
+		return this.privateChannelId.getData();
 	}
 	
-	public long getCharId2() {
-		return this.charId2.getData();
+	public long getCharId() {
+		return this.charId.getData();
 	}
 	
 	public String getMessage() {
@@ -50,14 +50,14 @@ public class PrivateChannelMessage extends BaseServerPacket {
 	}
 	
 	public byte[] getBytes() throws IOException {
-		return getBytes(charId1, charId2, message, raw);
+		return getBytes(privateChannelId, charId, message, raw);
 	}
 	
 	public String toString() {
 		String output = new StringBuffer()
 			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tCharId1: ").append(charId1)
-			.append("\n\tCharId2: ").append(charId2)
+			.append("\n\tPrivateChannelId: ").append(privateChannelId)
+			.append("\n\tCharId: ").append(charId)
 			.append("\n\tMessage: ").append(message)
 			.append("\n\tRaw: ").append(raw)
 			.toString();
