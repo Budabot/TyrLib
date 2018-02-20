@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Text;
 
@@ -42,23 +43,13 @@ public class PublicChannelMessage extends BaseClientPacket {
 	public String getRaw() {
 		return raw.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(channelId, message, raw);
-	}
-	
+
 	public int getPacketType() {
 		return PublicChannelMessage.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChannelId: ").append(channelId)
-			.append("\n\tMessage: ").append(message)
-			.append("\n\tRaw: ").append(raw)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{channelId, message, raw};
 	}
 }

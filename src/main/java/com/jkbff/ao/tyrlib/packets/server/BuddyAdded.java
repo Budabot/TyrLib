@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.CharacterId;
@@ -42,19 +43,8 @@ public class BuddyAdded extends BaseServerPacket {
 	public int getPacketType() {
 		return BuddyAdded.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(charId, online, status);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tCharId: ").append(charId)
-			.append("\n\tOnline: ").append(online)
-			.append("\n\tStatus: ").append(status)
-			.toString();
-	
-		return output;
+
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{charId, online, status};
 	}
 }

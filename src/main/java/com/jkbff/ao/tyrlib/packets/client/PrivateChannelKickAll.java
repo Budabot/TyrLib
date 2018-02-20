@@ -1,5 +1,7 @@
 package com.jkbff.ao.tyrlib.packets.client;
 
+import sk.sigp.aobot.client.types.AbstractType;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 
@@ -19,20 +21,13 @@ public class PrivateChannelKickAll extends BaseClientPacket {
 	public PrivateChannelKickAll() {
 
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return new byte[] {};
-	}
-	
+
 	public int getPacketType() {
 		return PrivateChannelKickAll.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{};
 	}
 }

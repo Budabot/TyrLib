@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import com.jkbff.ao.tyrlib.chat.MMDBParser;
 import com.jkbff.ao.tyrlib.packets.ExtendedMessage;
 import com.jkbff.ao.tyrlib.packets.ExtendedMessageParser;
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
@@ -59,20 +60,9 @@ public class SystemMessage extends BaseServerPacket {
 	public int getPacketType() {
 		return SystemMessage.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(clientId, windowId, messageId, messageArgs);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tClientId: ").append(clientId)
-			.append("\n\tWindowId: ").append(windowId)
-			.append("\n\tMessageId: ").append(messageId)
-			.append("\n\tMessageArgs: ").append(messageArgs)
-			.toString();
 
-		return output;
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{clientId, windowId, messageId, messageArgs};
 	}
 }

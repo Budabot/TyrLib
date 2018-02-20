@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Int;
 
@@ -51,25 +52,13 @@ public class PublicChannelClientModeSet extends BaseClientPacket {
 	public int getUnknownInt4() {
 		return unknownInt4.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(channelId, unknownInt1, unknownInt2, unknownInt3, unknownInt4);
-	}
-	
+
 	public int getPacketType() {
 		return PublicChannelClientModeSet.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChannelId: ").append(channelId)
-			.append("\n\tUnknownInt1: ").append(unknownInt1)
-			.append("\n\tUnknownInt2: ").append(unknownInt2)
-			.append("\n\tUnknownInt3: ").append(unknownInt3)
-			.append("\n\tUnknownInt4: ").append(unknownInt4)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{channelId, unknownInt1, unknownInt2, unknownInt3, unknownInt4};
 	}
 }

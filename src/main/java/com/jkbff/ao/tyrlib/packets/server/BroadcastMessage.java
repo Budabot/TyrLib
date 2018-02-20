@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Text;
 
 public class BroadcastMessage extends BaseServerPacket {
@@ -40,19 +41,9 @@ public class BroadcastMessage extends BaseServerPacket {
 	public int getPacketType() {
 		return BroadcastMessage.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(text, message, raw);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tText: '").append(text).append("'")
-			.append("\n\tMessage: '").append(message).append("'")
-			.append("\n\tRaw: ").append(raw)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{text, message, raw};
 	}
 }

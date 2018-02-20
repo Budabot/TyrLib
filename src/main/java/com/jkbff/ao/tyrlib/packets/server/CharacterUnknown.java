@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Int;
 
 public class CharacterUnknown extends BaseServerPacket {
@@ -26,17 +27,9 @@ public class CharacterUnknown extends BaseServerPacket {
 	public int getPacketType() {
 		return CharacterUnknown.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(unknownInt);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tUnknownInt: ").append(unknownInt)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{unknownInt};
 	}
 }

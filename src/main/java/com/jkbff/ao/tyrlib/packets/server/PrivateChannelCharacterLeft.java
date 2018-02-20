@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.CharacterId;
 
 public class PrivateChannelCharacterLeft extends BaseServerPacket {
@@ -33,18 +34,9 @@ public class PrivateChannelCharacterLeft extends BaseServerPacket {
 	public int getPacketType() {
 		return PrivateChannelCharacterLeft.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(privateChannelId, charId);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tPrivateChannelId: ").append(privateChannelId)
-			.append("\n\tCharId: ").append(charId)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{privateChannelId, charId};
 	}
 }

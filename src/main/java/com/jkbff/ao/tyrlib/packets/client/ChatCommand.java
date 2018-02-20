@@ -1,5 +1,6 @@
 package com.jkbff.ao.tyrlib.packets.client;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.TextArray;
 
@@ -23,24 +24,13 @@ public class ChatCommand extends BaseClientPacket {
 	public Text[] getCommand() {
 		return command.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(command);
-	}
-	
+
 	public int getPacketType() {
 		return ChatCommand.TYPE;
 	}
-	
-	public String toString() {
-		StringBuffer output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName());
-		
-		int i = 0;
-		for (Text text: getCommand()) {
-			output.append("\n\tCommand #").append(i++).append(": ").append(text);
-		}
-		
-		return output.toString();
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{command};
 	}
 }

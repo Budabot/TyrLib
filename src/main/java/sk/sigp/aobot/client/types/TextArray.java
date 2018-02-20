@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class TextArray extends AbstractType {
     private final Text[] data;
@@ -44,5 +45,10 @@ public class TextArray extends AbstractType {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "[" + Arrays.stream(data).map(x -> x.toString() + ", ") + "]";
     }
 }

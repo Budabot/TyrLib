@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Text;
 
 /**
@@ -28,21 +29,13 @@ public class Ping extends BaseClientPacket {
 	public String getText() {
 		return raw.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(raw);
-	}
-	
+
 	public int getPacketType() {
 		return Ping.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tRaw: ").append(raw)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{raw};
 	}
 }

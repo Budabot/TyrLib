@@ -1,5 +1,7 @@
 package com.jkbff.ao.tyrlib.packets.client;
 
+import sk.sigp.aobot.client.types.AbstractType;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -39,5 +41,10 @@ public class GenericClientPacket extends BaseClientPacket {
         outputStream.write(data);
 
         return byteStream.toByteArray();
+    }
+
+    @Override
+    public AbstractType[] getParameters() {
+        return new AbstractType[]{};
     }
 }

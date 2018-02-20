@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
 
@@ -43,23 +44,13 @@ public class LoginRequest extends BaseClientPacket {
 	public String getKey() {
 		return key.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(unknownInt, username, key);
-	}
 
 	public int getPacketType() {
 		return LoginRequest.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tUnknownInt: ").append(unknownInt)
-			.append("\n\tUsername: ").append(username)
-			.append("\n\tKey: ").append(key)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{unknownInt, username, key};
 	}
 }

@@ -20,16 +20,9 @@ public class LoginOk extends BaseServerPacket {
 	public int getPacketType() {
 		return LoginOk.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return super.getBytes((AbstractType[])null);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.toString();
-		
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{};
 	}
 }

@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Int;
 import sk.sigp.aobot.client.types.Text;
@@ -54,20 +55,9 @@ public class PublicChannelJoined extends BaseServerPacket {
 	public int getPacketType() {
 		return PublicChannelJoined.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(channelId, groupName, unknownInt, flags);
-	}
 
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChannelId: ").append(channelId)
-			.append("\n\tGroupName: ").append(groupName)
-			.append("\n\tUnknownInt: ").append(unknownInt)
-			.append("\n\tMute: ").append(flags)
-			.toString();
-		
-		return output;
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{channelId, groupName, unknownInt, flags};
 	}
 }

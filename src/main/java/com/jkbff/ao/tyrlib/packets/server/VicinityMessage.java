@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.server;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.TextBlob;
 import sk.sigp.aobot.client.types.CharacterId;
@@ -42,20 +43,9 @@ public class VicinityMessage extends BaseServerPacket {
 	public int getPacketType() {
 		return VicinityMessage.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(charId, message, blob);
-	}
-	
+
 	@Override
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tCharId: ").append(charId)
-			.append("\n\tMessage: ").append(message)
-			.append("\n\tBlob: ").append(blob)
-			.toString();
-	
-		return output;
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{charId, message, blob};
 	}
 }

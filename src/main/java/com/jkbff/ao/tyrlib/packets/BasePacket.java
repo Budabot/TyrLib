@@ -12,8 +12,12 @@ import sk.sigp.aobot.client.types.AbstractType;
 public abstract class BasePacket {
 
     public abstract int getPacketType();
+	public abstract AbstractType[] getParameters();
+	public abstract String getDirection();
 
-    public abstract byte[] getBytes() throws IOException;
+    public byte[] getBytes() throws IOException {
+        return getBytes(getParameters());
+    }
 
     protected byte[] getBytes(AbstractType... abstractTypeArray) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -41,6 +45,17 @@ public abstract class BasePacket {
 
     @Override
     public String toString() {
-        return String.valueOf(getPacketType()) + " " + " (" + this.getClass().getName() + ")";
+        StringBuilder str = new StringBuilder()
+				.append(getDirection()).append(".").append(getClass().getSimpleName())
+				.append("(").append(getPacketType()).append("): ");
+        int cnt = 0;
+        for (AbstractType type : getParameters()) {
+			if (cnt > 0) {
+				str.append(", ");
+			}
+            str.append("'").append(type.toString()).append("'");
+			cnt++;
+        }
+        return str.toString();
     }
 }

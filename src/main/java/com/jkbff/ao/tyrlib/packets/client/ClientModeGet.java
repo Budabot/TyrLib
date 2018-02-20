@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Int;
 
@@ -30,22 +31,13 @@ public class ClientModeGet extends BaseClientPacket {
 	public long getChannelId() {
 		return channelId.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(unknownInt, channelId);
-	}
-	
+
 	public int getPacketType() {
 		return ClientModeGet.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tUnknownInt: ").append(unknownInt)
-			.append("\n\tChannelId: ").append(channelId)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{unknownInt, channelId};
 	}
 }

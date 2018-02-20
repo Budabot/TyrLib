@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import com.jkbff.ao.tyrlib.chat.MMDBParser;
 import com.jkbff.ao.tyrlib.packets.ExtendedMessageParser;
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.ChannelId;
 import sk.sigp.aobot.client.types.Text;
 import sk.sigp.aobot.client.types.CharacterId;
@@ -68,20 +69,9 @@ public class PublicChannelMessage extends BaseServerPacket {
 			return null;
 		}
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(channelId, charId, message, raw);
-	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tChannelId: ").append(channelId)
-			.append("\n\tCharId: ").append(charId)
-			.append("\n\tMessage: ").append(message)
-			.append("\n\tRaw: ").append(raw)
-			.toString();
-		
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{channelId, charId, message, raw};
 	}
 }

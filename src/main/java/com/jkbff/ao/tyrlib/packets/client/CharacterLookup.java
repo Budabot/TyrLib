@@ -3,6 +3,7 @@ package com.jkbff.ao.tyrlib.packets.client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+import sk.sigp.aobot.client.types.AbstractType;
 import sk.sigp.aobot.client.types.Text;
 
 public class CharacterLookup extends BaseClientPacket {
@@ -22,21 +23,13 @@ public class CharacterLookup extends BaseClientPacket {
 	public String getName() {
 		return name.getData();
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(name);
-	}
-	
+
 	public int getPacketType() {
 		return CharacterLookup.TYPE;
 	}
-	
-	public String toString() {
-		String output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName())
-			.append("\n\tName: ").append(name)
-			.toString();
-	
-		return output;
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{name};
 	}
 }

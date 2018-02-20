@@ -31,10 +31,6 @@ public class CharacterList extends BaseServerPacket {
 	public int getPacketType() {
 		return CharacterList.TYPE;
 	}
-	
-	public byte[] getBytes() throws IOException {
-		return getBytes(userId, name, level, online);
-	}
 
 	public CharacterId[] getUserId() {
 		return userId.getData();
@@ -87,22 +83,9 @@ public class CharacterList extends BaseServerPacket {
 			return online;
 		}
 	}
-	
-	public String toString() {
-		LoginUser[] loginUsers = getLoginUsers();
-		
-		StringBuffer output = new StringBuffer()
-			.append(TYPE).append(" ").append(this.getClass().getSimpleName());
-		
-		int i = 0;
-		for (LoginUser loginUser: loginUsers) {
-			output.append("\n\tCount: ").append(i++)
-				.append("\n\t\tUserId: ").append(loginUser.getUserId())
-				.append("\n\t\tName: ").append(loginUser.getName())
-				.append("\n\t\tLevel: ").append(loginUser.getLevel())
-				.append("\n\t\tOnline: ").append(loginUser.getOnline());
-		}
-		
-		return output.toString();
+
+	@Override
+	public AbstractType[] getParameters() {
+		return new AbstractType[]{userId, name, level, online};
 	}
 }
