@@ -12,41 +12,45 @@ import sk.sigp.aobot.client.types.AbstractType;
 
 public abstract class BasePacket {
 
-    public abstract int getPacketType();
+	public abstract int getPacketType();
 	public abstract AbstractType[] getParameters();
 	public abstract String getDirection();
 
-    public byte[] getBytes() throws IOException {
-        return getBytes(getParameters());
-    }
+	public byte[] getBytes() throws IOException {
+		return getBytes(getParameters());
+	}
 
-    protected byte[] getBytes(AbstractType... abstractTypeArray) throws IOException {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        DataOutputStream outputStream = new DataOutputStream(byteStream);
+	protected byte[] getBytes(AbstractType... abstractTypeArray) throws IOException {
+		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+		DataOutputStream outputStream = new DataOutputStream(byteStream);
 
-        // write packet type
-        outputStream.writeShort(getPacketType());
+		// write packet type
+		outputStream.writeShort(getPacketType());
 
-        if (abstractTypeArray == null) {
-            // write size of 0
-            outputStream.writeShort(0);
-        } else {
-            // temporary output stream to hold types bytes from types so the size can be counted
-            ByteArrayOutputStream s = new ByteArrayOutputStream();
-            for (AbstractType abstractType : abstractTypeArray) {
-                s.write(abstractType.getBytes());
-            }
+		if (abstractTypeArray == null) {
+			// write size of 0
+			outputStream.writeShort(0);
+		} else {
+			// temporary output stream to hold types bytes from types so the size can be counted
+			ByteArrayOutputStream s = new ByteArrayOutputStream();
+			for (AbstractType abstractType : abstractTypeArray) {
+				s.write(abstractType.getBytes());
+			}
 
-            outputStream.writeShort(s.size());
-            outputStream.write(s.toByteArray());
-        }
+			outputStream.writeShort(s.size());
+			outputStream.write(s.toByteArray());
+		}
 
-        return byteStream.toByteArray();
-    }
+		return byteStream.toByteArray();
+	}
 
-    @Override
-    public String toString() {
-        return getDirection() + "." + getClass().getSimpleName() + "(" + getPacketType() + "): " +
-				Arrays.stream(getParameters()).map(AbstractType::toString).collect(Collectors.joining(", "));
-    }
+	@Override
+	public String toString() {
+		return getDirection() + "." + getClass().getSimpleName() + "(" + getPacketType() + "): " + getTypesAsString();
+
+	}
+
+	public String getTypesAsString() {
+		return Arrays.stream(getParameters()).map(AbstractType::toString).collect(Collectors.joining(", "));
+	}
 }

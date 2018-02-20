@@ -1,5 +1,6 @@
 package com.jkbff.ao.tyrlib.packets.server;
 
+import org.apache.commons.codec.binary.Hex;
 import sk.sigp.aobot.client.types.AbstractType;
 
 import java.io.ByteArrayOutputStream;
@@ -46,5 +47,10 @@ public class GenericServerPacket extends BaseServerPacket {
     @Override
     public AbstractType[] getParameters() {
         return new AbstractType[]{};
+    }
+
+    @Override
+    public String getTypesAsString() {
+        return new String(Hex.encodeHex(data));
     }
 }
