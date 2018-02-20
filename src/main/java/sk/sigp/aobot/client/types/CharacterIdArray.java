@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class CharacterIdArray extends AbstractType {
     private final CharacterId[] data;
@@ -49,6 +50,6 @@ public class CharacterIdArray extends AbstractType {
 
     @Override
     public String toString() {
-        return "[" + Arrays.stream(data).map(x -> x.toString() + ", ") + "]";
+        return "[" + Arrays.stream(data).map(CharacterId::toString).collect(Collectors.joining(", ")) + "]";
     }
 }

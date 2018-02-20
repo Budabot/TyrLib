@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import sk.sigp.aobot.client.types.AbstractType;
 
@@ -45,17 +46,7 @@ public abstract class BasePacket {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder()
-				.append(getDirection()).append(".").append(getClass().getSimpleName())
-				.append("(").append(getPacketType()).append("): ");
-        int cnt = 0;
-        for (AbstractType type : getParameters()) {
-			if (cnt > 0) {
-				str.append(", ");
-			}
-            str.append("'").append(type.toString()).append("'");
-			cnt++;
-        }
-        return str.toString();
+        return getDirection() + "." + getClass().getSimpleName() + "(" + getPacketType() + "): " +
+				Arrays.stream(getParameters()).map(AbstractType::toString).collect(Collectors.joining(", "));
     }
 }

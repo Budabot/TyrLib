@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class IntArray extends AbstractType {
     private final Int[] data;
@@ -49,6 +50,6 @@ public class IntArray extends AbstractType {
 
     @Override
     public String toString() {
-        return "[" + Arrays.stream(data).map(x -> x.toString() + ", ") + "]";
+        return "[" + Arrays.stream(data).map(Int::toString).collect(Collectors.joining(", ")) + "]";
     }
 }
