@@ -65,7 +65,7 @@ public class ExtendedMessageParser {
                 {
                     // short string
                     int stringLength = dataInputStream.readUnsignedByte();
-                    byte[] bytes = new byte[stringLength];
+                    byte[] bytes = new byte[stringLength - 1];
                     dataInputStream.readFully(bytes);
                     params.add(new String(bytes, ENCODING));
                     break;

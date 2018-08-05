@@ -11,7 +11,7 @@ import java.io.IOException;
 public class GenericClientPacket extends BaseClientPacket {
 	protected final int packetType;
 	protected final byte[] data;
-	
+
 	public GenericClientPacket(int packetType, int size, DataInputStream input) {
 		this.packetType = packetType;
 		this.data = new byte[size];
