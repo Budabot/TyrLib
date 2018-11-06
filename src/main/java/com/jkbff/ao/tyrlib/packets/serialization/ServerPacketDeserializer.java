@@ -1,12 +1,13 @@
-package com.jkbff.ao.tyrlib.packets;
+package com.jkbff.ao.tyrlib.packets.serialization;
+
+import com.jkbff.ao.tyrlib.packets.server.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
-import com.jkbff.ao.tyrlib.packets.server.*;
-
-public class ServerPacketFactory implements PacketFactory<BaseServerPacket> {
-    public BaseServerPacket createInstance(int packetId, byte[] payload) {
+public class ServerPacketDeserializer implements PacketDeserializer<BaseServerPacket> {
+    @Override
+    public BaseServerPacket toInstance(int packetId, byte[] payload) {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(payload);
         DataInputStream dataStream = new DataInputStream(byteStream);
         switch(packetId) {
@@ -26,7 +27,7 @@ public class ServerPacketFactory implements PacketFactory<BaseServerPacket> {
                 return new CharacterUnknown(dataStream);
             case PublicChannelJoined.TYPE:
                 return new PublicChannelJoined(dataStream);
-            case PublicChannelMessage.TYPE:
+            case com.jkbff.ao.tyrlib.packets.server.PublicChannelMessage.TYPE:
                 return new PublicChannelMessage(dataStream);
             case PublicChannelLeft.TYPE:
                 return new PublicChannelLeft(dataStream);
@@ -48,7 +49,7 @@ public class ServerPacketFactory implements PacketFactory<BaseServerPacket> {
                 return new PrivateChannelInvited(dataStream);
             case PrivateChannelKicked.TYPE:
                 return new PrivateChannelKicked(dataStream);
-            case PrivateChannelMessage.TYPE:
+            case com.jkbff.ao.tyrlib.packets.server.PrivateChannelMessage.TYPE:
                 return new PrivateChannelMessage(dataStream);
             case PrivateChannelLeft.TYPE:
                 return new PrivateChannelLeft(dataStream);

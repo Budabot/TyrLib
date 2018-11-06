@@ -1,7 +1,7 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
-import com.jkbff.ao.tyrlib.packets.BasePacket;
-import com.jkbff.ao.tyrlib.packets.PacketFactory;
+import com.jkbff.ao.tyrlib.packets.serialization.PacketDeserializer;
+import com.jkbff.ao.tyrlib.packets.serialization.PacketSerializer;
 import org.apache.log4j.Logger;
 
 import java.io.DataInputStream;
@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class AOSocket<T extends BasePacket, U extends BasePacket> implements Closeable {
+public class AOSocket<T, U> implements Closeable {
     private final String id;
     private final Socket socket;
     private final PacketListener<T> packetListener;
@@ -19,14 +19,14 @@ public class AOSocket<T extends BasePacket, U extends BasePacket> implements Clo
     private final LinkedBlockingQueue<T> inboundQueue = new LinkedBlockingQueue<>();
     private final Logger logger = Logger.getLogger(getClass());
 
-    public AOSocket(String id, Socket socket, PacketFactory<T> packetFactory, Closeable onError) {
+    public AOSocket(String id, Socket socket, PacketDeserializer<T> packetDeserializer, PacketSerializer<U> packetSerializer, Closeable onError) {
         this.id = id;
         this.socket = socket;
         try {
-            packetListener = new PacketListener<>(inboundQueue, new DataInputStream(socket.getInputStream()), packetFactory, onError);
+            packetListener = new PacketListener<>(inboundQueue, new DataInputStream(socket.getInputStream()), packetDeserializer, onError);
             packetListener.setName(id + "PacketListener");
 
-            packetSender = new PacketSender<>(outboundQueue, socket.getOutputStream(), onError);
+            packetSender = new PacketSender<>(outboundQueue, socket.getOutputStream(), packetSerializer, onError);
             packetSender.setName(id + "PacketSender");
         } catch (IOException e) {
             throw new RuntimeException(e);

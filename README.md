@@ -8,7 +8,7 @@ package com.example;
 import aoChatLib.Crypto;
 import com.jkbff.ao.tyrlib.chat.socket.AOClientSocket;
 import com.jkbff.ao.tyrlib.chat.socket.Closeable;
-import com.jkbff.ao.tyrlib.packets.ServerPacketFactory;
+import com.jkbff.ao.tyrlib.packets.ClientSerDes;
 import com.jkbff.ao.tyrlib.packets.client.LoginRequest;
 import com.jkbff.ao.tyrlib.packets.client.LoginSelect;
 import com.jkbff.ao.tyrlib.packets.server.*;
@@ -21,7 +21,7 @@ public class LoginExample {
 
     private String username = "username";
     private String password = "password";
-    private String characterName = "characterName";
+    private String characterName = "character";
 
     public static void main(String[] args) throws Exception {
         new LoginExample().start();
@@ -34,7 +34,7 @@ public class LoginExample {
 
         // library needs to know how to create incoming packets from bytes, we will use the provided implementation,
         // but you can create your own factory and own packet implementations if desired
-        ServerPacketFactory serverPacketFactory = new ServerPacketFactory();
+        ClientSerDes clientSerDes = new ClientSerDes();
 
         // we need a class with a close() method that will be called when there is a socket/connection error
         // so we can cleanup resources.  in this example, it just sets isRunning flag to false so the connection
@@ -42,7 +42,7 @@ public class LoginExample {
         Closeable onError = new SocketError(this);
 
         // create a client socket (a bot will act as a client to the ao chat server)
-        AOClientSocket aoClientSocket = new AOClientSocket("main", new Socket(serverAddress, serverPort), serverPacketFactory, onError);
+        AOClientSocket aoClientSocket = new AOClientSocket("main", new Socket(serverAddress, serverPort), clientSerDes, clientSerDes, onError);
 
         // connect socket to ao chat server
         aoClientSocket.start();

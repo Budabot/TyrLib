@@ -1,12 +1,13 @@
-package com.jkbff.ao.tyrlib.packets;
+package com.jkbff.ao.tyrlib.packets.serialization;
 
 import com.jkbff.ao.tyrlib.packets.client.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
-public class ClientPacketFactory implements PacketFactory<BaseClientPacket> {
-    public BaseClientPacket createInstance(int packetId, byte[] payload) {
+public class ClientPacketDeserializer implements PacketDeserializer<BaseClientPacket> {
+    @Override
+    public BaseClientPacket toInstance(int packetId, byte[] payload) {
         ByteArrayInputStream byteStream = new ByteArrayInputStream(payload);
         DataInputStream dataStream = new DataInputStream(byteStream);
         switch (packetId) {
@@ -32,10 +33,10 @@ public class ClientPacketFactory implements PacketFactory<BaseClientPacket> {
                 return new LoginSelect(dataStream);
             case OnlineStatusSet.TYPE:
                 return new OnlineStatusSet(dataStream);
-            case PublicChannelMessage.TYPE:
-                return new PublicChannelMessage(dataStream);
-            case PrivateChannelMessage.TYPE:
-                return new PrivateChannelMessage(dataStream);
+            case com.jkbff.ao.tyrlib.packets.client.PublicChannelMessage.TYPE:
+                return new com.jkbff.ao.tyrlib.packets.client.PublicChannelMessage(dataStream);
+            case com.jkbff.ao.tyrlib.packets.client.PrivateChannelMessage.TYPE:
+                return new com.jkbff.ao.tyrlib.packets.client.PrivateChannelMessage(dataStream);
             case PrivateMessageSend.TYPE:
                 return new PrivateMessageSend(dataStream);
             case Ping.TYPE:

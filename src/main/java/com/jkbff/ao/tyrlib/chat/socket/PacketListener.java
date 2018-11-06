@@ -1,25 +1,25 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
-import com.jkbff.ao.tyrlib.packets.BasePacket;
-import com.jkbff.ao.tyrlib.packets.PacketFactory;
+import com.jkbff.ao.tyrlib.packets.serialization.PacketDeserializer;
 import org.apache.log4j.Logger;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 
-public class PacketListener<T extends BasePacket> extends Thread implements Closeable {
+public class PacketListener<T> extends Thread implements Closeable {
     private final BlockingQueue<T> queue;
     private final DataInputStream inputStream;
-    private final PacketFactory<T> packetFactory;
+    private final PacketDeserializer<T> packetDeserializer;
     private final Closeable onError;
     private boolean stop = false;
     private final Logger logger = Logger.getLogger(getClass());
 
-    public PacketListener(BlockingQueue<T> queue, DataInputStream inputStream, PacketFactory<T> packetFactory, Closeable onError) {
+    public PacketListener(BlockingQueue<T> queue, DataInputStream inputStream, PacketDeserializer<T> packetDeserializer, Closeable onError) {
         this.queue = queue;
         this.inputStream = inputStream;
-        this.packetFactory = packetFactory;
+        this.packetDeserializer = packetDeserializer;
         this.onError = onError;
     }
 
@@ -43,9 +43,9 @@ public class PacketListener<T extends BasePacket> extends Thread implements Clos
         byte[] payload = new byte[packetLength];
         inputStream.readFully(payload);
 
-        T packet = packetFactory.createInstance(packetId, payload);
+        T packet = packetDeserializer.toInstance(packetId, payload);
         if (packet == null) {
-            throw new RuntimeException("Unknown packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + payload + "'");
+            throw new RuntimeException("Unknown packet id: '" + packetId + "'\npacketLength: '" + packetLength + "'\npayload: '" + Arrays.toString(payload) + "'");
         }
         return packet;
     }

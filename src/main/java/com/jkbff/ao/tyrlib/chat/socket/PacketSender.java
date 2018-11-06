@@ -1,6 +1,6 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
-import com.jkbff.ao.tyrlib.packets.BasePacket;
+import com.jkbff.ao.tyrlib.packets.serialization.PacketSerializer;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -8,16 +8,18 @@ import java.io.OutputStream;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class PacketSender<T extends BasePacket> extends Thread implements Closeable {
+public class PacketSender<T> extends Thread implements Closeable {
     private final BlockingQueue<T> queue;
     private final OutputStream outputStream;
+    private final PacketSerializer<T> packetSerializer;
     private final Closeable onError;
     private boolean stop = false;
     private final Logger logger = Logger.getLogger(getClass());
 
-    public PacketSender(BlockingQueue<T> queue, OutputStream outputStream, Closeable onError) {
+    public PacketSender(BlockingQueue<T> queue, OutputStream outputStream, PacketSerializer<T> packetSerializer, Closeable onError) {
         this.queue = queue;
         this.outputStream = outputStream;
+        this.packetSerializer = packetSerializer;
         this.onError = onError;
     }
 
@@ -27,7 +29,7 @@ public class PacketSender<T extends BasePacket> extends Thread implements Closea
             try {
                 T packet = queue.poll(1, TimeUnit.SECONDS);
                 if (packet != null) {
-                    outputStream.write(packet.getBytes());
+                    outputStream.write(packetSerializer.toBytes(packet));
                 }
             } catch (Exception e) {
                 logger.error("", e);
