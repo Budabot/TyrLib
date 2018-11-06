@@ -8,9 +8,10 @@ package com.example;
 import aoChatLib.Crypto;
 import com.jkbff.ao.tyrlib.chat.socket.AOClientSocket;
 import com.jkbff.ao.tyrlib.chat.socket.Closeable;
-import com.jkbff.ao.tyrlib.packets.ClientSerDes;
+import com.jkbff.ao.tyrlib.packets.serialization.ClientPacketSerializer;
 import com.jkbff.ao.tyrlib.packets.client.LoginRequest;
 import com.jkbff.ao.tyrlib.packets.client.LoginSelect;
+import com.jkbff.ao.tyrlib.packets.serialization.ServerPacketDeserializer;
 import com.jkbff.ao.tyrlib.packets.server.*;
 
 import java.net.Socket;
@@ -32,9 +33,12 @@ public class LoginExample {
         String serverAddress = "chat.d1.funcom.com";
         int serverPort = 7105;
 
-        // library needs to know how to create incoming packets from bytes, we will use the provided implementation,
-        // but you can create your own factory and own packet implementations if desired
-        ClientSerDes clientSerDes = new ClientSerDes();
+        // the library needs to know how to create incoming packets from bytes (deserializer), and how to convert
+        // outgoing packets to bytes (serializer).  the library includes an implementation to do this, but you can
+        // provide your own serializer/deserializer (and packet implementations) if desired
+        ClientPacketSerializer serializer = new ClientPacketSerializer();
+        ServerPacketDeserializer deserializer = new ServerPacketDeserializer();
+
 
         // we need a class with a close() method that will be called when there is a socket/connection error
         // so we can cleanup resources.  in this example, it just sets isRunning flag to false so the connection
@@ -42,7 +46,7 @@ public class LoginExample {
         Closeable onError = new SocketError(this);
 
         // create a client socket (a bot will act as a client to the ao chat server)
-        AOClientSocket aoClientSocket = new AOClientSocket("main", new Socket(serverAddress, serverPort), clientSerDes, clientSerDes, onError);
+        AOClientSocket aoClientSocket = new AOClientSocket("main", new Socket(serverAddress, serverPort), deserializer, serializer, onError);
 
         // connect socket to ao chat server
         aoClientSocket.start();
