@@ -12,7 +12,7 @@ cd TyrLib/
 git checkout 1.11
 ```
 
-3. Build and Install
+3. Build and Install (run this from the TyrLib directory)
 ```
 docker run -it --rm --name tyrlib-build -v ~/.m2:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.6.3-jdk-11-slim mvn -e install
 ```
