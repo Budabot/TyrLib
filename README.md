@@ -1,5 +1,23 @@
 This is an implementation of the Anarchy Online Chat Protocol, written in Java.
 
+# To install locally (to resolve dependencies)
+1. Download TyrLib source
+```
+git clone https://github.com/Budabot/TyrLib.git
+cd TyrLib/
+```
+
+2. (Optional) If you need a particular version, switch to that version
+```
+git checkout 1.11
+```
+
+3. Build and Install
+```
+docker run -it --rm --name tyrlib-build -v ~/.m2:/root/.m2 -v "$(pwd)":/usr/src/mymaven -w /usr/src/mymaven maven:3.6.3-jdk-11-slim mvn -e install
+```
+
+
 # Sample Bot
 
 ```
