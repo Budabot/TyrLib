@@ -17,10 +17,10 @@ public class ChatCommand extends BaseClientPacket {
 	
 	public ChatCommand(DataInputStream input) {
 		this.command = new TextArray(input);
-		this.windowId = new Int(input)
+		this.windowId = new Int(input);
 	}
 	
-	public ChatCommand(String[] command, Int windowId) {
+	public ChatCommand(String[] command, int windowId) {
 		this.command = new TextArray(command);
 		this.windowId = new Int(windowId);
 	}
