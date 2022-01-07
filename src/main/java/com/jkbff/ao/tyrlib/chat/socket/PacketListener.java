@@ -1,7 +1,8 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
 import com.jkbff.ao.tyrlib.packets.serialization.PacketDeserializer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class PacketListener<T> extends Thread implements Closeable {
     private final PacketDeserializer<T> packetDeserializer;
     private final Closeable onError;
     private boolean stop = false;
-    private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public PacketListener(BlockingQueue<T> queue, DataInputStream inputStream, PacketDeserializer<T> packetDeserializer, Closeable onError) {
         this.queue = queue;

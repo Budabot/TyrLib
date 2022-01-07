@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jkbff.ao</groupId>
 	<artifactId>tyrlib</artifactId>
-	<version>1.13</version>
+	<version>1.14</version>
 	<packaging>jar</packaging>
 	
 	<properties>
@@ -15,9 +15,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.32</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>

@@ -2,7 +2,8 @@ package com.jkbff.ao.tyrlib.chat.socket;
 
 import com.jkbff.ao.tyrlib.packets.serialization.PacketDeserializer;
 import com.jkbff.ao.tyrlib.packets.serialization.PacketSerializer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class AOSocket<T, U> implements Closeable {
     private final PacketSender<U> packetSender;
     private final LinkedBlockingQueue<U> outboundQueue = new LinkedBlockingQueue<>();
     private final LinkedBlockingQueue<T> inboundQueue = new LinkedBlockingQueue<>();
-    private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public AOSocket(String id, Socket socket, PacketDeserializer<T> packetDeserializer, PacketSerializer<U> packetSerializer, Closeable onError) {
         this.id = id;

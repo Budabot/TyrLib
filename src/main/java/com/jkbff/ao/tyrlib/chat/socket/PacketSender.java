@@ -1,7 +1,8 @@
 package com.jkbff.ao.tyrlib.chat.socket;
 
 import com.jkbff.ao.tyrlib.packets.serialization.PacketSerializer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,7 +15,7 @@ public class PacketSender<T> extends Thread implements Closeable {
     private final PacketSerializer<T> packetSerializer;
     private final Closeable onError;
     private boolean stop = false;
-    private final Logger logger = Logger.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public PacketSender(BlockingQueue<T> queue, OutputStream outputStream, PacketSerializer<T> packetSerializer, Closeable onError) {
         this.queue = queue;
